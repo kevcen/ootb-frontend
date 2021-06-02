@@ -1,13 +1,26 @@
+# node.js
 node_modules/
-.expo/
 npm-debug.*
+yarn-debug.*
+package-lock.json
+
+# generated
+.expo/
+.expo-shared/
+web-build/
+coverage/
+components/__tests__
+
+# vscode
+.vscode
+
+# extensions
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
 *.orig.*
-web-build/
 
 # macOS
 .DS_Store
