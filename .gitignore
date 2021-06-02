@@ -9,7 +9,6 @@ package-lock.json
 .expo-shared/
 web-build/
 coverage/
-components/__tests__
 
 # vscode
 .vscode
