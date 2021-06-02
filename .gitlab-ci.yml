@@ -15,7 +15,7 @@ before_script:
   - npm install
 
 build:
-  stage:build
+  stage: build
   script:
     - npm run build
 

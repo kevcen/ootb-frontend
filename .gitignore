@@ -31,7 +31,7 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
-#Vscode
+# vscode
 .vscode/
 
 # Android/IntelliJ
@@ -60,7 +60,6 @@ android/app/libs
 # screenshots whenever they are needed.
 # For more information about the recommended setup visit:
 # https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Gitignore.md
-
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
