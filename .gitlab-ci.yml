@@ -1,4 +1,8 @@
-image: node:alpine
+default:
+  image: node:alpine
+
+  before_script:
+    - npm install
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -11,20 +15,17 @@ stages:
   - test
   - deploy
 
-before_script:
-  - npm install
-
 build:
   stage: build
   script:
     - npm run build
 
-test-jest:
+test:
   stage: test
   script:
     - npm run test
 
-deploy-expo:
+deploy_expo:
   stage: deploy
   script:
     - apk add --no-cache bash
