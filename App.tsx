@@ -9,9 +9,8 @@ import { Ionicons } from "@expo/vector-icons";
 
 import useCachedResources from "./src/hooks/useCachedResources";
 import useColorScheme from "./src/hooks/useColorScheme";
-import QuestionScreen from "./src/screens/QuestionScreen";
 import IntroScreen from "./src/screens/IntroScreen";
-import InterestScreen from "./src/screens/InterestScreen";
+import CategoriesScreen from "./src/screens/CategoriesScreen";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -26,7 +25,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={IntroScreen} />
-          <Stack.Screen name="Interest" component={InterestScreen} />
+          <Stack.Screen name="Categories" component={CategoriesScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );

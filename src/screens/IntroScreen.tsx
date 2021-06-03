@@ -1,9 +1,8 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import Question from "../components/Question";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-// import { Container, Header, Content, Button } from 'native-base';
+import { buttonStyles } from "../styles/buttons";
+import { white } from "../styles/colors";
 
 export default function IntroScreen({ navigation }: { navigation: any }) {
   return (
@@ -11,17 +10,28 @@ export default function IntroScreen({ navigation }: { navigation: any }) {
       <Question
         questionText={"Please tell us a bit about more about the receiver"}
       />
-      <Button
+      <Pressable
         onPress={() => {
-          navigation.navigate("Interest");
+          navigation.navigate("Categories");
         }}
-        title="Let's go"
-      />
+        style={buttonStyles.blackCenteredFull}
+      >
+        <Text style={white}>Let's go</Text>
+      </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  button: {
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   question: {
     flex: 2,
     alignItems: "center",

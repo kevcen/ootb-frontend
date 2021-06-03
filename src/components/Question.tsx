@@ -7,15 +7,12 @@ import { MonoText } from "./StyledText";
 import { Text, View } from "./Themed";
 
 export default function Question({ questionText }: { questionText: string }) {
-  return (
-    <View>
-      <Text style={styles.titleText}>{questionText}</Text>
-    </View>
-  );
+  return <Text style={styles.question}>{questionText}</Text>;
 }
 
 const styles = StyleSheet.create({
-  titleText: {
+  question: {
+    padding: 30,
     fontSize: 20,
   },
 });
