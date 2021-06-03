@@ -9,6 +9,7 @@ export const buttonStyles = StyleSheet.create({
     backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
+    opacity: 0.7,
   },
   blackCenteredDiminish: {
     paddingVertical: 12,
@@ -18,5 +19,6 @@ export const buttonStyles = StyleSheet.create({
     backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
+    opacity: 0.4,
   },
 });

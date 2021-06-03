@@ -8,7 +8,7 @@ import { white } from "../styles/colors";
 export default function InterestScreen(navigation: any) {
   var interestButtons: any[] = [];
 
-  var gifteeInterests = [];
+  let gifteeInterests = new Set();
 
   categories.forEach((element) => {
     const [highlightButton, setHighlightButton] = React.useState(true);
@@ -17,12 +17,13 @@ export default function InterestScreen(navigation: any) {
       <Pressable
         style={
           highlightButton
-            ? buttonStyles.blackCenteredFull
-            : buttonStyles.blackCenteredDiminish
+            ? buttonStyles.blackCenteredDiminish
+            : buttonStyles.blackCenteredFull
         }
         onPress={() => {
-          gifteeInterests.push({ element });
+          gifteeInterests.add({ element });
           setHighlightButton(!highlightButton);
+          gifteeInterests.delete({ element });
         }}
       >
         <Text style={white}>{element}</Text>
