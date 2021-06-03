@@ -6,14 +6,14 @@ import { buttonStyles } from "../styles/buttons";
 import { white } from "../styles/colors";
 
 export default function InterestScreen(navigation: any) {
-  var interestButtons: any[] = [];
+  var categoryButtons: any[] = [];
 
   let gifteeInterests = new Set();
 
   categories.forEach((element) => {
     const [highlightButton, setHighlightButton] = React.useState(true);
 
-    interestButtons.push(
+    categoryButtons.push(
       <Pressable
         style={
           highlightButton
@@ -33,8 +33,9 @@ export default function InterestScreen(navigation: any) {
 
   return (
     <View style={styles.viewCentered}>
-      <Question questionText={"What's their interest"} />
-      {interestButtons}
+      <Question questionText={"What categories interest them?"} />
+      {categoryButtons}
+      <View style={styles.space} />
       <Pressable
         style={buttonStyles.blackCenteredFull}
         onPress={() => {
@@ -53,5 +54,9 @@ const styles = StyleSheet.create({
     flex: 2,
     alignItems: "center",
     justifyContent: "center",
+  },
+  space: {
+    width: 20,
+    height: 20,
   },
 });
