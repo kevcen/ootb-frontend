@@ -25,3 +25,5 @@ deploy:expo:
   stage: deploy
   script:
     - expo publish --non-interactive
+  only:
+    - master
