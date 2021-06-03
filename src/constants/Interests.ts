@@ -1,6 +1,7 @@
-export const interests : string[] = ["Music", 
-                   "Sport",
-                   "Photography",
-                   "Reading",
-                   "Partying" ]
-                
+export const interests: string[] = [
+  "Music",
+  "Sport",
+  "Photography",
+  "Reading",
+  "Partying",
+];
