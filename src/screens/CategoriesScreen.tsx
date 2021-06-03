@@ -5,31 +5,46 @@ import { categories } from "../constants/Categories";
 import { buttonStyles } from "../styles/buttons";
 import { white } from "../styles/colors";
 
-export default function InterestScreen(navigation: any) {
+export default function CategoriesScreen({ navigation }: { navigation: any }) {
   var categoryButtons: any[] = [];
 
   let gifteeInterests = new Set();
 
-  categories.forEach((element) => {
-    const [highlightButton, setHighlightButton] = React.useState(true);
+  var noButtonsPerRow = 2;
 
-    categoryButtons.push(
-      <Pressable
-        style={
-          highlightButton
-            ? buttonStyles.blackCenteredDiminish
-            : buttonStyles.blackCenteredFull
-        }
-        onPress={() => {
-          gifteeInterests.add({ element });
-          setHighlightButton(!highlightButton);
-          gifteeInterests.delete({ element });
-        }}
-      >
-        <Text style={white}>{element}</Text>
-      </Pressable>
-    );
-  });
+  // To make 2 buttons side by side, flexing downwards
+  for (var i = 0; i < categories.length; i++) {
+    var row = [];
+    for (var j = 0; j < noButtonsPerRow && i * 2 + j < categories.length; j++) {
+      const [isHighlighted, setHighlightButton] = React.useState(false);
+
+      var categoryName: string = categories[i * 2 + j];
+
+      row.push(
+        <Pressable
+          style={
+            isHighlighted
+              ? buttonStyles.blackCenteredFull
+              : buttonStyles.blackCenteredDiminish
+          }
+          onPress={() => {
+            if (!isHighlighted) {
+              gifteeInterests.add({ categoryName });
+              setHighlightButton(!isHighlighted);
+            } else {
+              gifteeInterests.delete({ categoryName });
+              setHighlightButton(!isHighlighted);
+            }
+          }}
+        >
+          <Text style={white}>{categoryName} </Text>
+        </Pressable>
+      );
+    }
+
+    var rowView = <View style={{ flexDirection: "row" }}>{row}</View>;
+    categoryButtons.push(rowView);
+  }
 
   return (
     <View style={styles.viewCentered}>
@@ -40,7 +55,7 @@ export default function InterestScreen(navigation: any) {
         style={buttonStyles.blackCenteredFull}
         onPress={() => {
           // send post request to backend server
-          navigation.navigate("Interest");
+          navigation.navigate("Categories");
         }}
       >
         <Text style={white}>Let's go</Text>
