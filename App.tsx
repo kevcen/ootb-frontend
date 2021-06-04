@@ -7,7 +7,9 @@ import useCachedResources from "./src/hooks/useCachedResources";
 import useColorScheme from "./src/hooks/useColorScheme";
 import IntroScreen from "./src/screens/IntroScreen";
 import CategoriesScreen from "./src/screens/CategoriesScreen";
-import SuggestionScreen from "./src/screens/SuggestionScreen";
+import RecommendationScreen from "./src/screens/RecommendationScreen";
+import NotFoundScreen from "./src/screens/NotFoundScreen";
+import ErrorScreen from "./src/screens/ErrorScreen";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -23,7 +25,8 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Home" component={IntroScreen} />
           <Stack.Screen name="Categories" component={CategoriesScreen} />
-          <Stack.Screen name="Suggestions" component={SuggestionScreen} />
+          <Stack.Screen name="Recommendations" component={RecommendationScreen} />
+          <Stack.Screen name="Error" component={ErrorScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );

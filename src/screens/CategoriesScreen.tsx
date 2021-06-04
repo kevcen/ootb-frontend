@@ -1,81 +1,84 @@
 import * as React from "react";
 import { StyleSheet, View, Text, Button, Pressable } from "react-native";
 import Question from "../components/Question";
-import { categories } from "../constants/Categories";
+import categories from "../constants/Categories";
 import { buttonStyles } from "../styles/buttons";
-import { white } from "../styles/colors";
+import { black, green, white } from "../styles/colors";
 import axios from "axios";
+import { useState } from "react";
+import { Icon } from "react-native-elements";
+
+let genData = (): any[] => {
+  var data = new Array();
+  categories.forEach((categoryName, index) => {
+    data.push({ key: "cat_" + index, title: categoryName });
+  });
+  return data;
+};
+
+const genButton = ({
+  onPress,
+  title,
+  key,
+}: {
+  onPress: (title: string) => any;
+  title: string;
+  key: string;
+}) => {
+  const [isToggled, setIsToggled] = useState(false);
+  return (
+    <Pressable
+      key={key}
+      style={isToggled ? styles.tagChosen : styles.tag}
+      onPress={() => {
+        setIsToggled(!isToggled);
+        onPress(title);
+      }}
+    >
+      <Text style={{ color: isToggled ? black : white }}>{title} </Text>
+    </Pressable>
+  );
+};
 
 export default function CategoriesScreen({ navigation }: { navigation: any }) {
-  var categoryButtons: any[] = [];
+  
+  const [chosenCategories,setChosenCategories] = useState(new Set())
 
-  let gifteeInterests = new Set();
-
-  var noButtonsPerRow = 2;
-
-  // To make 2 buttons side by side, flexing downwards
-  for (var i = 0; i < categories.length; i++) {
-    var row = [];
-    for (var j = 0; j < noButtonsPerRow && i * 2 + j < categories.length; j++) {
-      const [isHighlighted, setHighlightButton] = React.useState(false);
-
-      var categoryName: string = categories[i * 2 + j];
-
-      row.push(
-        <Pressable
-          style={
-            isHighlighted
-              ? buttonStyles.blackCenteredFull
-              : buttonStyles.blackCenteredDiminish
-          }
-          onPress={() => {
-            if (!isHighlighted) {
-              gifteeInterests.add({ categoryName });
-              setHighlightButton(!isHighlighted);
-            } else {
-              gifteeInterests.delete({ categoryName });
-              setHighlightButton(!isHighlighted);
-            }
-          }}
-        >
-          <Text style={white}>{categoryName} </Text>
-        </Pressable>
-      );
+  let onTagPress = (title: string) => {
+    // toggle chosen category
+    if (chosenCategories.has(title)) {
+      chosenCategories.delete(title);
+    } else {
+      chosenCategories.add(title);
     }
-
-    var rowView = <View style={{ flexDirection: "row" }}>{row}</View>;
-    categoryButtons.push(rowView);
-  }
+  };
 
   return (
     <View style={styles.viewCentered}>
-      <Question questionText={"What categories interest them?"} />
-      {categoryButtons}
+      <Question questionText={"Choose the categories which interest them"} />
+      <View style={styles.space} />
+      <View style={styles.list}>
+        {genData().map((data) => genButton({ ...data, onPress: onTagPress }))}
+      </View>
       <View style={styles.space} />
       <Pressable
         style={buttonStyles.blackCenteredFull}
         onPress={() => {
-          console.log("clicked");
-          axios
-            .get("https://gift-recommender-api.herokuapp.com")
-            .then((res) => {
-              console.log(res);
-            });
           axios
             .post("https://gift-recommender-api.herokuapp.com/products", {
-              categories: ["Food"],
+              categories: Array.from(chosenCategories) ,
             })
-            .then(function (response) {
-              console.log("got a response");
+            .then((response) => {
               console.log(response.data);
-              navigation.navigate("Suggestions", response.data);
+              navigation.navigate("Recommendations", {recommendations: response.data});
             })
-            .catch(function (error) {
+            .catch((error) => {
               console.log(error);
+              navigation.navigate("Error");
             });
         }}
       >
-        <Text style={white}>Let's go</Text>
+        <Text style={{ color: white }}>Let's go</Text>
       </Pressable>
     </View>
   );
@@ -83,12 +86,43 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
 
 const styles = StyleSheet.create({
   viewCentered: {
-    flex: 2,
+    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
   },
   space: {
     width: 20,
     height: 20,
+  },
+  list: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tag: {
+    height: 50,
+    marginVertical: 5,
+    marginHorizontal: 3,
+    paddingHorizontal: 20,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "black",
+    backgroundColor: "#101820",
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: 0.8,
+  },
+  tagChosen: {
+    height: 50,
+    paddingHorizontal: 20,
+    marginHorizontal: 6,
+    marginVertical: 5,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: green,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: 0.8,
   },
 });

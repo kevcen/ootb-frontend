@@ -1,4 +1,4 @@
-export const categories: string[] = [
+const categories: string[] = [
   "Food",
   "Fashion",
   "Music",
@@ -10,3 +10,4 @@ export const categories: string[] = [
   "Home Decor",
   "Personalised",
 ];
+export default categories;

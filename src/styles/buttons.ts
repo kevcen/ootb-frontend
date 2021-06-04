@@ -20,8 +20,10 @@ const full = {
 
 export const buttonStyles = StyleSheet.create({
   blackCenteredFull: {
+    position:"absolute",
+    bottom:30,
     paddingVertical: 16,
-    paddingHorizontal: 36,
+    width:200,
     borderRadius: 50,
     elevation: 3,
     backgroundColor: "black",
