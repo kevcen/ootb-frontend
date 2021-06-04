@@ -56,17 +56,19 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
         style={buttonStyles.blackCenteredFull}
         onPress={() => {
           console.log("clicked");
-          axios.get("https://gift-recommender-api.herokuapp.com").then((res) => {
-            console.log(res)
-          })
+          axios
+            .get("https://gift-recommender-api.herokuapp.com")
+            .then((res) => {
+              console.log(res);
+            });
           axios
             .post("https://gift-recommender-api.herokuapp.com/products", {
               categories: ["Food"],
             })
             .then(function (response) {
               console.log("got a response");
-              console.log(response);
-              navigation.navigate("Suggestions");
+              console.log(response.data);
+              navigation.navigate("Suggestions", response.data);
             })
             .catch(function (error) {
               console.log(error);

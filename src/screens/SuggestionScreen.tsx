@@ -19,13 +19,16 @@ export default function SuggestionScreen({
   route: any;
   navigation: any;
 }) {
-  const {} = route.params;
+  console.log(route);
+  const name = route.params[0].name;
+  const url = route.params[0].image;
   return (
     <View>
       <ScrollView style={stylesGrid.scrollContainer}>
         <View style={stylesGrid.sectionContainer}>
           <View style={stylesGrid.boxContainer}>
-            <Image source={{ uri: url }} />
+            <Image style={{ width: 100, height: 100 }} source={{ uri: url }} />
+            <Text>{name}</Text>
           </View>
           <View style={stylesGrid.boxContainer}>
             <Text>B2</Text>
