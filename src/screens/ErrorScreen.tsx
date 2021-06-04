@@ -2,12 +2,13 @@ import * as React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function NotFoundScreen({
-  error,
+  route,
   navigation,
 }: {
-  error: Error | undefined;
+  route: any;
   navigation: any;
 }) {
+  const error: Error | undefined = route.params?.error;
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Oops an error occurred!</Text>

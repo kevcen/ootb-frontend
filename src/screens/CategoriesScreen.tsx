@@ -69,12 +69,10 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
               categories: Array.from(chosenCategories) ,
             })
             .then((response) => {
-              console.log(response.data);
               navigation.navigate("Recommendations", {recommendations: response.data});
             })
             .catch((error) => {
-              console.log(error);
-              navigation.navigate("Error");
+              navigation.navigate("Error", {error});
             });
         }}
       >

@@ -13,16 +13,12 @@ import {
 import Product from "../../interfaces/Product";
 
 const renderItem = ({ item }: { item: any }) => {
-  var product: Product = item.product
-  console.log(product)
+  var product: Product = item.product;
   return (
     <View style={styles.view}>
-      <Image
-        style={{  height: "100%" }}
-        source={{ uri: product.image }}
-      />
+      <Image style={{ height: "100%" }} source={{ uri: product.image }} />
       <Text>{product.name}</Text>
-      <Text>{product.items[0]?.cost}</Text>
+      <Text>{product.items[0] && product.items[0].cost}</Text>
     </View>
   );
 };
@@ -53,7 +49,6 @@ export default function RecommendationScreen({
 
 const styles = StyleSheet.create({
   view: {
-    flex: 1,
     margin: 5,
     minWidth: 170,
     maxWidth: 223,
@@ -63,6 +58,6 @@ const styles = StyleSheet.create({
   },
   list: {
     justifyContent: "center",
-    flexDirection: "row",
+    flexDirection: "column",
   },
 });
