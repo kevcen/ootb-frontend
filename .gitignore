@@ -9,6 +9,7 @@ package-lock.json
 .expo-shared/
 web-build/
 coverage/
+yarn.lock
 
 # vscode
 .vscode
