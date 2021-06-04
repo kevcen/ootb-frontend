@@ -21,7 +21,7 @@ const renderItem = ({ item }: { item: any }) => {
   return (
     <View style={styles.view}>
       <Image style={{ height: 240 }} source={{ uri: product.image }} />
-      <Text>{product.name + (price == Number.MAX_SAFE_INTEGER ? "" : " - " + price)}</Text>
+      <Text style={{textAlign : "center"}}>{product.name + (price == Number.MAX_SAFE_INTEGER ? "" : " - £" + price)}</Text>
     </View>
   );
 };
