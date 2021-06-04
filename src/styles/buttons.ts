@@ -1,14 +1,14 @@
 import { StyleSheet } from "react-native";
 
-export const blackCentered = {
-  paddingVertical: 24,
-  paddingHorizontal: 40,
-  borderRadius: 50,
-  elevation: 3,
-  backgroundColor: "black",
-  alignItems: "center",
-  justifyContent: "center",
-};
+// export const blackCentered = {
+//   paddingVertical: 24,
+//   paddingHorizontal: 40,
+//   borderRadius: 50,
+//   elevation: 3,
+//   backgroundColor: "black",
+//   alignItems: "center",
+//   justifyContent: "center",
+// };
 
 const diminish = {
   opacity: 0.4,

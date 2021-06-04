@@ -4,6 +4,7 @@ import Question from "../components/Question";
 import { categories } from "../constants/Categories";
 import { buttonStyles } from "../styles/buttons";
 import { white } from "../styles/colors";
+import axios from "axios";
 
 export default function CategoriesScreen({ navigation }: { navigation: any }) {
   var categoryButtons: any[] = [];
@@ -54,8 +55,22 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
       <Pressable
         style={buttonStyles.blackCenteredFull}
         onPress={() => {
-          // send post request to backend server
-          navigation.navigate("Categories");
+          console.log("clicked");
+          axios.get("https://gift-recommender-api.herokuapp.com").then((res) => {
+            console.log(res)
+          })
+          axios
+            .post("https://gift-recommender-api.herokuapp.com/products", {
+              categories: ["Food"],
+            })
+            .then(function (response) {
+              console.log("got a response");
+              console.log(response);
+              navigation.navigate("Suggestions");
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
         }}
       >
         <Text style={white}>Let's go</Text>
