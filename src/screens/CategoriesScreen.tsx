@@ -7,6 +7,7 @@ import { black, green, white } from "../styles/colors";
 import axios from "axios";
 import { useState } from "react";
 import { Icon } from "react-native-elements";
+import LoadingData from "../components/LoadingData";
 
 let genData = (): any[] => {
   var data = new Array();
@@ -57,6 +58,7 @@ const genButton = ({
 
 export default function CategoriesScreen({ navigation }: { navigation: any }) {
   const [chosenCategories, setChosenCategories] = useState(new Set());
+  const [isLoading, setIsLoading] = useState(false);
 
   let onTagPress = (title: string) => {
     // toggle chosen category
@@ -75,26 +77,37 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
         {genData().map((data) => genButton({ ...data, onPress: onTagPress }))}
       </View>
       <View style={styles.space} />
-      <Pressable
-        style={buttonStyles.blackCenteredFull}
-        onPress={() => {
-          navigation.navigate("Loading");
-          axios
-            .post("https://gift-recommender-api.herokuapp.com/products", {
-              categories: Array.from(chosenCategories),
-            })
-            .then((response) => {
-              navigation.navigate("Recommendations", {
-                recommendations: response.data,
-              });
-            })
-            .catch((error) => {
-              navigation.navigate("Error", { error });
-            });
-        }}
-      >
-        <Text style={{ color: white }}>Let's go</Text>
-      </Pressable>
+      {isLoading ? (
+        <LoadingData />
+      ) : (
+        <Pressable
+          style={buttonStyles.blackCenteredFull}
+          onPress={() => {
+            setIsLoading(true);
+            setTimeout(
+              () =>
+                axios
+                  .post("https://gift-recommender-api.herokuapp.com/products", {
+                    categories: Array.from(chosenCategories),
+                  })
+                  .then((response) => {
+                    navigation.navigate("Recommendations", {
+                      recommendations: response.data,
+                    });
+                  })
+                  .catch((error) => {
+                    navigation.navigate("Error", { error });
+                  })
+                  .finally(() => {
+                    setIsLoading(false);
+                  }),
+              1000
+            );
+          }}
+        >
+          <Text style={{ color: white }}>Let's go</Text>
+        </Pressable>
+      )}
     </View>
   );
 }
