@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "scheme": "dw",
+    "privacy": "public",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./src/assets/images/splash.png",
@@ -19,18 +20,19 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier" : "outofthebox.drp.group",
+      "bundleIdentifier": "outofthebox.drp.group",
       "supportsTablet": true
     },
     "android": {
-      "package":"outofthebox.drp.group",
+      "package": "outofthebox.drp.group",
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
       "favicon": "./src/assets/images/favicon.png"
-    }
+    },
+    "description": ""
   }
 }
