@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FlatList } from "react-native";
+import { FlatList, Linking, TouchableHighlight } from "react-native";
 import {
   StyleSheet,
   View,
@@ -10,18 +10,31 @@ import {
   Dimensions,
   Image,
 } from "react-native";
+import Item from "../../interfaces/Item";
 import Product from "../../interfaces/Product";
 
 const renderItem = ({ item }: { item: any }) => {
   var product: Product = item.product;
-  var price = Number.MAX_SAFE_INTEGER;
+  var minPrice = Number.MAX_SAFE_INTEGER;
+  var minItem: Item | undefined;
   for (let i of product.items) {
-    price = Math.min(i.cost, price);
+    if (i.cost < minPrice) {
+      minPrice = i.cost;
+      minItem = i;
+      console.log(minItem);
+    }
   }
   return (
     <View style={styles.view}>
-      <Image style={{ height: 240 }} source={{ uri: product.image }} />
-      <Text style={{textAlign : "center"}}>{product.name + (price == Number.MAX_SAFE_INTEGER ? "" : " - £" + price)}</Text>
+      <TouchableHighlight
+        onPress={() => Linking.openURL(minItem?.website || "")}
+      >
+        <Image style={{ height: 240 }} source={{ uri: product.image }} />
+      </TouchableHighlight>
+      <Text style={{ textAlign: "center" }}>
+        {product.name +
+          (minPrice == Number.MAX_SAFE_INTEGER ? "" : " - £" + minPrice)}
+      </Text>
     </View>
   );
 };
@@ -38,7 +51,7 @@ export default function RecommendationScreen({
     return { key: "cat_" + idx, product };
   });
   return (
-    <View style={{flex:1,backgroundColor:"white"}}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <FlatList
         numColumns={2}
         contentContainerStyle={styles.list}
