@@ -10,6 +10,7 @@ import CategoriesScreen from "./src/screens/CategoriesScreen";
 import RecommendationScreen from "./src/screens/RecommendationScreen";
 import NotFoundScreen from "./src/screens/NotFoundScreen";
 import ErrorScreen from "./src/screens/ErrorScreen";
+import LoadingScreen from "./src/screens/LoadingScreen";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -27,6 +28,7 @@ export default function App() {
           <Stack.Screen name="Categories" component={CategoriesScreen} />
           <Stack.Screen name="Recommendations" component={RecommendationScreen} />
           <Stack.Screen name="Error" component={ErrorScreen} />
+          <Stack.Screen name="Loading" component={LoadingScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );

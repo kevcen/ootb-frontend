@@ -30,6 +30,7 @@ export const buttonStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     opacity: 0.9,
+    fontFamily: "roboto-light",
   },
   blackCenteredDiminish: {
     paddingVertical: 16,
@@ -40,5 +41,6 @@ export const buttonStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     opacity: 0.5,
+    fontFamily: "roboto-light",
   },
 });

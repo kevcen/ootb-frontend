@@ -14,11 +14,14 @@ import Product from "../../interfaces/Product";
 
 const renderItem = ({ item }: { item: any }) => {
   var product: Product = item.product;
+  var price = Number.MAX_SAFE_INTEGER;
+  for (let i of product.items) {
+    price = Math.min(i.cost, price);
+  }
   return (
     <View style={styles.view}>
-      <Image style={{ height: "100%" }} source={{ uri: product.image }} />
-      <Text>{product.name}</Text>
-      <Text>{product.items[0] && product.items[0].cost}</Text>
+      <Image style={{ height: 240 }} source={{ uri: product.image }} />
+      <Text>{product.name + (price == Number.MAX_SAFE_INTEGER ? "" : " - " + price)}</Text>
     </View>
   );
 };
@@ -35,7 +38,7 @@ export default function RecommendationScreen({
     return { key: "cat_" + idx, product };
   });
   return (
-    <View>
+    <View style={{flex:1,backgroundColor:"white"}}>
       <FlatList
         numColumns={2}
         contentContainerStyle={styles.list}
@@ -49,12 +52,11 @@ export default function RecommendationScreen({
 
 const styles = StyleSheet.create({
   view: {
-    margin: 5,
-    minWidth: 170,
-    maxWidth: 223,
-    height: 304,
-    maxHeight: 304,
-    backgroundColor: "#CCC",
+    marginHorizontal: 1,
+    flex: 1,
+    height: 260,
+    maxHeight: 260,
+    backgroundColor: "white",
   },
   list: {
     justifyContent: "center",

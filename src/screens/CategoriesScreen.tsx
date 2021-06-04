@@ -55,7 +55,7 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
 
   return (
     <View style={styles.viewCentered}>
-      <Question questionText={"Choose the categories which interest them"} />
+      <Question questionText={"Which categories would interest them"} />
       <View style={styles.space} />
       <View style={styles.list}>
         {genData().map((data) => genButton({ ...data, onPress: onTagPress }))}
@@ -64,6 +64,7 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
       <Pressable
         style={buttonStyles.blackCenteredFull}
         onPress={() => {
+          navigation.navigate("Loading");
           axios
             .post("https://gift-recommender-api.herokuapp.com/products", {
               categories: Array.from(chosenCategories) ,
@@ -86,6 +87,7 @@ const styles = StyleSheet.create({
   viewCentered: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "white",
   },
   space: {
     width: 20,

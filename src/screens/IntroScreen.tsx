@@ -7,16 +7,17 @@ import { white } from "../styles/colors";
 export default function IntroScreen({ navigation }: { navigation: any }) {
   return (
     <View style={styles.question}>
-      <Question questionText={"Out Of The Box"} />
+      <Question 
+        questionText={"Out Of The Box"} />
       <Text style={styles.intro}>
-        Struggling to find a gift a for someone. Look no further, our brilliant
+        Struggling to find a gift a for someone? Look no further, our brilliant
         AI powered app is able to help you out.
       </Text>
       <View>
         <Image
           style={styles.image}
           source={{
-            uri: "https://image.freepik.com/free-vector/dog-comes-out-box-cartoon-illustration_152710-41.jpg",
+            uri: "https://i.pinimg.com/originals/fd/2c/1a/fd2c1a96b654e220d09525f006482477.gif",
           }}
         />
       </View>
@@ -34,13 +35,16 @@ export default function IntroScreen({ navigation }: { navigation: any }) {
 
 const styles = StyleSheet.create({
   question: {
-    flex: 2,
+    flex: 1,
     alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
   },
   intro: {
-    marginVertical: 20,
     fontSize: 18,
     width: "80%",
+    textAlign: "center", 
+    fontFamily: "roboto-thin",
   },
   image: {
     width: 200,
