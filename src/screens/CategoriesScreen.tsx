@@ -16,6 +16,11 @@ let genData = (): any[] => {
   return data;
 };
 
+function getRandomColor(): string {
+  var color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
+  return color;
+}
+
 const genButton = ({
   onPress,
   title,
@@ -26,23 +31,32 @@ const genButton = ({
   key: string;
 }) => {
   const [isToggled, setIsToggled] = useState(false);
+  const [randomColor, setRandomColor] = useState(
+    StyleSheet.create({
+      color: { backgroundColor: getRandomColor() },
+    })
+  );
+
+  const randomColorTagChosen = [styles.tagChosen, randomColor.color];
+
+  const randomColorTag = [styles.tag, randomColor.color];
+
   return (
     <Pressable
       key={key}
-      style={isToggled ? styles.tagChosen : styles.tag}
+      style={isToggled ? randomColorTagChosen : randomColorTag}
       onPress={() => {
         setIsToggled(!isToggled);
         onPress(title);
       }}
     >
-      <Text style={{ color: isToggled ? black : white }}>{title} </Text>
+      <Text style={{ color: black }}>{title} </Text>
     </Pressable>
   );
 };
 
 export default function CategoriesScreen({ navigation }: { navigation: any }) {
-  
-  const [chosenCategories,setChosenCategories] = useState(new Set())
+  const [chosenCategories, setChosenCategories] = useState(new Set());
 
   let onTagPress = (title: string) => {
     // toggle chosen category
@@ -67,13 +81,15 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
           navigation.navigate("Loading");
           axios
             .post("https://gift-recommender-api.herokuapp.com/products", {
-              categories: Array.from(chosenCategories) ,
+              categories: Array.from(chosenCategories),
             })
             .then((response) => {
-              navigation.navigate("Recommendations", {recommendations: response.data});
+              navigation.navigate("Recommendations", {
+                recommendations: response.data,
+              });
             })
             .catch((error) => {
-              navigation.navigate("Error", {error});
+              navigation.navigate("Error", { error });
             });
         }}
       >
@@ -106,21 +122,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: "black",
-    backgroundColor: "#101820",
+    borderColor: "white",
     alignItems: "center",
     justifyContent: "center",
-    opacity: 0.8,
+    opacity: 0.4,
   },
   tagChosen: {
     height: 50,
-    paddingHorizontal: 20,
-    marginHorizontal: 6,
     marginVertical: 5,
+    marginHorizontal: 3,
+    paddingHorizontal: 20,
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: green,
-    backgroundColor: "white",
+    borderColor: "black",
     alignItems: "center",
     justifyContent: "center",
     opacity: 0.8,
