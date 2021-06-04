@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   tag: {
-    height: 50,
+    height: 40,
     marginVertical: 5,
     marginHorizontal: 3,
     paddingHorizontal: 20,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   tagChosen: {
-    height: 50,
+    height: 40,
     marginVertical: 5,
     marginHorizontal: 3,
     paddingHorizontal: 20,
