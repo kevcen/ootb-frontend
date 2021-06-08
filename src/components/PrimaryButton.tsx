@@ -6,13 +6,14 @@ import {
   View,
   Pressable,
 } from "react-native";
-import { primary, white } from "../styles/Colors";
+import { TouchableHighlight } from "react-native-gesture-handler";
+import { primary, secondary, white } from "../styles/Colors";
 
 export default (props: { onPress: () => any; text: string }) => {
   return (
-    <Pressable onPress={props.onPress} style={styles.button}>
+    <TouchableHighlight  underlayColor={secondary} onPress={props.onPress} style={styles.button}>
       <Text style={styles.buttonText}>{props.text.toUpperCase()}</Text>
-    </Pressable>
+    </TouchableHighlight>
   );
 };
 
