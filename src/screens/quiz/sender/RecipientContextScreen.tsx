@@ -4,12 +4,18 @@ import Question from "../../../components/Question";
 import { buttonStyles } from "../../../styles/buttons";
 import { white } from "../../../styles/Colors";
 import { useState } from "react";
-import { genGenders, genRelationships, genButton } from "../../../classes/GeneratingFunctions"
-import { styles } from "../../../styles/quiz"
+import {
+  genGenders,
+  genRelationships,
+  genButton,
+} from "../../../classes/GeneratingFunctions";
+import { styles } from "../../../styles/quiz";
 
 export default function RecipientContextScreen({
+  route,
   navigation,
 }: {
+  route: any;
   navigation: any;
 }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +50,9 @@ export default function RecipientContextScreen({
       <View style={styles.space} />
       <Pressable
         onPress={() => {
-          navigation.navigate("Occasions");
+          route["params"]["gender"] = gender;
+          route["params"]["relationship"] = relationships;
+          navigation.navigate("Occasions", route);
         }}
         style={buttonStyles.blackCenteredFull}
       >

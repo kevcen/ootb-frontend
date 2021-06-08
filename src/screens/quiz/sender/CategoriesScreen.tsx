@@ -6,15 +6,21 @@ import { white } from "../../../styles/Colors";
 import axios from "axios";
 import { useState } from "react";
 import LoadingData from "../../../components/LoadingData";
-import { genCategories, genButton } from "../../../classes/GeneratingFunctions"
-import { styles } from "../../../styles/quiz"
+import { genCategories, genButton } from "../../../classes/GeneratingFunctions";
+import { styles } from "../../../styles/quiz";
 
 function getRandomColor(): string {
   var color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
   return color;
 }
 
-export default function CategoriesScreen({ navigation }: { navigation: any }) {
+export default function CategoriesScreen({
+  route,
+  navigation,
+}: {
+  route: any;
+  navigation: any;
+}) {
   const [chosenCategories, setChosenCategories] = useState(new Set());
   const [isLoading, setIsLoading] = useState(false);
 
@@ -32,7 +38,9 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
       <Question questionText={"Which categories would interest them"} />
       <View style={styles.space} />
       <View style={styles.list}>
-        {genCategories().map((data) => genButton({ ...data, onPress: onTagPress }))}
+        {genCategories().map((data) =>
+          genButton({ ...data, onPress: onTagPress })
+        )}
       </View>
       <View style={styles.space} />
       {isLoading ? (

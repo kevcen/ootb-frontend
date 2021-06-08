@@ -30,10 +30,13 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Intro" component={IntroScreen} />
-          <Stack.Screen name="Recipient" component={RecipientContextScreen} />
-          <Stack.Screen name="Sender" component={SenderContextScreen} />
+          <Stack.Screen name="Recipient" component={SenderContextScreen} />
+          <Stack.Screen name="Sender" component={RecipientContextScreen} />
           <Stack.Screen name="Categories" component={CategoriesScreen} />
-          <Stack.Screen name="RecipientCategories" component={RecipientCategoriesScreen} />
+          <Stack.Screen
+            name="RecipientCategories"
+            component={RecipientCategoriesScreen}
+          />
           <Stack.Screen name="Food" component={FoodScreen} />
           <Stack.Screen name="Occasions" component={OccasionScreen} />
           <Stack.Screen
