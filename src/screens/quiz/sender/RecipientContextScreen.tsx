@@ -65,7 +65,11 @@ const genButton = ({
   );
 };
 
-export default function RecipientContextScreen({ navigation }: { navigation: any }) {
+export default function RecipientContextScreen({
+  navigation,
+}: {
+  navigation: any;
+}) {
   const [isLoading, setIsLoading] = useState(false);
 
   var gender = "";
@@ -74,25 +78,35 @@ export default function RecipientContextScreen({ navigation }: { navigation: any
   // TODO: unselect other options after selection
   return (
     <View style={styles.viewCentered}>
-      <Question questionText={"What gender does the recipient identify with?"} />
+      <Question
+        questionText={"What gender does the recipient identify with?"}
+      />
       <View style={styles.space} />
       <View style={styles.list}>
-        {genGenders().map((data) => genButton({ ...data, onPress: () => gender = data.title }))}
+        {genGenders().map((data) =>
+          genButton({ ...data, onPress: () => (gender = data.title) })
+        )}
       </View>
       <View style={styles.space} />
-      <Question questionText={"What best describes your relationship with the recipient?"} />
+      <Question
+        questionText={
+          "What best describes your relationship with the recipient?"
+        }
+      />
       <View style={styles.space} />
       <View style={styles.list}>
-        {genRelationships().map((data) => genButton({ ...data, onPress: () => relationships = data.title  }))}
+        {genRelationships().map((data) =>
+          genButton({ ...data, onPress: () => (relationships = data.title) })
+        )}
       </View>
       <View style={styles.space} />
       <Pressable
         onPress={() => {
-          navigation.navigate("Categories"); // TODO: change to the name of OccasionScreen
+          navigation.navigate("Occasions");
         }}
         style={buttonStyles.blackCenteredFull}
       >
-        <Text style={{color:white}}>Let's go</Text>
+        <Text style={{ color: white }}>Let's go</Text>
       </Pressable>
     </View>
   );
