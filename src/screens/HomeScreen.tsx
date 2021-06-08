@@ -7,12 +7,12 @@ import { buttonStyles } from "../styles/buttons";
 import { white } from "../styles/Colors";
 
 export default function HomeScreen({ navigation }: { navigation: any }) {
-  const navigateReciever = () => {
-    navigation.navigate("Recipient");
+  const navigateSender = () => {
+    navigation.navigate("Sender", {});
   };
 
-  const navigateSender = () => {
-    navigation.navigate("Sender");
+  const navigateReceiver = () => {
+    navigation.navigate("Recipient", {});
   };
 
   return (
@@ -25,7 +25,7 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
         <PrimaryText text={"Are you"} />
         <PrimaryButton onPress={navigateSender} text={"Buying a gift"} />
         <PrimaryText text={"or"} />
-        <PrimaryButton text={"Receiving a gift"} onPress={navigateReciever} />
+        <PrimaryButton text={"Receiving a gift"} onPress={navigateReceiver} />
       </View>
       <View>
         <Image
