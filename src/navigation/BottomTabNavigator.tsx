@@ -10,7 +10,7 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import CategoriesScreen from '../screens/CategoriesScreen';
+import CategoriesScreen from '../screens/quiz/sender/CategoriesScreen';
 import QuestionScreen from '../screens/QuestionScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 

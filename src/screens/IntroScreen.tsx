@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, View, Text, Pressable, Image } from "react-native";
 import Question from "../components/Question";
 import { buttonStyles } from "../styles/buttons";
-import { white } from "../styles/colors";
+import { white } from "../styles/Colors";
 
 export default function IntroScreen({ navigation }: { navigation: any }) {
   return (
@@ -23,7 +23,7 @@ export default function IntroScreen({ navigation }: { navigation: any }) {
       </View>
       <Pressable
         onPress={() => {
-          navigation.navigate("Categories");
+          navigation.navigate("Recipient");
         }}
         style={buttonStyles.blackCenteredFull}
       >
