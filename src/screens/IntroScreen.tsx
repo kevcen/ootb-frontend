@@ -23,7 +23,7 @@ export default function IntroScreen({ navigation }: { navigation: any }) {
       </View>
       <Pressable
         onPress={() => {
-          navigation.navigate("Recipient");
+          navigation.navigate("Sender");
         }}
         style={buttonStyles.blackCenteredFull}
       >

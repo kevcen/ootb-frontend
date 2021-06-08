@@ -8,6 +8,8 @@ import axios from "axios";
 import { useState } from "react";
 import { Icon } from "react-native-elements";
 import LoadingData from "../../../components/LoadingData";
+import { genButton } from "../../../classes/GeneratingFunctions"
+import { styles } from "../../../styles/quiz"
 
 let genData = (): any[] => {
   var data = new Array();
@@ -21,40 +23,6 @@ function getRandomColor(): string {
   var color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
   return color;
 }
-
-const genButton = ({
-  onPress,
-  title,
-  key,
-}: {
-  onPress: (title: string) => any;
-  title: string;
-  key: string;
-}) => {
-  const [isToggled, setIsToggled] = useState(false);
-  const [randomColor, setRandomColor] = useState(
-    StyleSheet.create({
-      color: { backgroundColor: getRandomColor() },
-    })
-  );
-
-  const randomColorTagChosen = [styles.tagChosen, randomColor.color];
-
-  const randomColorTag = [styles.tag, randomColor.color];
-
-  return (
-    <Pressable
-      key={key}
-      style={isToggled ? randomColorTagChosen : randomColorTag}
-      onPress={() => {
-        setIsToggled(!isToggled);
-        onPress(title);
-      }}
-    >
-      <Text style={{ color: black }}>{title} </Text>
-    </Pressable>
-  );
-};
 
 export default function CategoriesScreen({ navigation }: { navigation: any }) {
   const [chosenCategories, setChosenCategories] = useState(new Set());
@@ -111,45 +79,3 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  viewCentered: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "white",
-  },
-  space: {
-    width: 20,
-    height: 20,
-  },
-  list: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  tag: {
-    height: 40,
-    marginVertical: 5,
-    marginHorizontal: 3,
-    paddingHorizontal: 20,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
-    opacity: 0.4,
-  },
-  tagChosen: {
-    height: 40,
-    marginVertical: 5,
-    marginHorizontal: 3,
-    paddingHorizontal: 20,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
-    opacity: 0.8,
-  },
-});
