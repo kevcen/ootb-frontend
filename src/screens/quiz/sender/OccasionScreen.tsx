@@ -1,27 +1,15 @@
 import * as React from "react";
 import { StyleSheet, View, Text, Button, Pressable } from "react-native";
 import Question from "../../../components/Question";
-import genders from "../../../constants/Genders";
-import relationships from "../../../constants/Relationships";
 import { buttonStyles } from "../../../styles/buttons";
 import { black, green, white } from "../../../styles/Colors";
-import axios from "axios";
 import { useState } from "react";
-import { Icon } from "react-native-elements";
-import LoadingData from "../../../components/LoadingData";
+import occasions from "../../../constants/Occasion";
 
-let genGenders = (): any[] => {
+let genData = (): any[] => {
   var data = new Array();
-  genders.forEach((genderName, index) => {
-    data.push({ key: "cat_" + index, title: genderName });
-  });
-  return data;
-};
-
-let genRelationships = (): any[] => {
-  var data = new Array();
-  relationships.forEach((relationshipName, index) => {
-    data.push({ key: "cat_" + index, title: relationshipName });
+  occasions.forEach((occasionName, index) => {
+    data.push({ key: "cat_" + index, title: occasionName });
   });
   return data;
 };
@@ -65,44 +53,30 @@ const genButton = ({
   );
 };
 
-export default function RecipientContextScreen({
-  navigation,
-}: {
-  navigation: any;
-}) {
+export default function OccasionScreen({ navigation }: { navigation: any }) {
+  const [chosenOccasion, setchosenOccasion] = useState(new Set());
   const [isLoading, setIsLoading] = useState(false);
 
-  var gender = "";
-  var relationships = "";
+  let onTagPress = (title: string) => {
+    // toggle chosen category
+    if (chosenOccasion.has(title)) {
+      chosenOccasion.delete(title);
+    } else {
+      chosenOccasion.add(title);
+    }
+  };
 
-  // TODO: unselect other options after selection
   return (
     <View style={styles.viewCentered}>
-      <Question
-        questionText={"What gender does the recipient identify with?"}
-      />
+      <Question questionText={"What is the occasion, if any?"} />
       <View style={styles.space} />
       <View style={styles.list}>
-        {genGenders().map((data) =>
-          genButton({ ...data, onPress: () => (gender = data.title) })
-        )}
-      </View>
-      <View style={styles.space} />
-      <Question
-        questionText={
-          "What best describes your relationship with the recipient?"
-        }
-      />
-      <View style={styles.space} />
-      <View style={styles.list}>
-        {genRelationships().map((data) =>
-          genButton({ ...data, onPress: () => (relationships = data.title) })
-        )}
+        {genData().map((data) => genButton({ ...data, onPress: onTagPress }))}
       </View>
       <View style={styles.space} />
       <Pressable
         onPress={() => {
-          navigation.navigate("Occasions");
+          navigation.navigate("Categories");
         }}
         style={buttonStyles.blackCenteredFull}
       >
