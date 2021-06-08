@@ -10,7 +10,6 @@ export default function Question({ questionText }: { questionText: string }) {
 const styles = StyleSheet.create({
   question: {
     top:10,
-    padding: 30,
     fontSize: 20,
     textAlign:"center"
   },
