@@ -10,6 +10,7 @@ import CategoriesScreen from "./src/screens/quiz/sender/CategoriesScreen";
 import RecommendationScreen from "./src/screens/RecommendationScreen";
 import ErrorScreen from "./src/screens/ErrorScreen";
 import RecipientContextScreen from "./src/screens/quiz/sender/RecipientContextScreen";
+import HomeScreen from "./src/screens/HomeScreen";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -23,7 +24,8 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={IntroScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Intro" component={IntroScreen} />
           <Stack.Screen name="Recipient" component={RecipientContextScreen} />
           <Stack.Screen name="Categories" component={CategoriesScreen} />
           <Stack.Screen name="Recommendations" component={RecommendationScreen} />

@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
-import Colors from '../constants/Colors';
+import Colors from '../styles/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import CategoriesScreen from '../screens/quiz/sender/CategoriesScreen';
 import QuestionScreen from '../screens/QuestionScreen';
