@@ -5,10 +5,7 @@ import genders from "../../../constants/Genders";
 import relationships from "../../../constants/Relationships";
 import { buttonStyles } from "../../../styles/buttons";
 import { black, green, white } from "../../../styles/Colors";
-import axios from "axios";
 import { useState } from "react";
-import { Icon } from "react-native-elements";
-import LoadingData from "../../../components/LoadingData";
 
 let genGenders = (): any[] => {
   var data = new Array();
@@ -66,8 +63,10 @@ const genButton = ({
 };
 
 export default function RecipientContextScreen({
+  route,
   navigation,
 }: {
+  route: any;
   navigation: any;
 }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -102,7 +101,9 @@ export default function RecipientContextScreen({
       <View style={styles.space} />
       <Pressable
         onPress={() => {
-          navigation.navigate("Occasions");
+          route["params"]["gender"] = gender;
+          route["params"]["relationship"] = relationships;
+          navigation.navigate("Occasions", route);
         }}
         style={buttonStyles.blackCenteredFull}
       >

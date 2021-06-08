@@ -20,9 +20,10 @@ function getRandomColor(): string {
 }
 
 export default function OccasionScreen({
+  route,
   navigation,
 }: {
-  route: Map<string, string>;
+  route: any;
   navigation: any;
 }) {
   var [chosenOccasion, setChosenOccasion] = useState("");
@@ -76,7 +77,8 @@ export default function OccasionScreen({
       <View style={styles.space} />
       <Pressable
         onPress={() => {
-          navigation.navigate("Categories");
+          route["params"]["occasion"] = chosenOccasion;
+          navigation.navigate("Categories", route);
         }}
         style={buttonStyles.blackCenteredFull}
       >

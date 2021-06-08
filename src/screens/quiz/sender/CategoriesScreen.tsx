@@ -8,8 +8,8 @@ import axios from "axios";
 import { useState } from "react";
 import { Icon } from "react-native-elements";
 import LoadingData from "../../../components/LoadingData";
-import { genButton } from "../../../classes/GeneratingFunctions"
-import { styles } from "../../../styles/quiz"
+import { genButton } from "../../../classes/GeneratingFunctions";
+import { styles } from "../../../styles/quiz";
 
 let genData = (): any[] => {
   var data = new Array();
@@ -24,7 +24,13 @@ function getRandomColor(): string {
   return color;
 }
 
-export default function CategoriesScreen({ navigation }: { navigation: any }) {
+export default function CategoriesScreen({
+  route,
+  navigation,
+}: {
+  route: any;
+  navigation: any;
+}) {
   const [chosenCategories, setChosenCategories] = useState(new Set());
   const [isLoading, setIsLoading] = useState(false);
 
