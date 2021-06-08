@@ -9,7 +9,7 @@ import occasions from "../../../constants/Occasion";
 let genData = (): any[] => {
   var data = new Array();
   occasions.forEach((occasionName, index) => {
-    data.push({ key: "cat_" + index, title: occasionName });
+    data.push({ key: "occ_" + index, title: occasionName });
   });
   return data;
 };
@@ -19,51 +19,51 @@ function getRandomColor(): string {
   return color;
 }
 
-const genButton = ({
-  onPress,
-  title,
-  key,
+export default function OccasionScreen({
+  navigation,
 }: {
-  onPress: (title: string) => any;
-  title: string;
-  key: string;
-}) => {
-  const [isToggled, setIsToggled] = useState(false);
-  const [randomColor, setRandomColor] = useState(
-    StyleSheet.create({
-      color: { backgroundColor: getRandomColor() },
-    })
-  );
+  route: Map<string, string>;
+  navigation: any;
+}) {
+  var [chosenOccasion, setChosenOccasion] = useState("");
 
-  const randomColorTagChosen = [styles.tagChosen, randomColor.color];
+  const genButton = ({
+    onPress,
+    title,
+    key,
+  }: {
+    onPress: (title: string) => any;
+    title: string;
+    key: string;
+  }) => {
+    const [isToggled, setIsToggled] = useState(false);
+    const [randomColor, setRandomColor] = useState(
+      StyleSheet.create({
+        color: { backgroundColor: getRandomColor() },
+      })
+    );
 
-  const randomColorTag = [styles.tag, randomColor.color];
+    const randomColorTagChosen = [styles.tagChosen, randomColor.color];
 
-  return (
-    <Pressable
-      key={key}
-      style={isToggled ? randomColorTagChosen : randomColorTag}
-      onPress={() => {
-        setIsToggled(!isToggled);
-        onPress(title);
-      }}
-    >
-      <Text style={{ color: black }}>{title} </Text>
-    </Pressable>
-  );
-};
+    const randomColorTag = [styles.tag, randomColor.color];
 
-export default function OccasionScreen({ navigation }: { navigation: any }) {
-  const [chosenOccasion, setchosenOccasion] = useState(new Set());
-  const [isLoading, setIsLoading] = useState(false);
-
-  let onTagPress = (title: string) => {
-    // toggle chosen category
-    if (chosenOccasion.has(title)) {
-      chosenOccasion.delete(title);
-    } else {
-      chosenOccasion.add(title);
-    }
+    return (
+      <Pressable
+        key={key}
+        style={isToggled ? randomColorTagChosen : randomColorTag}
+        onPress={() => {
+          if (isToggled) {
+            setIsToggled(!isToggled);
+            setChosenOccasion("");
+          } else if (chosenOccasion === "") {
+            setChosenOccasion(title);
+            setIsToggled(!isToggled);
+          }
+        }}
+      >
+        <Text style={{ color: black }}>{title} </Text>
+      </Pressable>
+    );
   };
 
   return (
@@ -71,7 +71,7 @@ export default function OccasionScreen({ navigation }: { navigation: any }) {
       <Question questionText={"What is the occasion, if any?"} />
       <View style={styles.space} />
       <View style={styles.list}>
-        {genData().map((data) => genButton({ ...data, onPress: onTagPress }))}
+        {genData().map((data) => genButton({ ...data }))}
       </View>
       <View style={styles.space} />
       <Pressable
