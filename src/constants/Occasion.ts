@@ -1,4 +1,4 @@
-const occassions: string[] = [
+const occasions: string[] = [
   "Wedding",
   "Birthday",
   "Anniversary",
@@ -10,4 +10,4 @@ const occassions: string[] = [
   "Graduation",
 ];
 
-export default occassions;
+export default occasions;
