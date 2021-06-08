@@ -10,11 +10,8 @@ import CategoriesScreen from "./src/screens/quiz/sender/CategoriesScreen";
 import RecommendationScreen from "./src/screens/RecommendationScreen";
 import ErrorScreen from "./src/screens/ErrorScreen";
 import RecipientContextScreen from "./src/screens/quiz/sender/RecipientContextScreen";
-<<<<<<< HEAD
 import SenderContextScreen from "./src/screens/quiz/sender/SenderContextScreen";
-=======
 import OccasionScreen from "./src/screens/quiz/sender/OccasionScreen";
->>>>>>> bdfdb9704a80df94d88e7219e71c6c08294b81e3
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
