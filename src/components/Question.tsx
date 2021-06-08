@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   question: {
     top:10,
     fontSize: 20,
-    textAlign:"center"
+    textAlign:"center",
+    color: "black"
   },
 });

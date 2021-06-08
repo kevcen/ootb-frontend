@@ -1,32 +1,11 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Button, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import Question from "../../../components/Question";
-import genders from "../../../constants/Genders";
-import giftTypes from "../../../constants/GiftTypes";
 import { buttonStyles } from "../../../styles/buttons";
-import { black, green, white } from "../../../styles/Colors";
-import axios from "axios";
+import { white } from "../../../styles/Colors";
 import { useState } from "react";
-import { Icon } from "react-native-elements";
-import LoadingData from "../../../components/LoadingData";
 import { styles } from "../../../styles/quiz"
-import { genButton } from "../../../classes/GeneratingFunctions"
-
-let genGenders = (): any[] => {
-  var data = new Array();
-  genders.forEach((genderName, index) => {
-    data.push({ key: "cat_" + index, title: genderName, subtitle: "" });
-  });
-  return data;
-};
-
-let genGiftTypes = (): any[] => {
-  var data = new Array();
-  giftTypes.forEach((giftType, index) => {
-    data.push({ key: "cat_" + index, title: giftType[0], subtitle: giftType[1] });
-  });
-  return data;
-};
+import { genGenders, genGiftTypes, genButton } from "../../../classes/GeneratingFunctions"
 
 export default function RecipientContextScreen({ navigation }: { navigation: any }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +30,7 @@ export default function RecipientContextScreen({ navigation }: { navigation: any
       <View style={styles.space} />
       <Pressable
         onPress={() => {
-          navigation.navigate("Categories"); // TODO: change to the name of OccasionScreen
+          navigation.navigate("RecipientCategories"); // TODO: change to the name of OccasionScreen
         }}
         style={buttonStyles.blackCenteredFull}
       >

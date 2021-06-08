@@ -1,23 +1,13 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Button, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import Question from "../../../components/Question";
-import categories from "../../../constants/Categories";
 import { buttonStyles } from "../../../styles/buttons";
-import { black, green, white } from "../../../styles/Colors";
+import { white } from "../../../styles/Colors";
 import axios from "axios";
 import { useState } from "react";
-import { Icon } from "react-native-elements";
 import LoadingData from "../../../components/LoadingData";
-import { genButton } from "../../../classes/GeneratingFunctions"
+import { genCategories, genButton } from "../../../classes/GeneratingFunctions"
 import { styles } from "../../../styles/quiz"
-
-let genData = (): any[] => {
-  var data = new Array();
-  categories.forEach((categoryName, index) => {
-    data.push({ key: "cat_" + index, title: categoryName });
-  });
-  return data;
-};
 
 function getRandomColor(): string {
   var color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
@@ -42,7 +32,7 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
       <Question questionText={"Which categories would interest them"} />
       <View style={styles.space} />
       <View style={styles.list}>
-        {genData().map((data) => genButton({ ...data, onPress: onTagPress }))}
+        {genCategories().map((data) => genButton({ ...data, onPress: onTagPress }))}
       </View>
       <View style={styles.space} />
       {isLoading ? (
