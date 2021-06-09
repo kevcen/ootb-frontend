@@ -1,17 +1,16 @@
-import * as React from "react";
-import { StyleSheet, View, Text, Button, Pressable } from "react-native";
+import React from "react";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import Question from "../../../components/Question";
 import { buttonStyles } from "../../../styles/buttons";
-import { black, green, white } from "../../../styles/Colors";
-import { useState } from "react";
+import { white } from "../../../styles/Colors";
 import occasions from "../../../constants/Occasion";
-import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
 
 export default function OccasionScreen({
+  route,
   navigation,
 }: {
-  route: Map<string, string>;
+  route: any;
   navigation: any;
 }) {
   var chosenOccasion = "";
@@ -28,7 +27,8 @@ export default function OccasionScreen({
       <View style={styles.space} />
       <Pressable
         onPress={() => {
-          navigation.navigate("Categories");
+          route["params"]["occasion"] = chosenOccasion;
+          navigation.navigate("Categories", route);
         }}
         style={buttonStyles.blackCenteredFull}
       >

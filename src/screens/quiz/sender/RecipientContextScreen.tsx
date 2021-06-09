@@ -1,36 +1,18 @@
-import * as React from "react";
-import { StyleSheet, View, Text, Button, Pressable } from "react-native";
+import React from "react";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import Question from "../../../components/Question";
-import genders from "../../../constants/Genders";
-import relationships from "../../../constants/Relationships";
 import { buttonStyles } from "../../../styles/buttons";
-import { black, green, white } from "../../../styles/Colors";
-import axios from "axios";
+import { white } from "../../../styles/Colors";
 import { useState } from "react";
-import { Icon } from "react-native-elements";
-import LoadingData from "../../../components/LoadingData";
-import SelectableTag from "../../../components/Quiz/SelectableTag";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
-
-let genGenders = (): any[] => {
-  var data = new Array();
-  genders.forEach((genderName, index) => {
-    data.push({ key: "cat_" + index, title: genderName });
-  });
-  return data;
-};
-
-let genRelationships = (): any[] => {
-  var data = new Array();
-  relationships.forEach((relationshipName, index) => {
-    data.push({ key: "cat_" + index, title: relationshipName });
-  });
-  return data;
-};
+import Genders from "../../../constants/Genders";
+import Relationships from "../../../constants/Relationships";
 
 export default function RecipientContextScreen({
+  route,
   navigation,
 }: {
+  route: any;
   navigation: any;
 }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +27,7 @@ export default function RecipientContextScreen({
         questionText={"What gender does the recipient identify with?"}
       />
       <View style={styles.space} />
-      <SingleOptionQuestion tagdata={genders} onTagPress={(name) => (gender = name)}/>
+      <SingleOptionQuestion tagdata={Genders} onTagPress={(name) => (gender = name)}/>
       <View style={styles.space} />
       <Question
         questionText={
@@ -53,11 +35,11 @@ export default function RecipientContextScreen({
         }
       />
       <View style={styles.space} />
-      <SingleOptionQuestion tagdata={relationships} onTagPress={(name) => (relationship = name)}/>
+      <SingleOptionQuestion tagdata={Relationships} onTagPress={(name) => (relationship = name)}/>
       <View style={styles.space} />
       <Pressable
         onPress={() => {
-          navigation.navigate("Occasions");
+          navigation.navigate("Occasions", {gender,relationship});
         }}
         style={buttonStyles.blackCenteredFull}
       >

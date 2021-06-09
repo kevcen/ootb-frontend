@@ -7,12 +7,14 @@ import useCachedResources from "./src/hooks/useCachedResources";
 import useColorScheme from "./src/hooks/useColorScheme";
 import IntroScreen from "./src/screens/IntroScreen";
 import CategoriesScreen from "./src/screens/quiz/sender/CategoriesScreen";
+import RecipientCategoriesScreen from "./src/screens/quiz/recipient/RecipientCategoriesScreen";
 import RecommendationScreen from "./src/screens/RecommendationScreen";
 import ErrorScreen from "./src/screens/ErrorScreen";
 import RecipientContextScreen from "./src/screens/quiz/sender/RecipientContextScreen";
-import SenderContextScreen from "./src/screens/quiz/sender/SenderContextScreen";
+import SenderContextScreen from "./src/screens/quiz/recipient/SenderContextScreen";
 import OccasionScreen from "./src/screens/quiz/sender/OccasionScreen";
 import HomeScreen from "./src/screens/HomeScreen";
+import FoodScreen from "./src/screens/quiz/categories/FoodScreen";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -27,9 +29,20 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={HomeScreen} />
+<<<<<<< HEAD
           <Stack.Screen name="Recipient" component={RecipientContextScreen} />
           <Stack.Screen name="Sender" component={SenderContextScreen} />
+=======
+          <Stack.Screen name="Intro" component={IntroScreen} />
+          <Stack.Screen name="Recipient" component={SenderContextScreen} />
+          <Stack.Screen name="Sender" component={RecipientContextScreen} />
+>>>>>>> b8bf169dba684e54bf1e84f9338d92ac08a007fd
           <Stack.Screen name="Categories" component={CategoriesScreen} />
+          <Stack.Screen
+            name="RecipientCategories"
+            component={RecipientCategoriesScreen}
+          />
+          <Stack.Screen name="Food" component={FoodScreen} />
           <Stack.Screen name="Occasions" component={OccasionScreen} />
           <Stack.Screen
             name="Recommendations"

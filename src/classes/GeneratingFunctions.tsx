@@ -3,10 +3,50 @@ import { useState } from "react";
 import { StyleSheet, View, Text, Button, Pressable } from "react-native";
 import { styles } from "../styles/quiz"
 import { black, green, white } from "../styles/Colors";
+import genders from "../constants/Genders";
+import relationships from "../constants/Relationships";
+import giftTypes from "../constants/GiftTypes";
+import cuisines from "../constants/Cuisines";
+import yesNo from "../constants/YesNo";
+import categories from "../constants/Categories";
 
-function getRandomColor(): string {
-    var color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
-    return color;
+let generate = (strings: any[], hasSubtitle: boolean): any[] => {
+  var data = new Array();
+  strings.forEach((string, index) => {
+    let title = hasSubtitle ? string[0] : string
+    let subtitle = hasSubtitle ? string[1] : ""
+    data.push({ key: "cat_" + index, title, subtitle});
+  });
+  return data;
+}
+
+export let genGenders = (): any[] => {
+  return generate(genders, false)
+};
+
+export let genCuisines = (): any[] => {
+  return generate(cuisines, false)
+};
+
+export let genCategories = (): any[] => {
+  return generate(categories, false)
+};
+
+export let genGiftTypes = (): any[] => {
+  return generate(giftTypes, true)
+};
+
+export let genYesNo = (): any[] => {
+  return generate(yesNo, false)
+};
+
+export let genRelationships = (): any[] => {
+  return generate(relationships, false)
+};
+
+export function getRandomColor(): string {
+  var color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
+  return color;
 }
 
 export const genButton = ({
