@@ -36,8 +36,15 @@ export default function CategoriesScreen({
       <View style={styles.space} />
       <QuizNavigator
         navigation={navigation}
-        prev={{pagename: "Recipient"}}
-        next={{ pagename: "Recommendations", params: { chosenCategories } }}
+        prev={{ pagename: "Recipient" }}
+        next={{
+          pagename: "Budget",
+          params: {
+            categories: chosenCategories,
+            isSender: false,
+            ...route.params,
+          },
+        }}
         pagenum={route.params.pagenum}
         totalpages={route.params.totalpages}
       />
