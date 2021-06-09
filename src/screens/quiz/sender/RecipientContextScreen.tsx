@@ -6,6 +6,7 @@ import { white } from "../../../styles/Colors";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
 import Genders from "../../../constants/Genders";
 import Relationships from "../../../constants/Relationships";
+import QuizNavigator from "../../../components/Quiz/QuizNavigator";
 
 export default function RecipientContextScreen({
   route,
@@ -23,7 +24,10 @@ export default function RecipientContextScreen({
         questionText={"What gender does the recipient identify with?"}
       />
       <View style={styles.space} />
-      <SingleOptionQuestion tagdata={Genders} onTagPress={(name) => (gender = name)}/>
+      <SingleOptionQuestion
+        tagdata={Genders}
+        onTagPress={(name) => (gender = name)}
+      />
       <View style={styles.space} />
       <Question
         questionText={
@@ -31,16 +35,17 @@ export default function RecipientContextScreen({
         }
       />
       <View style={styles.space} />
-      <SingleOptionQuestion tagdata={Relationships} onTagPress={(name) => (relationship = name)}/>
+      <SingleOptionQuestion
+        tagdata={Relationships}
+        onTagPress={(name) => (relationship = name)}
+      />
       <View style={styles.space} />
-      <Pressable
-        onPress={() => {
-          navigation.navigate("Occasions", {gender,relationship});
-        }}
-        style={buttonStyles.blackCenteredFull}
-      >
-        <Text style={{ color: white }}>Let's go</Text>
-      </Pressable>
+      <QuizNavigator
+        navigation={navigation}
+        next={{ pagename: "Occasions", params: { gender, relationship } }}
+        pagenum={1}
+        totalpages={3}
+      />
     </View>
   );
 }
