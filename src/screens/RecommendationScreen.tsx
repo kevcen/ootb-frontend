@@ -50,7 +50,7 @@ export default function RecommendationScreen({
       "https://gift-recommender-api.herokuapp.com/products",
       {
         categories: Array.from(chosenCategories),
-        price: route.params?.priceRange,
+        price: route.params?.price,
         gender: route.params?.gender,
         relationship: route.params?.relationship,
         occasion: route.params?.occasion,
