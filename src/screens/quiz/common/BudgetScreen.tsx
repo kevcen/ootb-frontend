@@ -8,6 +8,7 @@ import SliderMarker from "../../../components/Quiz/SliderMarker";
 import Question from "../../../components/Question";
 import axios from "axios";
 import LoadingData from "../../../components/LoadingData";
+import QuizNavigator from "../../../components/Quiz/QuizNavigator";
 
 export default function BudgetScreen({
   route,
@@ -60,40 +61,20 @@ export default function BudgetScreen({
       />
 
       <View style={styles.space} />
-      <Pressable
-        onPress={() => {
-          setIsLoading(true);
-          var promise = axios.post(
-            "https://gift-recommender-api.herokuapp.com/products",
-            {
-              categories: Array.from(route.params?.categories.current),
-              price: route.params?.priceRange,
-              gender: route.params?.gender,
-              relationship: route.params?.relationship,
-              occasion: route.params?.occasion,
-            }
-          );
-          setTimeout(
-            () =>
-              promise
-                .then((response) => {
-                  navigation.navigate("Recommendations", {
-                    recommendations: response.data,
-                  });
-                })
-                .catch((error) => {
-                  navigation.navigate("Error", { error });
-                })
-                .finally(() => {
-                  setIsLoading(false);
-                }),
-            500
-          );
+      <QuizNavigator
+        navigation={navigation}
+        prev={{
+          pagename: route.params.isSender
+            ? "SenderCategoriesScreen"
+            : "RecipientCategoriesScreen",
         }}
-        style={buttonStyles.blackCenteredFull}
-      >
-        <Text style={{ color: white }}>Let's go</Text>
-      </Pressable>
+        next={{
+          pagename: "Recommendations",
+          params: { price: priceRange, ...route.params },
+        }}
+        pagenum={route.params.pagenum}
+        totalpages={route.params.totalpages}
+      />
     </View>
   );
 }
