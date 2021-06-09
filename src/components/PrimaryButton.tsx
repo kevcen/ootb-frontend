@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     height: "20px",
     width: "100%",
     fontFamily: "Roboto",
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "500",
     letterSpacing: 2.5,
     lineHeight: 20,

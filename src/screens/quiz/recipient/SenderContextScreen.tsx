@@ -1,48 +1,44 @@
 import * as React from "react";
 import { View, Text, Pressable } from "react-native";
 import Question from "../../../components/Question";
+import Genders from "../../../constants/Genders";
+import GiftTypes from "../../../constants/GiftTypes";
 import { buttonStyles } from "../../../styles/buttons";
 import { white } from "../../../styles/Colors";
-import { useState } from "react";
 import { styles } from "../../../styles/quiz";
-import {
-  genGenders,
-  genGiftTypes,
-  genButton,
-} from "../../../classes/GeneratingFunctions";
+import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
+import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 
 export default function RecipientContextScreen({
   navigation,
 }: {
   navigation: any;
 }) {
-  const [isLoading, setIsLoading] = useState(false);
-
   var gender = "";
-  var relationships = "";
+  var chosenGiftType = "";
 
   // TODO: unselect other options after selection
   return (
     <View style={styles.viewCentered}>
       <Question questionText={"What gender do you identify with?"} />
       <View style={styles.space} />
-      <View style={styles.list}>
-        {genGenders().map((data) =>
-          genButton({ ...data, onPress: () => (gender = data.title) })
-        )}
-      </View>
+      <SingleOptionQuestion
+        tagdata={Genders}
+        onTagPress={(tagname) => (gender = tagname)}
+      />
+
       <View style={styles.space} />
+
       <Question questionText={"What gifts would you prefer to receive?"} />
       <View style={styles.space} />
-      <View style={styles.list}>
-        {genGiftTypes().map((data) =>
-          genButton({ ...data, onPress: () => (relationships = data.title) })
-        )}
-      </View>
+      <SingleOptionQuestion
+        tagdata={GiftTypes}
+        onTagPress={(tagname) => (chosenGiftType = tagname)}
+      />
       <View style={styles.space} />
       <Pressable
         onPress={() => {
-          navigation.navigate("RecipientCategories"); // TODO: change to the name of OccasionScreen
+          navigation.navigate("Categories"); // TODO: change to the name of OccasionScreen
         }}
         style={buttonStyles.blackCenteredFull}
       >

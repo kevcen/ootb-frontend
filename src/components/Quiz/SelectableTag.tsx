@@ -2,10 +2,7 @@ import { Button } from "native-base";
 import React, { useState } from "react";
 import {
   StyleSheet,
-  TouchableOpacity,
   Text,
-  View,
-  Pressable,
 } from "react-native";
 import { black, white } from "../../styles/Colors";
 
@@ -29,7 +26,7 @@ export default (props: {
         {
           backgroundColor: randomColor,
           borderColor: props.active ? black : white,
-          opacity: props.active ? 0.8 : 0.4,
+          opacity: props.active ? 0.8 : 0.5,
         },
       ]}
       onPress={() => {
@@ -53,9 +50,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 2,
     borderColor: "white",
-    alignItems: "center",
+    textAlign: "center",
     justifyContent: "center",
-    opacity: 0.4,
+    alignItems:"center",
+    flexDirection:"column",
   },
   tagTitle: {
     color: black,
@@ -63,5 +61,5 @@ const styles = StyleSheet.create({
   tagSubtitle: {
     color: black,
     fontSize: 10,
-  },
+  }
 });

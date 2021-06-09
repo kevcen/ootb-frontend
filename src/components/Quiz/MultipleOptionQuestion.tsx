@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
-import TagData from "../../constants/TagData";
+import TagData from "../../interfaces/TagData";
 import SelectableTag from "./SelectableTag";
 
 export default (props: {
@@ -35,9 +35,9 @@ export default (props: {
 
 const styles = StyleSheet.create({
   list: {
+    width:"85%",
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
+    alignItems:"center",
   },
 });

@@ -3,16 +3,14 @@ import { StyleSheet, View, Text, Pressable, Image } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import PrimaryText from "../components/PrimaryText";
 import Question from "../components/Question";
-import { buttonStyles } from "../styles/buttons";
-import { white } from "../styles/Colors";
 
 export default function HomeScreen({ navigation }: { navigation: any }) {
   const navigateSender = () => {
-    navigation.navigate("Sender", {});
+    navigation.navigate("Sender");
   };
 
   const navigateReceiver = () => {
-    navigation.navigate("Recipient", {});
+    navigation.navigate("Recipient");
   };
 
   return (

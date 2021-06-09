@@ -3,7 +3,6 @@ import { View, StyleSheet, Text, Pressable } from "react-native";
 import Question from "../../../components/Question";
 import { buttonStyles } from "../../../styles/buttons";
 import { white } from "../../../styles/Colors";
-import { useState } from "react";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
 import Genders from "../../../constants/Genders";
 import Relationships from "../../../constants/Relationships";
@@ -15,12 +14,9 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  const [isLoading, setIsLoading] = useState(false);
-
   var gender = "";
   var relationship = "";
 
-  // TODO: unselect other options after selection
   return (
     <View style={styles.viewCentered}>
       <Question
