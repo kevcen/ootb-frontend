@@ -1,4 +1,4 @@
-import TagData from "./TagData";
+import TagData from "../interfaces/TagData";
 
 const giftTypes: TagData[] = [
   {title:"Personalised", subtitle:"Customisable gifts"},
