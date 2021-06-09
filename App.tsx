@@ -13,6 +13,7 @@ import SenderContextScreen from "./src/screens/quiz/recipient/SenderContextScree
 import OccasionScreen from "./src/screens/quiz/sender/OccasionScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import FoodScreen from "./src/screens/quiz/categories/FoodScreen";
+import BudgetScreen from "./src/screens/quiz/common/BudgetScreen";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
