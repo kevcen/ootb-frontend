@@ -29,9 +29,10 @@ export default (props: {
 
 const styles = StyleSheet.create({
   list: {
-    width:"85%",
+    width: "85%",
     flexDirection: "row",
     flexWrap: "wrap",
-    alignItems:"center",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

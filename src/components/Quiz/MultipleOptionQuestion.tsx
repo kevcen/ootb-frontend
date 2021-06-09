@@ -18,12 +18,12 @@ export default (props: {
           title={tag.title}
           subtitle={tag.subtitle}
           onPress={(name) => {
-            if(activeTags.current.has(name)){
-              activeTags.current.delete(name)
-            }else{
-              activeTags.current.add(name)
+            if (activeTags.current.has(name)) {
+              activeTags.current.delete(name);
+            } else {
+              activeTags.current.add(name);
             }
-            forceUpdate(!updated)
+            forceUpdate(!updated);
             props.onTagPress(name);
           }}
           active={activeTags.current.has(tag.title)}
@@ -35,9 +35,10 @@ export default (props: {
 
 const styles = StyleSheet.create({
   list: {
-    width:"85%",
+    width: "85%",
     flexDirection: "row",
     flexWrap: "wrap",
-    alignItems:"center",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
