@@ -6,7 +6,7 @@ import { white } from "../../../styles/Colors";
 import occasions from "../../../constants/Occasion";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
 import { styles } from "../../../styles/quiz";
-
+import QuizNavigator from "../../../components/Quiz/QuizNavigator";
 export default function OccasionScreen({
   route,
   navigation,
@@ -26,17 +26,13 @@ export default function OccasionScreen({
         }}
       />
       <View style={styles.space} />
-      <Pressable
-        onPress={() =>
-          navigation.navigate("Categories", {
-            occasion: chosenOccasion,
-            ...route.params,
-          })
-        }
-        style={buttonStyles.blackCenteredFull}
-      >
-        <Text style={{ color: white }}>Let's go</Text>
-      </Pressable>
+      <QuizNavigator
+        navigation={navigation}
+        prev={{ pagename: "Sender" }}
+        next={{ pagename: "SenderCategories", params: { chosenOccasion } }}
+        pagenum={route.params.pagenum}
+        totalpages={route.params.totalpages}
+      />
     </View>
   );
 }

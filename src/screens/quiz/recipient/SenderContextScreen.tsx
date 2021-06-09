@@ -7,7 +7,7 @@ import { buttonStyles } from "../../../styles/buttons";
 import { white } from "../../../styles/Colors";
 import { styles } from "../../../styles/quiz";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
-import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
+import QuizNavigator from "../../../components/Quiz/QuizNavigator";
 
 export default function RecipientContextScreen({
   navigation,
@@ -36,14 +36,12 @@ export default function RecipientContextScreen({
         onTagPress={(tagname) => (chosenGiftType = tagname)}
       />
       <View style={styles.space} />
-      <Pressable
-        onPress={() => {
-          navigation.navigate("Categories"); // TODO: change to the name of OccasionScreen
-        }}
-        style={buttonStyles.blackCenteredFull}
-      >
-        <Text style={{ color: white }}>Let's go</Text>
-      </Pressable>
+      <QuizNavigator
+        navigation={navigation}
+        next={{ pagename: "RecipientCategories" }}
+        pagenum={1}
+        totalpages={2}
+      />
     </View>
   );
 }

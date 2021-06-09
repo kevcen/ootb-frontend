@@ -6,6 +6,7 @@ import { white } from "../../../styles/Colors";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
 import Genders from "../../../constants/Genders";
 import Relationships from "../../../constants/Relationships";
+import QuizNavigator from "../../../components/Quiz/QuizNavigator";
 
 export default function RecipientContextScreen({
   route,
@@ -39,18 +40,12 @@ export default function RecipientContextScreen({
         onTagPress={(name) => (relationship = name)}
       />
       <View style={styles.space} />
-      <Pressable
-        onPress={() => {
-          navigation.navigate("Occasions", {
-            gender: gender,
-            relationship: relationship,
-            ...route.params,
-          });
-        }}
-        style={buttonStyles.blackCenteredFull}
-      >
-        <Text style={{ color: white }}>Let's go</Text>
-      </Pressable>
+      <QuizNavigator
+        navigation={navigation}
+        next={{ pagename: "Occasions", params: { gender, relationship } }}
+        pagenum={1}
+        totalpages={3}
+      />
     </View>
   );
 }
