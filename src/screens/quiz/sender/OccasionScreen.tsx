@@ -5,19 +5,8 @@ import { buttonStyles } from "../../../styles/buttons";
 import { black, green, white } from "../../../styles/Colors";
 import { useState } from "react";
 import occasions from "../../../constants/Occasion";
-
-let genData = (): any[] => {
-  var data = new Array();
-  occasions.forEach((occasionName, index) => {
-    data.push({ key: "occ_" + index, title: occasionName });
-  });
-  return data;
-};
-
-function getRandomColor(): string {
-  var color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
-  return color;
-}
+import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
+import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
 
 export default function OccasionScreen({
   navigation,
@@ -25,54 +14,17 @@ export default function OccasionScreen({
   route: Map<string, string>;
   navigation: any;
 }) {
-  var [chosenOccasion, setChosenOccasion] = useState("");
-
-  const genButton = ({
-    onPress,
-    title,
-    key,
-  }: {
-    onPress: (title: string) => any;
-    title: string;
-    key: string;
-  }) => {
-    const [isToggled, setIsToggled] = useState(false);
-    const [randomColor, setRandomColor] = useState(
-      StyleSheet.create({
-        color: { backgroundColor: getRandomColor() },
-      })
-    );
-
-    const randomColorTagChosen = [styles.tagChosen, randomColor.color];
-
-    const randomColorTag = [styles.tag, randomColor.color];
-
-    return (
-      <Pressable
-        key={key}
-        style={isToggled ? randomColorTagChosen : randomColorTag}
-        onPress={() => {
-          if (isToggled) {
-            setIsToggled(!isToggled);
-            setChosenOccasion("");
-          } else if (chosenOccasion === "") {
-            setChosenOccasion(title);
-            setIsToggled(!isToggled);
-          }
-        }}
-      >
-        <Text style={{ color: black }}>{title} </Text>
-      </Pressable>
-    );
-  };
-
+  var chosenOccasion = "";
   return (
     <View style={styles.viewCentered}>
       <Question questionText={"What is the occasion, if any?"} />
       <View style={styles.space} />
-      <View style={styles.list}>
-        {genData().map((data) => genButton({ ...data }))}
-      </View>
+      <SingleOptionQuestion
+        tagdata={occasions}
+        onTagPress={(tagname) => {
+          chosenOccasion = tagname;
+        }}
+      />
       <View style={styles.space} />
       <Pressable
         onPress={() => {

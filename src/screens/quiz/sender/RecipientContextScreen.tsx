@@ -9,6 +9,8 @@ import axios from "axios";
 import { useState } from "react";
 import { Icon } from "react-native-elements";
 import LoadingData from "../../../components/LoadingData";
+import SelectableTag from "../../../components/Quiz/SelectableTag";
+import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
 
 let genGenders = (): any[] => {
   var data = new Array();
@@ -26,45 +28,6 @@ let genRelationships = (): any[] => {
   return data;
 };
 
-function getRandomColor(): string {
-  var color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
-  return color;
-}
-
-const genButton = ({
-  onPress,
-  title,
-  key,
-}: {
-  onPress: (title: string) => any;
-  title: string;
-  key: string;
-}) => {
-  const [isToggled, setIsToggled] = useState(false);
-  const [randomColor, setRandomColor] = useState(
-    StyleSheet.create({
-      color: { backgroundColor: getRandomColor() },
-    })
-  );
-
-  const randomColorTagChosen = [styles.tagChosen, randomColor.color];
-
-  const randomColorTag = [styles.tag, randomColor.color];
-
-  return (
-    <Pressable
-      key={key}
-      style={isToggled ? randomColorTagChosen : randomColorTag}
-      onPress={() => {
-        setIsToggled(!isToggled);
-        onPress(title);
-      }}
-    >
-      <Text style={{ color: black }}>{title} </Text>
-    </Pressable>
-  );
-};
-
 export default function RecipientContextScreen({
   navigation,
 }: {
@@ -73,7 +36,7 @@ export default function RecipientContextScreen({
   const [isLoading, setIsLoading] = useState(false);
 
   var gender = "";
-  var relationships = "";
+  var relationship = "";
 
   // TODO: unselect other options after selection
   return (
@@ -82,11 +45,7 @@ export default function RecipientContextScreen({
         questionText={"What gender does the recipient identify with?"}
       />
       <View style={styles.space} />
-      <View style={styles.list}>
-        {genGenders().map((data) =>
-          genButton({ ...data, onPress: () => (gender = data.title) })
-        )}
-      </View>
+      <SingleOptionQuestion tagdata={genders} onTagPress={(name) => (gender = name)}/>
       <View style={styles.space} />
       <Question
         questionText={
@@ -94,11 +53,7 @@ export default function RecipientContextScreen({
         }
       />
       <View style={styles.space} />
-      <View style={styles.list}>
-        {genRelationships().map((data) =>
-          genButton({ ...data, onPress: () => (relationships = data.title) })
-        )}
-      </View>
+      <SingleOptionQuestion tagdata={relationships} onTagPress={(name) => (relationship = name)}/>
       <View style={styles.space} />
       <Pressable
         onPress={() => {
@@ -127,29 +82,5 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-  },
-  tag: {
-    height: 40,
-    marginVertical: 5,
-    marginHorizontal: 3,
-    paddingHorizontal: 20,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
-    opacity: 0.4,
-  },
-  tagChosen: {
-    height: 40,
-    marginVertical: 5,
-    marginHorizontal: 3,
-    paddingHorizontal: 20,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
-    opacity: 0.8,
   },
 });

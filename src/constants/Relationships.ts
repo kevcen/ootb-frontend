@@ -1,10 +1,12 @@
-const relationships: string[] = [
-  "Parent",
-  "Child",
-  "Sibling",
-  "Work Colleague",
-  "Friend",
-  "Significant Other"
+import TagData from "./TagData";
+
+const relationships: TagData[] = [
+  {title:"Parent"},
+  {title:"Child"},
+  {title:"Sibling"},
+  {title:"Work Colleague"},
+  {title:"Friend"},
+  {title:"Significant Other"}
 ];
 
 export default relationships;

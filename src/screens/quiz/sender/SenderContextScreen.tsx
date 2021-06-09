@@ -9,45 +9,43 @@ import axios from "axios";
 import { useState } from "react";
 import { Icon } from "react-native-elements";
 import LoadingData from "../../../components/LoadingData";
-import { styles } from "../../../styles/quiz"
-import { genButton } from "../../../classes/GeneratingFunctions"
+import { styles } from "../../../styles/quiz";
+import { genButton } from "../../../classes/GeneratingFunctions";
+import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
+import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 
-let genGenders = (): any[] => {
-  var data = new Array();
-  genders.forEach((genderName, index) => {
-    data.push({ key: "cat_" + index, title: genderName, subtitle: "" });
-  });
-  return data;
-};
-
-let genGiftTypes = (): any[] => {
-  var data = new Array();
-  giftTypes.forEach((giftType, index) => {
-    data.push({ key: "cat_" + index, title: giftType[0], subtitle: giftType[1] });
-  });
-  return data;
-};
-
-export default function RecipientContextScreen({ navigation }: { navigation: any }) {
-  const [isLoading, setIsLoading] = useState(false);
-
+export default function RecipientContextScreen({
+  navigation,
+}: {
+  navigation: any;
+}) {
   var gender = "";
-  var relationships = "";
+  var chosenGiftTypes = new Set();
 
   // TODO: unselect other options after selection
   return (
     <View style={styles.viewCentered}>
       <Question questionText={"What gender do you identify with?"} />
       <View style={styles.space} />
-      <View style={styles.list}>
-        {genGenders().map((data) => genButton({ ...data, onPress: () => gender = data.title }))}
-      </View>
+      <SingleOptionQuestion
+        tagdata={genders}
+        onTagPress={(tagname) => (gender = tagname)}
+      />
+
       <View style={styles.space} />
+
       <Question questionText={"What gifts would you prefer to receive?"} />
       <View style={styles.space} />
-      <View style={styles.list}>
-        {genGiftTypes().map((data) => genButton({ ...data, onPress: () => relationships = data.title  }))}
-      </View>
+      <MultipleOptionQuestion
+        tagdata={giftTypes}
+        onTagPress={(tagname) => {
+          if (chosenGiftTypes.has(tagname)) {
+            chosenGiftTypes.delete(tagname);
+          } else {
+            chosenGiftTypes.add(tagname);
+          }
+        }}
+      />
       <View style={styles.space} />
       <Pressable
         onPress={() => {
@@ -55,7 +53,7 @@ export default function RecipientContextScreen({ navigation }: { navigation: any
         }}
         style={buttonStyles.blackCenteredFull}
       >
-        <Text style={{color:white}}>Let's go</Text>
+        <Text style={{ color: white }}>Let's go</Text>
       </Pressable>
     </View>
   );

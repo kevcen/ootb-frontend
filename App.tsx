@@ -27,7 +27,6 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Intro" component={IntroScreen} />
           <Stack.Screen name="Recipient" component={RecipientContextScreen} />
           <Stack.Screen name="Sender" component={SenderContextScreen} />
           <Stack.Screen name="Categories" component={CategoriesScreen} />

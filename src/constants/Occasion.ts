@@ -1,13 +1,15 @@
-const occasions: string[] = [
-  "Wedding",
-  "Birthday",
-  "Anniversary",
-  "Valentine's Day",
-  "Religious/Cultural Day",
-  "Christmas",
-  "Father's/Mother's Day",
-  "Thanksgiving",
-  "Graduation",
+import TagData from "./TagData";
+
+const occasions: TagData[] = [
+  { title: "Wedding" },
+  { title: "Birthday" },
+  { title: "Anniversary" },
+  { title: "Valentine's Day" },
+  { title: "Religious/Cultural Day" },
+  { title: "Christmas" },
+  { title: "Father's/Mother's Day" },
+  { title: "Thanksgiving" },
+  { title: "Graduation" },
 ];
 
 export default occasions;

@@ -1,7 +1,9 @@
-const giftTypes: string[][] = [
-  ["Personalised", "Customisable gifts"],
-  ["Useful", "Based on my interests"],
-  ["Events", "Spending time with others"],
-  ["Other", ""]
+import TagData from "./TagData";
+
+const giftTypeTags: TagData[] = [
+  {title:"Personalised", subtitle:"Customisable gifts"},
+  {title:"Useful", subtitle:"Based on my interests"},
+  {title:"Events", subtitle: "Spending time with others"},
+  {title:"Other"}
 ];
-export default giftTypes;
+export default giftTypeTags;
