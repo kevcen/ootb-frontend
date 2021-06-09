@@ -67,6 +67,10 @@ export default function BudgetScreen({
             "https://gift-recommender-api.herokuapp.com/products",
             {
               categories: Array.from(route.params?.categories.current),
+              price: route.params?.priceRange,
+              gender: route.params?.gender,
+              relationship: route.params?.relationship,
+              occasion: route.params?.occasion,
             }
           );
           setTimeout(

@@ -23,7 +23,10 @@ export default function RecipientContextScreen({
         questionText={"What gender does the recipient identify with?"}
       />
       <View style={styles.space} />
-      <SingleOptionQuestion tagdata={Genders} onTagPress={(name) => (gender = name)}/>
+      <SingleOptionQuestion
+        tagdata={Genders}
+        onTagPress={(name) => (gender = name)}
+      />
       <View style={styles.space} />
       <Question
         questionText={
@@ -31,11 +34,18 @@ export default function RecipientContextScreen({
         }
       />
       <View style={styles.space} />
-      <SingleOptionQuestion tagdata={Relationships} onTagPress={(name) => (relationship = name)}/>
+      <SingleOptionQuestion
+        tagdata={Relationships}
+        onTagPress={(name) => (relationship = name)}
+      />
       <View style={styles.space} />
       <Pressable
         onPress={() => {
-          navigation.navigate("Occasions", {gender,relationship});
+          navigation.navigate("Occasions", {
+            gender: gender,
+            relationship: relationship,
+            ...route.params,
+          });
         }}
         style={buttonStyles.blackCenteredFull}
       >

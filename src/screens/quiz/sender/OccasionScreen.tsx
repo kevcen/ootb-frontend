@@ -27,7 +27,12 @@ export default function OccasionScreen({
       />
       <View style={styles.space} />
       <Pressable
-        onPress={() => navigation.navigate("Categories", {chosenOccasion, ...route.params})}
+        onPress={() =>
+          navigation.navigate("Categories", {
+            occasion: chosenOccasion,
+            ...route.params,
+          })
+        }
         style={buttonStyles.blackCenteredFull}
       >
         <Text style={{ color: white }}>Let's go</Text>
