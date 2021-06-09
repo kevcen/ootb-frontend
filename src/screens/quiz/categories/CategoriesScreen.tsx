@@ -1,21 +1,20 @@
 import React, { useRef, useState } from "react";
-import {  View, Text, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import Question from "../../../components/Question";
 import { buttonStyles } from "../../../styles/buttons";
-import {  white } from "../../../styles/Colors";
-import axios from "axios";
-import LoadingData from "../../../components/LoadingData";
+import { white } from "../../../styles/Colors";
 import { styles } from "../../../styles/quiz";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 import Categories from "../../../constants/Categories";
 
-export default function CategoriesScreen({ navigation }: { navigation: any }) {
-  const [isLoading, setIsLoading] = useState(false);
+export default function CategoriesScreen({
+  route,
+  navigation,
+}: {
+  route: any;
+  navigation: any;
+}) {
   const chosenCategories = useRef(new Set());
-
-  if (isLoading) {
-    return <LoadingData />;
-  }
 
   return (
     <View style={styles.viewCentered}>
@@ -35,29 +34,10 @@ export default function CategoriesScreen({ navigation }: { navigation: any }) {
       <Pressable
         style={buttonStyles.blackCenteredFull}
         onPress={() => {
-          setIsLoading(true);
-          var promise = axios.post(
-            "https://gift-recommender-api.herokuapp.com/products",
-            {
-              categories: Array.from(chosenCategories.current),
-            }
-          );
-          setTimeout(
-            () =>
-              promise
-                .then((response) => {
-                  navigation.navigate("Recommendations", {
-                    recommendations: response.data,
-                  });
-                })
-                .catch((error) => {
-                  navigation.navigate("Error", { error });
-                })
-                .finally(() => {
-                  setIsLoading(false);
-                }),
-            500
-          );
+          navigation.navigate("Budget", {
+            categories: chosenCategories,
+            ...route.params,
+          });
         }}
       >
         <Text style={{ color: white }}>Let's go</Text>

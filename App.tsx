@@ -5,9 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import useCachedResources from "./src/hooks/useCachedResources";
 import useColorScheme from "./src/hooks/useColorScheme";
-import IntroScreen from "./src/screens/IntroScreen";
 import CategoriesScreen from "./src/screens/quiz/categories/CategoriesScreen";
-import RecipientCategoriesScreen from "./src/screens/quiz/recipient/RecipientCategoriesScreen";
 import RecommendationScreen from "./src/screens/RecommendationScreen";
 import ErrorScreen from "./src/screens/ErrorScreen";
 import RecipientContextScreen from "./src/screens/quiz/sender/RecipientContextScreen";
@@ -15,6 +13,7 @@ import SenderContextScreen from "./src/screens/quiz/recipient/SenderContextScree
 import OccasionScreen from "./src/screens/quiz/sender/OccasionScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import FoodScreen from "./src/screens/quiz/categories/FoodScreen";
+import BudgetScreen from "./src/screens/quiz/common/BudgetScreen";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -32,6 +31,7 @@ export default function App() {
           <Stack.Screen name="Recipient" component={SenderContextScreen} />
           <Stack.Screen name="Sender" component={RecipientContextScreen} />
           <Stack.Screen name="Categories" component={CategoriesScreen} />
+          <Stack.Screen name="Budget" component={BudgetScreen} />
           <Stack.Screen name="Food" component={FoodScreen} />
           <Stack.Screen name="Occasions" component={OccasionScreen} />
           <Stack.Screen

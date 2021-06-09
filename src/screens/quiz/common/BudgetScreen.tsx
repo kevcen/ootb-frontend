@@ -6,6 +6,8 @@ import { buttonStyles } from "../../../styles/buttons";
 import { white } from "../../../styles/Colors";
 import SliderMarker from "../../../components/Quiz/SliderMarker";
 import Question from "../../../components/Question";
+import axios from "axios";
+import LoadingData from "../../../components/LoadingData";
 
 export default function BudgetScreen({
   route,
@@ -15,6 +17,11 @@ export default function BudgetScreen({
   navigation: any;
 }) {
   var [priceRange, setPriceRange] = useState([30, 75]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (isLoading) {
+    return <LoadingData />;
+  }
 
   return (
     <View style={styles.viewCentered}>
@@ -55,8 +62,29 @@ export default function BudgetScreen({
       <View style={styles.space} />
       <Pressable
         onPress={() => {
-          console.log(priceRange);
-          navigation.navigate("");
+          setIsLoading(true);
+          var promise = axios.post(
+            "https://gift-recommender-api.herokuapp.com/products",
+            {
+              categories: Array.from(route.params?.categories.current),
+            }
+          );
+          setTimeout(
+            () =>
+              promise
+                .then((response) => {
+                  navigation.navigate("Recommendations", {
+                    recommendations: response.data,
+                  });
+                })
+                .catch((error) => {
+                  navigation.navigate("Error", { error });
+                })
+                .finally(() => {
+                  setIsLoading(false);
+                }),
+            500
+          );
         }}
         style={buttonStyles.blackCenteredFull}
       >
