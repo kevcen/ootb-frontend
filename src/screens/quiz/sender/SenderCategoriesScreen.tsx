@@ -34,7 +34,12 @@ export default function CategoriesScreen({
         navigation={navigation}
         currentpage={{ pagename: "SenderCategories", params: { ...route.params } }}
         prev={{pagename: "Occasions"}}
-        next={{ pagename: "Recommendations", params: { chosenCategories } }}
+        next={{
+          pagename: "Budget",
+          params: {
+            categories: chosenCategories,
+          },
+        }}
         pagenum={route.params.pagenum}
         totalpages={route.params.totalpages}
       />

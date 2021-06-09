@@ -51,6 +51,7 @@ export default function CategoriesScreen({
             prevpage: "",
             nextpageindex: 1,
             nextpages: arrayCategories,
+            categories: chosenCategories,
           },
         }}
         pagenum={route.params.pagenum}

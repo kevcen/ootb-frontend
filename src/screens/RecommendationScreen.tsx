@@ -40,7 +40,7 @@ export default function RecommendationScreen({
   navigation: any;
 }) {
   const [isLoading, setIsLoading] = useState(true);
-  const chosenCategories: Set<String> = route.params?.chosenCategories;
+  const chosenCategories: Set<String> = route.params?.categories;
   var [recommendations, setRecommendations] = useState([]);
 
   // on component load, get results
@@ -50,6 +50,10 @@ export default function RecommendationScreen({
       "https://gift-recommender-api.herokuapp.com/products",
       {
         categories: Array.from(chosenCategories),
+        price: route.params?.price,
+        gender: route.params?.gender,
+        relationship: route.params?.relationship,
+        occasion: route.params?.occasion,
       }
     );
 

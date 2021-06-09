@@ -8,6 +8,7 @@ import SliderMarker from "../../../components/Quiz/SliderMarker";
 import Question from "../../../components/Question";
 import axios from "axios";
 import LoadingData from "../../../components/LoadingData";
+import QuizNavigator from "../../../components/Quiz/QuizNavigator";
 
 export default function BudgetScreen({
   route,
@@ -16,7 +17,7 @@ export default function BudgetScreen({
   route: any;
   navigation: any;
 }) {
-  var [priceRange, setPriceRange] = useState([30, 75]);
+  var [priceRange, setPriceRange] = useState([30, 500]);
   const [isLoading, setIsLoading] = useState(false);
 
   if (isLoading) {
@@ -54,46 +55,30 @@ export default function BudgetScreen({
           return <SliderMarker markerValue={e.currentValue} />;
         }}
         sliderLength={280}
-        min={10}
-        max={100}
+        min={1}
+        max={1000}
         allowOverlap={true}
       />
 
       <View style={styles.space} />
-      <Pressable
-        onPress={() => {
-          setIsLoading(true);
-          var promise = axios.post(
-            "https://gift-recommender-api.herokuapp.com/products",
-            {
-              categories: Array.from(route.params?.categories.current),
-              price: route.params?.priceRange,
-              gender: route.params?.gender,
-              relationship: route.params?.relationship,
-              occasion: route.params?.occasion,
-            }
-          );
-          setTimeout(
-            () =>
-              promise
-                .then((response) => {
-                  navigation.navigate("Recommendations", {
-                    recommendations: response.data,
-                  });
-                })
-                .catch((error) => {
-                  navigation.navigate("Error", { error });
-                })
-                .finally(() => {
-                  setIsLoading(false);
-                }),
-            500
-          );
+      <QuizNavigator
+        currentpage={{
+          pagename: "Budget",
+          params: { ...route.params },
         }}
-        style={buttonStyles.blackCenteredFull}
-      >
-        <Text style={{ color: white }}>Let's go</Text>
-      </Pressable>
+        navigation={navigation}
+        prev={{
+          pagename: route.params.isSender
+            ? "SenderCategoriesScreen"
+            : "RecipientCategoriesScreen",
+        }}
+        next={{
+          pagename: "Recommendations",
+          params: { price: priceRange },
+        }}
+        pagenum={route.params.pagenum}
+        totalpages={route.params.totalpages}
+      />
     </View>
   );
 }
