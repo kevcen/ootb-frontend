@@ -43,6 +43,7 @@ export default function RecipientContextScreen({
       <QuizNavigator
         navigation={navigation}
         next={{ pagename: "Occasions", params: { gender, relationship } }}
+        currentpage={{ pagename: "Sender", params: { ...route.params } }}
         pagenum={1}
         totalpages={3}
       />

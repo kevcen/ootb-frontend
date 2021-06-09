@@ -19,12 +19,12 @@ export default (props: { text: string }) => {
   if (!fontsLoaded) {
     return <LoadingData />;
   }
+  
   return <Text style={styles.text}>{props.text}</Text>;
 };
 
 const styles = StyleSheet.create({
   text: {
-    height: "24px",
     width: "80%",
     margin:20,
     fontFamily: "Nunito_400Regular",

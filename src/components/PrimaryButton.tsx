@@ -5,8 +5,8 @@ import {
   Text,
   View,
   Pressable,
+  TouchableHighlight,
 } from "react-native";
-import { TouchableHighlight } from "react-native-gesture-handler";
 import { primary, secondary, white } from "../styles/Colors";
 
 export default (props: { onPress: () => any; text: string }) => {
@@ -19,14 +19,14 @@ export default (props: { onPress: () => any; text: string }) => {
 
 const styles = StyleSheet.create({
   button: {
-    height: "57px",
-    width: "222px",
+    height: 57,
+    width: 222,
     backgroundColor: primary,
-    textAlign: "center",
     justifyContent: "center",
   },
   buttonText: {
-    height: "20px",
+    textAlign: "center",
+    height: 20,
     width: "100%",
     fontFamily: "Roboto",
     fontSize: 14,

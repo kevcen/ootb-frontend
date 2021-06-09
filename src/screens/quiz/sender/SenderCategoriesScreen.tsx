@@ -1,10 +1,6 @@
 import React, { useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import Question from "../../../components/Question";
-import { buttonStyles } from "../../../styles/buttons";
-import { white } from "../../../styles/Colors";
-import axios from "axios";
-import LoadingData from "../../../components/LoadingData";
 import { styles } from "../../../styles/quiz";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 import Categories from "../../../constants/Categories";
@@ -36,6 +32,7 @@ export default function CategoriesScreen({
       <View style={styles.space} />
       <QuizNavigator
         navigation={navigation}
+        currentpage={{ pagename: "SenderCategories", params: { ...route.params } }}
         prev={{pagename: "Occasions"}}
         next={{ pagename: "Recommendations", params: { chosenCategories } }}
         pagenum={route.params.pagenum}

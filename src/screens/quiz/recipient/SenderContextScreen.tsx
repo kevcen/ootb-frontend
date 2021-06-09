@@ -8,24 +8,22 @@ import { white } from "../../../styles/Colors";
 import { styles } from "../../../styles/quiz";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
 import QuizNavigator from "../../../components/Quiz/QuizNavigator";
+import { useState } from "react";
 
 export default function RecipientContextScreen({
   navigation,
 }: {
   navigation: any;
 }) {
-  var gender = "";
-  var chosenGiftType = "";
+  const [chosenGender, setChosenGender] = useState("");
+  const [chosenGiftType, setChosenGiftType] = useState("");
 
   // TODO: unselect other options after selection
   return (
     <View style={styles.viewCentered}>
       <Question questionText={"What gender do you identify with?"} />
       <View style={styles.space} />
-      <SingleOptionQuestion
-        tagdata={Genders}
-        onTagPress={(tagname) => (gender = tagname)}
-      />
+      <SingleOptionQuestion tagdata={Genders} onTagPress={setChosenGender} />
 
       <View style={styles.space} />
 
@@ -33,12 +31,23 @@ export default function RecipientContextScreen({
       <View style={styles.space} />
       <SingleOptionQuestion
         tagdata={GiftTypes}
-        onTagPress={(tagname) => (chosenGiftType = tagname)}
+        onTagPress={setChosenGiftType}
       />
       <View style={styles.space} />
       <QuizNavigator
         navigation={navigation}
-        next={{ pagename: "RecipientCategories" }}
+        currentpage={
+          {
+            pagename:"Recipient",
+          }
+        }
+        next={{
+          pagename:
+            chosenGiftType == "Personalised"
+              ? "PersonalisedCategories"
+              : "RecipientCategories",
+          params: { chosenGender, chosenGiftType },
+        }}
         pagenum={1}
         totalpages={2}
       />
