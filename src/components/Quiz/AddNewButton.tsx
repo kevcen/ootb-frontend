@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     borderWidth: 0,
-    color: "000000",
     fontSize: 20,
     alignSelf: "center",
   },
