@@ -62,12 +62,10 @@ export default function RecommendationScreen({
   if (recommendations.length == 0) {
     return (
       <View
-        style={{
-          flex: 1,
-          backgroundColor: "white",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        style={[
+          styles.view,
+          { justifyContent: "center", alignItems: "center" },
+        ]}
       >
         <PrimaryText text={"Couldn't find any recommendations for you"} />
       </View>
@@ -75,8 +73,10 @@ export default function RecommendationScreen({
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <PrimaryText text={"Your gift recommendations"} />
+    <View style={styles.view}>
+      <View style={styles.header}>
+        <PrimaryText text={"Your gift recommendations"} />
+      </View>
       <FlatList
         numColumns={2}
         style={styles.grid}
@@ -94,32 +94,35 @@ export default function RecommendationScreen({
         )}
         keyExtractor={(item) => item.name}
       />
-      <PrimaryButton text={"Add selected to wishlist"} onPress={() => {}} />
+      <PrimaryButton
+        style={styles.footer}
+        text={"Add selected to wishlist"}
+        onPress={() => {}}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    backgroundColor: white,
+  header: {
+    width: "100%",
+    alignItems: "center",
+  },
+  footer: {
+    bottom: 20,
+    width: "80%",
+    alignSelf: "center",
   },
   view: {
-    marginHorizontal: 1,
     flex: 1,
-    height: 260,
-    maxHeight: 260,
-    backgroundColor: white,
+    backgroundColor: "white",
+    alignItems:"center"
   },
   grid: {
+    width: "95%",
     marginTop: 10,
   },
   list: {
     justifyContent: "space-evenly",
-  },
-  seperator: {
-    height: 1,
-    width: "86%",
-    backgroundColor: "#CED0CE",
-    marginLeft: "14%",
   },
 });

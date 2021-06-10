@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Item from "../../../interfaces/Item";
 import Product from "../../../interfaces/Product";
-import { black } from "../../styles/Colors";
+import { black, white } from "../../styles/Colors";
 import PrimaryText from "../PrimaryText";
 import QuickView from "./QuickView";
 import { primary } from "../../styles/Colors";
@@ -45,10 +45,12 @@ export default (props: {
 
   return (
     <TouchableHighlight
-      style={
-        (styles.view,
-        props.isActive ?? { borderWidth: 2, borderColor: primary })
-      }
+      style={[
+        styles.view,
+        {
+          borderColor: props.isActive ? primary : white,
+        },
+      ]}
       onPress={() => props.onSelect(props.product, minItem)}
     >
       <View>
@@ -71,6 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 260,
     margin: 5,
+    borderWidth:2
   },
   image: {
     height: 200,

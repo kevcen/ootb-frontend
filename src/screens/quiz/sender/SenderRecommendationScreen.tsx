@@ -125,7 +125,10 @@ export default function RecommendationScreen({
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={styles.view}>
+      <View style={styles.header}>
+        <PrimaryText text={"Your gift recommendations"} />
+      </View>
       <FlatList
         numColumns={2}
         style={styles.grid}
@@ -156,26 +159,28 @@ export default function RecommendationScreen({
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    backgroundColor: white,
+  header: {
+    width: "100%",
+    alignItems: "center",
+  },
+  footer: {
+    bottom: 20,
+    width: "80%",
+    alignSelf: "center",
   },
   view: {
-    marginHorizontal: 1,
     flex: 1,
-    height: 260,
-    maxHeight: 260,
-    backgroundColor: white,
+    backgroundColor: "white",
+    alignItems: "center",
   },
   grid: {
+    width: "95%",
     marginTop: 10,
   },
   list: {
     justifyContent: "space-evenly",
   },
-  seperator: {
-    height: 1,
-    width: "86%",
-    backgroundColor: "#CED0CE",
-    marginLeft: "14%",
+  overlay: {
+    backgroundColor: white,
   },
 });
