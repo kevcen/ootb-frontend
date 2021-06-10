@@ -25,7 +25,7 @@ export default function RecommendationScreen({
   var [recommendations, setRecommendations] = useState([]);
   const [visible, setVisible] = useState(false);
   const [quickView, setQuickView] = useState(<View/>);
-
+  
   const toggleOverlay = () => {
     setVisible(!visible);
   };
@@ -34,13 +34,52 @@ export default function RecommendationScreen({
   React.useEffect(() => {
     // make post request to backend server
     var promise = axios.post(
-      "https://gift-recommender-api.herokuapp.com/products",
+      "http://localhost:8080/products",
       {
         categories: Array.from(chosenCategories),
         price: route.params?.price,
         gender: route.params?.gender,
         relationship: route.params?.relationship,
         occasion: route.params?.occasion,
+
+        //Fashion
+        clothesStoreTypes: Array.from(route.params?.chosenClothesStoreTypes || new Set()),
+        clothingSeasons: Array.from(route.params?.chosenClothingSeasons || new Set()),
+        fashionWear: Array.from(route.params?.chosenFashionWear || new Set()),
+
+        //Food
+        doesCook: route.params?.doesCook,
+        doesDrink: route.params?.doesDrink,
+        cuisines: Array.from(route.params?.chosenCuisines || new Set()),
+
+        //Fragrance
+        perfumeTypes: Array.from(route.params?.chosenPerfumeTypes || new Set()),
+        fragranceFamilies: Array.from(route.params?.chosenFragranceFamilies || new Set()),
+
+        //Gardening
+        hasGreenhouse: route.params?.hasGreenhouse,
+        plantSizes: Array.from(route.params?.chosenPlantSizes || new Set()),
+        plantTypes: Array.from(route.params?.chosenPlantTypes || new Set()),
+
+        //Health & Beauty
+        likesMakeup: route.params?.likesMakeup,
+        beautyProductTypes: Array.from(route.params?.chosenBeautyProductTypes || new Set()),
+
+        // Home Decor
+        homeRooms: Array.from(route.params?.chosenHomeRooms || new Set()),
+        homeStyles: Array.from(route.params?.chosenHomeStyles || new Set()),
+
+        //Music
+        genres: Array.from(route.params?.chosenGenres || new Set()),
+        instruments: Array.from(route.params?.chosenInstruments || new Set()),
+
+        //Photography
+        cameraTypes: Array.from(route.params?.chosenCameraTypes || new Set()),
+        photographyExperience: Array.from(route.params?.chosenExperience || new Set()),
+
+        //Sport
+        playSports: Array.from(route.params?.chosenPlaySports || new Set()),
+        watchSports: Array.from(route.params?.chosenWatchSports || new Set()),
       }
     );
 
