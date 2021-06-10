@@ -45,6 +45,7 @@ export default (props: {
 
   return (
     <TouchableHighlight
+    underlayColor="#0000"
       style={[
         styles.view,
         {
@@ -67,7 +68,9 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     padding: 10,
+    backgroundColor: '#fff',
     shadowColor: black,
+    elevation:3,
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 4,
     shadowOpacity: 0.5,

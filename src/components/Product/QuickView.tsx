@@ -4,10 +4,8 @@ import {
   StyleSheet,
   Text,
   Image,
-  TouchableHighlight,
   Linking,
 } from "react-native";
-import { Overlay } from "react-native-elements";
 import Item from "../../../interfaces/Item";
 import Product from "../../../interfaces/Product";
 import { black, white } from "../../styles/Colors";

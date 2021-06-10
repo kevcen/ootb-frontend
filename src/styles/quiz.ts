@@ -1,6 +1,12 @@
 import { StyleSheet, View, Text, Button, Pressable } from "react-native";
 
 export const styles = StyleSheet.create({
+  subtext:{
+    margin:5,
+    width:"70%",
+    textAlign:"center",
+    fontFamily:"roboto-thin"
+  },
   viewCentered: {
     flex: 1,
     alignItems: "center",

@@ -23,14 +23,15 @@ export default (props: { onPress: () => any; text: string; style?: any }) => {
 
 const styles = StyleSheet.create({
   button: {
+    padding:5,
     height: 57,
-    width: 222,
+    width: 250,
     backgroundColor: primary,
     justifyContent: "center",
+    alignItems:"center",
   },
   buttonText: {
     textAlign: "center",
-    height: 20,
     width: "100%",
     fontFamily: "roboto-light",
     fontSize: 14,

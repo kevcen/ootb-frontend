@@ -9,6 +9,8 @@ import { styles } from "../../../styles/quiz";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 import Categories from "../../../constants/Categories";
 import QuizNavigator from "../../../components/Quiz/QuizNavigator";
+import PrimaryText from "../../../components/PrimaryText";
+import PrimaryButton from "../../../components/PrimaryButton";
 
 export default function CategoriesScreen({
   route,
@@ -23,7 +25,8 @@ export default function CategoriesScreen({
 
   return (
     <View style={styles.viewCentered}>
-      <Question questionText={"Which categories would interest them"} />
+      <Question questionText={"Which categories interest you?"} />
+      <Text style={styles.subtext}>Each category that you choose will help use discover more about you. This means you may potentially be asked more questions</Text>
       <View style={styles.space} />
       <MultipleOptionQuestion
         tagdata={Categories}

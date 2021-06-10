@@ -6,11 +6,11 @@ import Question from "../components/Question";
 
 export default function HomeScreen({ navigation }: { navigation: any }) {
   const navigateSender = () => {
-    navigation.navigate("Sender");
+    navigation.navigate("SenderIntro");
   };
 
   const navigateReceiver = () => {
-    navigation.navigate("Recipient");
+    navigation.navigate("RecipientIntro");
   };
 
   return (
@@ -20,10 +20,10 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
         <Text style={styles.intro}>Gifting made simple.</Text>
       </View>
       <View style={styles.body}>
-        <PrimaryText text={"Are you"} />
-        <PrimaryButton onPress={navigateSender} text={"Buying a gift"} />
+        <PrimaryText text={"Want to"} />
+        <PrimaryButton onPress={navigateSender} text={"Find a gift for someone"} />
         <PrimaryText text={"or"} />
-        <PrimaryButton text={"Receiving a gift"} onPress={navigateReceiver} />
+        <PrimaryButton text={"Help others find gifts for you"} onPress={navigateReceiver} />
       </View>
       <View>
         <Image

@@ -51,7 +51,7 @@ export default (props: {
       </Text>
 
       <TouchableOpacity onPress={navigateNext}>
-        <Text style={styles.section}>{"Next >"}</Text>
+        <Text style={styles.section}>{"Continue >"}</Text>
       </TouchableOpacity>
     </View>
   );
