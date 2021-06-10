@@ -10,6 +10,7 @@ const occasions: TagData[] = [
   { title: "Father's/Mother's Day" },
   { title: "Thanksgiving" },
   { title: "Graduation" },
+  { title: "Any" },
 ];
 
 export default occasions;

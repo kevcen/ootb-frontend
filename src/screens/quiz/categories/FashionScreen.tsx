@@ -4,7 +4,9 @@ import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 import QuizNavigator from "../../../components/Quiz/QuizNavigator";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
-import Cuisines from "../../../constants/Cuisines";
+import FashionWear from "../../../constants/FashionWear";
+import ClothesStoreTypes from "../../../constants/ClothesStoreTypes";
+import ClothingSeasons from "../../../constants/ClothingSeasons";
 import yesNo from "../../../constants/YesNo";
 import { styles } from "../../../styles/quiz";
 
@@ -15,44 +17,56 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var doesDrink = false;
-  var doesCook = false;
-  var chosenCuisines = new Set();
+  var chosenClothesStoreTypes = new Set();
+  var chosenClothingSeasons = new Set();
+  var chosenFashionWear = new Set();
 
   // TODO: unselect other options after selection
   return (
     <View style={styles.viewCentered}>
       <View style={styles.space} />
-      <Question questionText={"Are you of legal age to drink?"} />
-      <View style={styles.space} />
-      <SingleOptionQuestion
-        tagdata={yesNo}
-        onTagPress={(tagname) => (doesDrink = tagname == "Yes")}
-      />
-      <View style={styles.space} />
-      <Question questionText={"What are your favorite cuisine?"} />
+      <Question questionText={"What season is it?"} />
       <View style={styles.space} />
       <MultipleOptionQuestion
-        tagdata={Cuisines}
-        onTagPress={(cuisine) => {
-          if (chosenCuisines.has(cuisine)) {
-            chosenCuisines.delete(cuisine);
+        tagdata={ClothingSeasons}
+        onTagPress={(season) => {
+          if (chosenClothingSeasons.has(season)) {
+            chosenClothingSeasons.delete(season);
           } else {
-            chosenCuisines.add(cuisine);
+            chosenClothingSeasons.add(season);
           }
         }}
       />
       <View style={styles.space} />
-      <Question questionText={"Do you cook?"} />
+      <Question questionText={"What type of wear do you like to wear?"} />
       <View style={styles.space} />
-      <SingleOptionQuestion
-        tagdata={yesNo}
-        onTagPress={(tagname) => (doesCook = tagname == "Yes")}
+      <MultipleOptionQuestion
+        tagdata={FashionWear}
+        onTagPress={(wear) => {
+          if (chosenFashionWear.has(wear)) {
+            chosenFashionWear.delete(wear);
+          } else {
+            chosenFashionWear.add(wear);
+          }
+        }}
+      />
+      <View style={styles.space} />
+      <Question questionText={"Where do you usually shop?"} /> //
+      <View style={styles.space} />
+      <MultipleOptionQuestion
+        tagdata={ClothesStoreTypes}
+        onTagPress={(store) => {
+          if (chosenClothesStoreTypes.has(store)) {
+            chosenClothesStoreTypes.delete(store);
+          } else {
+            chosenClothesStoreTypes.add(store);
+          }
+        }}
       />
       <View style={styles.space} />
       <QuizNavigator
         currentpage={{
-          pagename: "Food",
+          pagename: "Fashion",
           params: { ...route.params },
         }}
         navigation={navigation}
@@ -68,9 +82,9 @@ export default function RecipientContextScreen({
             "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
-            doesCook,
-            doesDrink,
-            chosenCuisines,
+            chosenClothesStoreTypes,
+            chosenClothingSeasons,
+            chosenFashionWear,
           },
         }}
         pagenum={route.params.pagenum}
