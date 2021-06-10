@@ -117,7 +117,7 @@ export default function RecommendationScreen({
   return (
     <View style={styles.view}>
       <View style={styles.header}>
-        <PrimaryText text={"Your gift recommendations"} />
+        <PrimaryText style={{textAlign:"left",width:"90%",margin:15}} text={"Your gift recommendations"} />
       </View>
       <FlatList
         numColumns={2}
@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
   },
   grid: {
     width: "95%",
-    marginTop: 10,
     marginBottom: 20,
   },
   list: {

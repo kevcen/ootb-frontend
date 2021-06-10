@@ -10,17 +10,16 @@ import { primary, white } from "../styles/Colors";
 import { useFonts, Nunito_400Regular } from "@expo-google-fonts/nunito";
 import LoadingData from "./LoadingData";
 
-export default (props: { text: string }) => {
+export default (props: { text: string, style?:any }) => {
   let [fontsLoaded] = useFonts({
     Nunito_400Regular,
   });
-
 
   if (!fontsLoaded) {
     return <LoadingData />;
   }
   
-  return <Text style={styles.text}>{props.text}</Text>;
+  return <Text style={[styles.text, props.style]}>{props.text}</Text>;
 };
 
 const styles = StyleSheet.create({
