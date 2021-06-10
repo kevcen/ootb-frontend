@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as React from "react";
 import { useState } from "react";
-import { FlatList, Linking, TouchableHighlight } from "react-native";
+import { FlatList, Linking, TouchableHighlight, Platform } from "react-native";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { Overlay } from "react-native-elements";
 import Modal from "modal-react-native-web";
@@ -123,7 +123,30 @@ export default function RecommendationScreen({
       </View>
     );
   }
+  const webQuickView = (
+  <Overlay
+    ModalComponent={Modal}
+    isVisible={visible}
+    onBackdropPress={toggleOverlay}
+    style={styles.overlay}
+  >
+    {quickView}
+  </Overlay>);
 
+  const phoneQuickView = (
+  <Overlay
+    isVisible={visible}
+    onBackdropPress={toggleOverlay}
+    style={styles.overlay}
+  >
+    {quickView}
+  </Overlay>);
+  
+  const itemQuickView = Platform.select({
+    ios: phoneQuickView,
+    android: phoneQuickView,
+    default: webQuickView,
+  })
   return (
     <View style={styles.view}>
       <View style={styles.header}>
@@ -146,13 +169,7 @@ export default function RecommendationScreen({
         keyExtractor={(item) => item.name}
       />
 
-      <Overlay
-        isVisible={visible}
-        onBackdropPress={toggleOverlay}
-        style={styles.overlay}
-      >
-        {quickView}
-      </Overlay>
+      {itemQuickView}
     </View>
   );
 }
