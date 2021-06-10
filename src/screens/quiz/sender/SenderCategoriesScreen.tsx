@@ -9,6 +9,8 @@ import { styles } from "../../../styles/quiz";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 import Categories from "../../../constants/Categories";
 import QuizNavigator from "../../../components/Quiz/QuizNavigator";
+import AddNewButton from "../../../components/Quiz/AddNewButton";
+import TagData from "../../../interfaces/TagData";
 
 export default function CategoriesScreen({
   route,
@@ -18,19 +20,26 @@ export default function CategoriesScreen({
   navigation: any;
 }) {
   const chosenCategories = new Set();
+  var [cats, setCats] = useState(Categories.slice());
 
   return (
     <View style={styles.viewCentered}>
       <Question questionText={"Which categories would interest them"} />
       <View style={styles.space} />
       <MultipleOptionQuestion
-        tagdata={Categories}
+        tagdata={cats}
         onTagPress={(tagname) => {
           if (chosenCategories.has(tagname)) {
             chosenCategories.delete(tagname);
           } else {
             chosenCategories.add(tagname);
           }
+        }}
+      />
+      <View style={styles.space} />
+      <AddNewButton
+        setCats={(cat: TagData) => {
+          setCats(cats.concat(cat));
         }}
       />
       <View style={styles.space} />
