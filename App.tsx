@@ -13,6 +13,14 @@ import SenderContextScreen from "./src/screens/quiz/recipient/SenderContextScree
 import OccasionScreen from "./src/screens/quiz/sender/OccasionScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import FoodScreen from "./src/screens/quiz/categories/FoodScreen";
+import FashionScreen from "./src/screens/quiz/categories/FashionScreen";
+import MusicScreen from "./src/screens/quiz/categories/MusicScreen";
+import PhotographyScreen from "./src/screens/quiz/categories/PhotographyScreen";
+import SportScreen from "./src/screens/quiz/categories/SportScreen";
+import FragranceScreen from "./src/screens/quiz/categories/FragranceScreen";
+import GardeningScreen from "./src/screens/quiz/categories/GardeningScreen";
+import HealthBeautyScreen from "./src/screens/quiz/categories/HealthBeautyScreen";
+import HomeDecorScreen from "./src/screens/quiz/categories/HomeDecorScreen";
 import BudgetScreen from "./src/screens/quiz/common/BudgetScreen";
 
 const horizontalAnimation = {
@@ -78,6 +86,46 @@ export default function App() {
             options={{ headerShown: false }}
             name="Food"
             component={FoodScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Fashion"
+            component={FashionScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Music"
+            component={MusicScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Photography"
+            component={PhotographyScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Sport"
+            component={SportScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Fragrance"
+            component={FragranceScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Gardening"
+            component={GardeningScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Health & Beauty"
+            component={HealthBeautyScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Home Decor"
+            component={HomeDecorScreen}
           />
           <Stack.Screen
             options={{ headerShown: false }}

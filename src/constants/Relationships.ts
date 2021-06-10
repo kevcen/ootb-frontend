@@ -6,7 +6,8 @@ const relationships: TagData[] = [
   {title:"Sibling"},
   {title:"Work Colleague"},
   {title:"Friend"},
-  {title:"Significant Other"}
+  {title:"Significant Other"},
+  { title: "Prefer not to say" },
 ];
 
 export default relationships;

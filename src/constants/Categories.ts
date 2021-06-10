@@ -10,6 +10,5 @@ const categories: TagData[] = [
   { title: "Gardening" },
   { title: "Health & Beauty" },
   { title: "Home Decor" },
-  { title: "Personalised" },
 ];
 export default categories;
