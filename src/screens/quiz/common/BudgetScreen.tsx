@@ -68,9 +68,7 @@ export default function BudgetScreen({
         }}
         navigation={navigation}
         prev={{
-          pagename: route.params.isSender
-            ? "SenderCategoriesScreen"
-            : "RecipientCategoriesScreen",
+          pagename: "SenderCategories"
         }}
         next={{
           pagename: "Recommendations",

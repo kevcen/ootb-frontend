@@ -3,34 +3,15 @@ import * as React from "react";
 import { useState } from "react";
 import { FlatList, Linking, TouchableHighlight } from "react-native";
 import { StyleSheet, View, Text, Image } from "react-native";
+import { Overlay } from "react-native-elements";
+import Modal from "modal-react-native-web";
 import Item from "../../interfaces/Item";
-import Product from "../../interfaces/Product";
 import LoadingData from "../components/LoadingData";
 import PrimaryText from "../components/PrimaryText";
-
-const renderItem = ({ item: product }: { item: Product }) => {
-  var minPrice = Number.MAX_SAFE_INTEGER;
-  var minItem: Item | undefined;
-  for (let i of product.items) {
-    if (i.cost < minPrice) {
-      minPrice = i.cost;
-      minItem = i;
-    }
-  }
-  return (
-    <View style={styles.view}>
-      <TouchableHighlight
-        onPress={() => Linking.openURL(minItem?.website || "")}
-      >
-        <Image style={{ height: 240 }} source={{ uri: product.image }} />
-      </TouchableHighlight>
-      <Text style={{ textAlign: "center" }}>
-        {product.name +
-          (minPrice == Number.MAX_SAFE_INTEGER ? "" : " - £" + minPrice)}
-      </Text>
-    </View>
-  );
-};
+import BasicView from "../components/Product/BasicView";
+import QuickView from "../components/Product/QuickView";
+import { primary, white } from "../styles/Colors";
+import Product from "../../interfaces/Product";
 
 export default function RecommendationScreen({
   route,
@@ -42,6 +23,12 @@ export default function RecommendationScreen({
   const [isLoading, setIsLoading] = useState(true);
   const chosenCategories: Set<String> = route.params?.categories;
   var [recommendations, setRecommendations] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [quickView, setQuickView] = useState(<View/>);
+
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
 
   // on component load, get results
   React.useEffect(() => {
@@ -95,25 +82,54 @@ export default function RecommendationScreen({
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <FlatList
         numColumns={2}
-        contentContainerStyle={styles.list}
+        style={styles.grid}
+        columnWrapperStyle={styles.list}
         data={recommendations}
-        renderItem={renderItem}
+        renderItem={({ item }: { item: Product }) => (
+          <BasicView
+            product={item}
+            onSelect={(product: Product, item: Item) => {
+              setQuickView(<QuickView product={product} item={item} />);
+              toggleOverlay();
+            }}
+          />
+        )}
         keyExtractor={(item) => item.name}
       />
+
+      <Overlay
+        ModalComponent={Modal}
+        isVisible={visible}
+        onBackdropPress={toggleOverlay}
+        style={styles.overlay}
+      >
+        {quickView}
+      </Overlay>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  overlay: {
+    backgroundColor: white,
+  },
   view: {
     marginHorizontal: 1,
     flex: 1,
     height: 260,
     maxHeight: 260,
-    backgroundColor: "white",
+    backgroundColor: white,
+  },
+  grid: {
+    marginTop: 10,
   },
   list: {
-    justifyContent: "center",
-    flexDirection: "column",
+    justifyContent: "space-evenly",
+  },
+  seperator: {
+    height: 1,
+    width: "86%",
+    backgroundColor: "#CED0CE",
+    marginLeft: "14%",
   },
 });

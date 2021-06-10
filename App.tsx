@@ -88,7 +88,11 @@ export default function App() {
             name="Recommendations"
             component={RecommendationScreen}
           />
-          <Stack.Screen name="Budget" component={BudgetScreen} />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Budget"
+            component={BudgetScreen}
+          />
           <Stack.Screen name="Error" component={ErrorScreen} />
         </Stack.Navigator>
       </NavigationContainer>
