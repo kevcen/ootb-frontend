@@ -21,9 +21,15 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
       </View>
       <View style={styles.body}>
         <PrimaryText text={"Want to"} />
-        <PrimaryButton onPress={navigateSender} text={"Find a gift for someone"} />
+        <PrimaryButton
+          onPress={navigateSender}
+          text={"Find a gift for someone"}
+        />
         <PrimaryText text={"or"} />
-        <PrimaryButton text={"Help others find gifts for you"} onPress={navigateReceiver} />
+        <PrimaryButton
+          text={"Help others find gifts for you"}
+          onPress={navigateReceiver}
+        />
       </View>
       <View>
         <Image
@@ -46,7 +52,8 @@ const styles = StyleSheet.create({
   },
   header: {
     width: "100%",
-    padding: 20,
+    paddingTop: 50,
+    padding: 10,
     alignItems: "center",
     justifyContent: "center",
   },
