@@ -18,6 +18,8 @@ import { Divider } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Product from "../../../interfaces/Product";
 import PrimaryButton from "../../../components/PrimaryButton";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { black } from "../../../styles/Colors";
 
 export default function RankingScreen({
   route,
@@ -35,20 +37,20 @@ export default function RankingScreen({
     ({ item, index, drag, isActive }: RenderItemParams<Product>) => {
       return (
         <View style={{ paddingVertical: 5, width: "90%", alignSelf: "center" }}>
-          <Pressable
+          <TouchableWithoutFeedback
             style={{
               alignItems: "center",
               paddingVertical: 10,
               flexDirection: "row",
               borderWidth: 2,
-              borderColor: "#000000",
+              borderColor: "#fff",
               borderRadius: 5,
-              backgroundColor: "#ffffff",
+              backgroundColor: "#fff",
               elevation: 5,
               shadowColor: "#000000",
-              shadowOffset: { width: 1, height: 1 },
+              shadowOffset: { width: 0, height: 0 },
               shadowOpacity: 0.8,
-              shadowRadius: 1,
+              shadowRadius: 2,
             }}
             onPressIn={drag}
           >
@@ -61,7 +63,7 @@ export default function RankingScreen({
               }}
             />
             <Text style={{ padding: 10 }}>{item.name}</Text>
-          </Pressable>
+          </TouchableWithoutFeedback>
         </View>
       );
     },
@@ -85,7 +87,7 @@ export default function RankingScreen({
             width: "60%",
             height: 1,
             margin: 5,
-            backgroundColor: "#000000",
+            backgroundColor:black,
           }}
         />
         <View style={styles.space} />
@@ -107,7 +109,7 @@ export default function RankingScreen({
             width: "60%",
             height: 1,
             margin: 5,
-            backgroundColor: "#000000",
+            backgroundColor: black,
           }}
         />
         <Text style={styles.heading2}>Least Wanted</Text>
