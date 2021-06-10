@@ -28,7 +28,8 @@ let getCheapestItem = (items: Item[]): Item | undefined => {
 
 export default (props: {
   product: Product;
-  onSelect: (product: Product, item: Item) => any;
+  onSelect?: (item: Item) => any;
+  onLongPress?: (item: Item) => any;
   isActive?: boolean;
 }) => {
   const minItem: Item | undefined = getCheapestItem(props.product.items);
@@ -45,15 +46,15 @@ export default (props: {
 
   return (
     <TouchableHighlight
-    underlayColor="#0000"
+      onLongPress={()=> {props.onLongPress ? props.onLongPress(minItem) : null }}
+      underlayColor="#0000"
       style={[
         styles.view,
         {
-          borderColor:
-             props.isActive ? primary : white,
+          borderColor: props.isActive ? primary : white,
         },
       ]}
-      onPress={() => props.onSelect(props.product, minItem)}
+      onPress={()=> {props.onSelect ? props.onSelect(minItem) : null }}
     >
       <View>
         <Image style={styles.image} source={{ uri: props.product.image }} />
@@ -68,9 +69,9 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     shadowColor: black,
-    elevation:3,
+    elevation: 3,
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 4,
     shadowOpacity: 0.5,

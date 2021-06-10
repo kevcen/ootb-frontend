@@ -157,11 +157,11 @@ export default function RecommendationScreen({
         style={styles.grid}
         columnWrapperStyle={styles.list}
         data={recommendations}
-        renderItem={({ item }: { item: Product }) => (
+        renderItem={({ item:product }: { item: Product }) => (
           <BasicView
-            product={item}
-            onSelect={(product: Product, item: Item) => {
-              setQuickView(<QuickView product={product} item={item} />);
+            product={product}
+            onLongPress={(minItem: Item) => {
+              setQuickView(<QuickView product={product} item={minItem} />);
               toggleOverlay();
             }}
           />

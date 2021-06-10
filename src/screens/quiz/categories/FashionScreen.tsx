@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 import QuizNavigator from "../../../components/Quiz/QuizNavigator";
@@ -24,46 +24,54 @@ export default function RecipientContextScreen({
   // TODO: unselect other options after selection
   return (
     <View style={styles.viewCentered}>
-      <View style={styles.space} />
-      <Question questionText={"What season is it?"} />
-      <View style={styles.space} />
-      <MultipleOptionQuestion
-        tagdata={ClothingSeasons}
-        onTagPress={(season) => {
-          if (chosenClothingSeasons.has(season)) {
-            chosenClothingSeasons.delete(season);
-          } else {
-            chosenClothingSeasons.add(season);
-          }
+      <ScrollView
+        style={styles.scrollable}
+        contentContainerStyle={{
+          justifyContent: "center",
+          alignItems: "center",
         }}
-      />
-      <View style={styles.space} />
-      <Question questionText={"What type of wear do you like to wear?"} />
-      <View style={styles.space} />
-      <MultipleOptionQuestion
-        tagdata={FashionWear}
-        onTagPress={(wear) => {
-          if (chosenFashionWear.has(wear)) {
-            chosenFashionWear.delete(wear);
-          } else {
-            chosenFashionWear.add(wear);
-          }
-        }}
-      />
-      <View style={styles.space} />
-      <Question questionText={"Where do you usually shop?"} />
-      <View style={styles.space} />
-      <MultipleOptionQuestion
-        tagdata={ClothesStoreTypes}
-        onTagPress={(store) => {
-          if (chosenClothesStoreTypes.has(store)) {
-            chosenClothesStoreTypes.delete(store);
-          } else {
-            chosenClothesStoreTypes.add(store);
-          }
-        }}
-      />
-      <View style={styles.space} />
+      >
+        <View style={styles.space} />
+        <Question questionText={"What season is it?"} />
+        <View style={styles.space} />
+        <MultipleOptionQuestion
+          tagdata={ClothingSeasons}
+          onTagPress={(season) => {
+            if (chosenClothingSeasons.has(season)) {
+              chosenClothingSeasons.delete(season);
+            } else {
+              chosenClothingSeasons.add(season);
+            }
+          }}
+        />
+        <View style={styles.space} />
+        <Question questionText={"What type of wear do you like to wear?"} />
+        <View style={styles.space} />
+        <MultipleOptionQuestion
+          tagdata={FashionWear}
+          onTagPress={(wear) => {
+            if (chosenFashionWear.has(wear)) {
+              chosenFashionWear.delete(wear);
+            } else {
+              chosenFashionWear.add(wear);
+            }
+          }}
+        />
+        <View style={styles.space} />
+        <Question questionText={"Where do you usually shop?"} />
+        <View style={styles.space} />
+        <MultipleOptionQuestion
+          tagdata={ClothesStoreTypes}
+          onTagPress={(store) => {
+            if (chosenClothesStoreTypes.has(store)) {
+              chosenClothesStoreTypes.delete(store);
+            } else {
+              chosenClothesStoreTypes.add(store);
+            }
+          }}
+        />
+        <View style={styles.space} />
+      </ScrollView>
       <QuizNavigator
         currentpage={{
           pagename: "Fashion",

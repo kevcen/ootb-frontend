@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as React from "react";
 import { useRef, useState } from "react";
-import { FlatList, Linking, TouchableHighlight } from "react-native";
+import { FlatList, Linking, Platform, TouchableHighlight } from "react-native";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { Overlay } from "react-native-elements";
 import Modal from "modal-react-native-web";
@@ -22,11 +22,17 @@ export default function RecommendationScreen({
   navigation: any;
 }) {
   const [isLoading, setIsLoading] = useState(true);
-  const chosenCategories: Set<String> = route.params?.categories;
   var [recommendations, setRecommendations] = useState([]);
 
-  const wishlist = useRef(new Set());
+  const wishlist = useRef(new Set<Product>());
   const [updated, forceUpdate] = useState(true);
+
+  const [visible, setVisible] = useState(false);
+  const [quickView, setQuickView] = useState(<View />);
+
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
 
   // on component load, get results
   React.useEffect(() => {
@@ -34,7 +40,7 @@ export default function RecommendationScreen({
     var promise = axios.post(
       "https://gift-recommender-api.herokuapp.com/products",
       {
-        categories: Array.from(chosenCategories),
+        categories: Array.from(route.params?.categories),
         price: route.params?.price,
         gender: route.params?.gender,
         relationship: route.params?.relationship,
@@ -42,8 +48,8 @@ export default function RecommendationScreen({
       }
     );
 
-    // create min artifical delay of 500 ms
-    setTimeout(() => {
+    // create min artifical delay of 600 ms
+    let timer = setTimeout(() => {
       promise
         .then((response) => {
           setRecommendations(response.data);
@@ -55,6 +61,9 @@ export default function RecommendationScreen({
           setIsLoading(false);
         });
     }, 600);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   if (isLoading) {
@@ -73,7 +82,32 @@ export default function RecommendationScreen({
       </View>
     );
   }
+  const webQuickView = (
+    <Overlay
+      ModalComponent={Modal}
+      isVisible={visible}
+      onBackdropPress={toggleOverlay}
+      style={styles.overlay}
+    >
+      {quickView}
+    </Overlay>
+  );
 
+  const phoneQuickView = (
+    <Overlay
+      isVisible={visible}
+      onBackdropPress={toggleOverlay}
+      style={styles.overlay}
+    >
+      {quickView}
+    </Overlay>
+  );
+
+  const itemQuickView = Platform.select({
+    ios: phoneQuickView,
+    android: phoneQuickView,
+    default: webQuickView,
+  });
   return (
     <View style={styles.view}>
       <View style={styles.header}>
@@ -84,10 +118,16 @@ export default function RecommendationScreen({
         style={styles.grid}
         columnWrapperStyle={styles.list}
         data={recommendations}
-        renderItem={({ item }: { item: Product }) => (
+        extraData={updated}
+        renderItem={({ item: product }: { item: Product }) => (
           <BasicView
-            product={item}
-            onSelect={(product: Product, item : Item) => {
+            key={product.name}
+            product={product}
+            onLongPress={(minItem: Item) => {
+              setQuickView(<QuickView product={product} item={minItem} />);
+              toggleOverlay();
+            }}
+            onSelect={() => {
               if (wishlist.current.has(product)) {
                 wishlist.current.delete(product);
               } else {
@@ -95,16 +135,19 @@ export default function RecommendationScreen({
               }
               forceUpdate(!updated);
             }}
-            isActive={wishlist.current.has(item)}
+            isActive={wishlist.current.has(product)}
           />
         )}
         keyExtractor={(item) => item.name}
       />
       <PrimaryButton
         style={styles.footer}
-        text={"Add selected to wishlist"}
+        text={`Add ${
+          wishlist.current.size == 0 ? "selected" : wishlist.current.size
+        } to wishlist`}
         onPress={() => {}}
       />
+      {itemQuickView}
     </View>
   );
 }
@@ -115,7 +158,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   footer: {
-    bottom: 20,
+    bottom: 10,
     width: "80%",
     alignSelf: "center",
   },
@@ -127,8 +170,12 @@ const styles = StyleSheet.create({
   grid: {
     width: "95%",
     marginTop: 10,
+    marginBottom: 20,
   },
   list: {
     justifyContent: "space-evenly",
+  },
+  overlay: {
+    backgroundColor: white,
   },
 });

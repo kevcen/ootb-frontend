@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 import QuizNavigator from "../../../components/Quiz/QuizNavigator";
@@ -22,33 +22,40 @@ export default function RecipientContextScreen({
   // TODO: ADD NEWs
   return (
     <View style={styles.viewCentered}>
-      <View style={styles.space} />
-      <Question questionText={"What instruments do you play?"} />
-      <View style={styles.space} />
-      <MultipleOptionQuestion
-        tagdata={Instruments}
-        onTagPress={(instrument) => {
-          if (chosenInstruments.has(instrument)) {
-            chosenInstruments.delete(instrument);
-          } else {
-            chosenInstruments.add(instrument);
-          }
+      <ScrollView
+        style={styles.scrollable}
+        contentContainerStyle={{
+          justifyContent: "center",
+          alignItems: "center",
         }}
-      />
-      <View style={styles.space} />
-      <Question questionText={"What genres of music do you like?"} />
-      <View style={styles.space} />
-      <MultipleOptionQuestion
-        tagdata={Genres}
-        onTagPress={(genre) => {
-          if (chosenGenres.has(genre)) {
-            chosenGenres.delete(genre);
-          } else {
-            chosenGenres.add(genre);
-          }
-        }}
-      />
-      <View style={styles.space} />
+      >
+        <Question questionText={"What instruments do you play?"} />
+        <View style={styles.space} />
+        <MultipleOptionQuestion
+          tagdata={Instruments}
+          onTagPress={(instrument) => {
+            if (chosenInstruments.has(instrument)) {
+              chosenInstruments.delete(instrument);
+            } else {
+              chosenInstruments.add(instrument);
+            }
+          }}
+        />
+        <View style={styles.space} />
+        <Question questionText={"What genres of music do you like?"} />
+        <View style={styles.space} />
+        <MultipleOptionQuestion
+          tagdata={Genres}
+          onTagPress={(genre) => {
+            if (chosenGenres.has(genre)) {
+              chosenGenres.delete(genre);
+            } else {
+              chosenGenres.add(genre);
+            }
+          }}
+        />
+        <View style={styles.space} />
+      </ScrollView>
       <QuizNavigator
         currentpage={{
           pagename: "Music",

@@ -42,7 +42,9 @@ export default function RecipientContextScreen({
           }}
         />
         <View style={styles.space} />
-        <Question questionText={"What are your favourite fragrance families?"} />
+        <Question
+          questionText={"What are your favourite fragrance families?"}
+        />
         <View style={styles.space} />
         <MultipleOptionQuestion
           tagdata={fragranceFamilies}
@@ -71,7 +73,7 @@ export default function RecipientContextScreen({
         next={{
           pagename:
             route.params.nextpages[route.params.nextpageindex] ||
-            "Recommendations",
+            "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
             chosenPerfumeTypes,

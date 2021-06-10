@@ -26,6 +26,8 @@ import HomeDecorScreen from "./src/screens/quiz/categories/HomeDecorScreen";
 import RecipientIntroScreen from "./src/screens/quiz/recipient/RecipientIntroScreen";
 import SenderIntroScreen from "./src/screens/quiz/sender/SenderIntroScreen";
 
+const defaultQuizScreenOptions = {title:"Quiz",headerLeft:()=>null }
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
 
@@ -38,87 +40,87 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            options={{ title: "Home" }}
+            options={{ title: "Home"}}
             name="Home"
             component={HomeScreen}
           />
           <Stack.Screen
-            options={{ title: "" }}
+            options={{ title: ""}}
             name="SenderIntro"
             component={SenderIntroScreen}
           />
           <Stack.Screen
-            options={{ title: "" }}
+            options={{ title: ""}}
             name="RecipientIntro"
             component={RecipientIntroScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Recipient"
             component={SenderContextScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Sender"
             component={RecipientContextScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="RecipientCategories"
             component={RecipientCategoriesScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="SenderCategories"
             component={SenderCategoriesScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Food"
             component={FoodScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Fashion"
             component={FashionScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Music"
             component={MusicScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Photography"
             component={PhotographyScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Sport"
             component={SportScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Fragrance"
             component={FragranceScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Gardening"
             component={GardeningScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Health & Beauty"
             component={HealthBeautyScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Home Decor"
             component={HomeDecorScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Occasions"
             component={OccasionScreen}
           />
