@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 import QuizNavigator from "../../../components/Quiz/QuizNavigator";
@@ -24,48 +24,56 @@ export default function RecipientContextScreen({
   // TODO: unselect other options after selection
   return (
     <View style={styles.viewCentered}>
-      <View style={styles.space} />
-      <Question questionText={"Are you of legal age to drink?"} />
-      <View style={styles.space} />
-      <SingleOptionQuestion
-        tagdata={yesNo}
-        onTagPress={(tagname) => (doesDrink = tagname == "Yes")}
-      />
-      <View style={styles.space} />
-      <Question questionText={"What are your favorite cuisine?"} />
-      <View style={styles.space} />
-      <MultipleOptionQuestion
-        tagdata={Cuisines}
-        onTagPress={(cuisine) => {
-          if (chosenCuisines.has(cuisine)) {
-            chosenCuisines.delete(cuisine);
-          } else {
-            chosenCuisines.add(cuisine);
-          }
+      <ScrollView
+        style={styles.scrollable}
+        contentContainerStyle={{
+          justifyContent: "center",
+          alignItems: "center",
         }}
-      />
-      <View style={styles.space} />
-      <Question questionText={"Do you cook?"} />
-      <View style={styles.space} />
-      <SingleOptionQuestion
-        tagdata={yesNo}
-        onTagPress={(tagname) => (doesCook = tagname == "Yes")}
-      />
-      <View style={styles.space} />
+      >
+        <Question questionText={"Are you of legal age to drink?"} />
+        <View style={styles.space} />
+        <SingleOptionQuestion
+          tagdata={yesNo}
+          onTagPress={(tagname) => (doesDrink = tagname == "Yes")}
+        />
+        <Question questionText={"What are your favorite cuisine?"} />
+        <View style={styles.space} />
+        <MultipleOptionQuestion
+          tagdata={Cuisines}
+          onTagPress={(cuisine) => {
+            if (chosenCuisines.has(cuisine)) {
+              chosenCuisines.delete(cuisine);
+            } else {
+              chosenCuisines.add(cuisine);
+            }
+          }}
+        />
+        <Question questionText={"Do you cook?"} />
+        <View style={styles.space} />
+        <SingleOptionQuestion
+          tagdata={yesNo}
+          onTagPress={(tagname) => (doesCook = tagname == "Yes")}
+        />
 
-      <Question questionText={"Do you have any allergies? or special dieteary requirements?"} />
-      <View style={styles.space} />
-      <MultipleOptionQuestion
-        tagdata={DietaryRequirements}
-        onTagPress={(dietaryRequirements) => {
-          if (chosenDietaryRequirements.has(dietaryRequirements)) {
-            chosenDietaryRequirements.delete(dietaryRequirements);
-          } else {
-            chosenDietaryRequirements.add(dietaryRequirements);
+        <Question
+          questionText={
+            "Do you have any allergies? or special dieteary requirements?"
           }
-        }}
-      />
-      <View style={styles.space} />
+        />
+        <View style={styles.space} />
+        <MultipleOptionQuestion
+          tagdata={DietaryRequirements}
+          onTagPress={(dietaryRequirements) => {
+            if (chosenDietaryRequirements.has(dietaryRequirements)) {
+              chosenDietaryRequirements.delete(dietaryRequirements);
+            } else {
+              chosenDietaryRequirements.add(dietaryRequirements);
+            }
+          }}
+        />
+        <View style={styles.space} />
+      </ScrollView>
       <QuizNavigator
         currentpage={{
           pagename: "Food",
@@ -79,7 +87,9 @@ export default function RecipientContextScreen({
           },
         }}
         next={{
-          pagename: route.params.nextpages[route.params.nextpageindex] || "Recommendations",
+          pagename:
+            route.params.nextpages[route.params.nextpageindex] ||
+            "Recommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
             doesCook,

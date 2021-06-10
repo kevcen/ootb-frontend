@@ -6,6 +6,11 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
   },
+  scrollable :{
+    width:"100%",
+    backgroundColor: "white",
+    marginBottom:70,
+  },
   space: {
     width: 20,
     height: 20,
@@ -26,7 +31,6 @@ export const styles = StyleSheet.create({
     borderColor: "white",
     alignItems: "center",
     justifyContent: "center",
-    opacity: 0.4,
   },
   tagChosen: {
     height: 40,
@@ -38,6 +42,5 @@ export const styles = StyleSheet.create({
     borderColor: "black",
     alignItems: "center",
     justifyContent: "center",
-    opacity: 0.8,
   },
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { primary } from "../../styles/Colors";
+import { black, green, primary, white } from "../../styles/Colors";
 
 export interface PageData {
   pagename: string;
@@ -9,7 +9,7 @@ export interface PageData {
 }
 
 export default (props: {
-  currentpage: PageData,
+  currentpage: PageData;
   navigation: any;
   prev?: PageData;
   next: PageData;
@@ -24,8 +24,8 @@ export default (props: {
     props.navigation.navigate(props.prev?.pagename, {
       ...props.currentpage.params,
       ...props.prev?.params,
-      nextpage:props.currentpage.pagename,
-      pagenum: props.pagenum-1,
+      nextpage: props.currentpage.pagename,
+      pagenum: props.pagenum - 1,
       totalpages: props.totalpages,
     });
   };
@@ -34,8 +34,8 @@ export default (props: {
     props.navigation.navigate(props.next.pagename, {
       ...props.currentpage.params,
       ...props.next.params,
-      prevpage:props.currentpage.pagename,
-      pagenum: props.pagenum+1,
+      prevpage: props.currentpage.pagename,
+      pagenum: props.pagenum + 1,
       totalpages: props.totalpages,
     });
   };
@@ -59,15 +59,15 @@ export default (props: {
 
 const styles = StyleSheet.create({
   bottomNavbar: {
-    width: "80%",
-    padding: 25,
-    bottom:0,
-    flex: 1,
+    width: "100%",
+    bottom: 0,
     flexDirection: "row",
     justifyContent: "space-between",
     position: "absolute",
+    backgroundColor: white,
   },
   section: {
+    padding: 25,
     color: primary,
   },
 });

@@ -15,6 +15,29 @@ import HomeScreen from "./src/screens/HomeScreen";
 import FoodScreen from "./src/screens/quiz/categories/FoodScreen";
 import BudgetScreen from "./src/screens/quiz/common/BudgetScreen";
 
+const horizontalAnimation = {
+  cardStyleInterpolator: ({
+    current,
+    layouts,
+  }: {
+    current: any;
+    layouts: any;
+  }) => {
+    return {
+      cardStyle: {
+        transform: [
+          {
+            translateX: current.progress.interpolate({
+              inputRange: [0, 1],
+              outputRange: [layouts.screen.width, 0],
+            }),
+          },
+        ],
+      },
+    };
+  },
+};
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
 
@@ -27,7 +50,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={horizontalAnimation}
             name="Home"
             component={HomeScreen}
           />

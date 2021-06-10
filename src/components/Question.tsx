@@ -10,7 +10,6 @@ export default function Question({ questionText }: { questionText: string }) {
 const styles = StyleSheet.create({
   question: {
     width:"85%",
-    top:10,
     marginTop:40,
     fontSize: 20,
     textAlign:"center",
