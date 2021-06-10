@@ -34,6 +34,12 @@ export default function RecommendationScreen({
     setVisible(!visible);
   };
 
+  const navigateToRankPage = () => {
+    navigation.navigate("RankingScreen", {
+      products: Array.from(wishlist.current),
+    });
+  };
+
   // on component load, get results
   React.useEffect(() => {
     // make post request to backend server
@@ -145,7 +151,7 @@ export default function RecommendationScreen({
         text={`Add ${
           wishlist.current.size == 0 ? "selected" : wishlist.current.size
         } to wishlist`}
-        onPress={() => {}}
+        onPress={navigateToRankPage}
       />
       {itemQuickView}
     </View>

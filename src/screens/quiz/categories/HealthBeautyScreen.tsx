@@ -55,7 +55,7 @@ export default function RecipientContextScreen({
         }}
         navigation={navigation}
         prev={{
-          pagename: route.params.prevpage || "RecipientCategories",
+          pagename: route.params.nextpages[route.params.nextpageindex - 2] || "RecipientCategories",
           params: {
             nextpageindex: route.params.nextpageindex - 1,
           },

@@ -9,8 +9,8 @@ import SenderCategoriesScreen from "./src/screens/quiz/sender/SenderCategoriesSc
 import SenderRecommendationScreen from "./src/screens/quiz/sender/SenderRecommendationScreen";
 import RecipientRecommendationScreen from "./src/screens/quiz/recipient/RecipientRecommendationScreen";
 import ErrorScreen from "./src/screens/ErrorScreen";
-import RecipientContextScreen from "./src/screens/quiz/sender/RecipientContextScreen";
-import SenderContextScreen from "./src/screens/quiz/recipient/SenderContextScreen";
+import SenderContextScreen from "./src/screens/quiz/sender/SenderContextScreen";
+import RecipientContextScreen from "./src/screens/quiz/recipient/RecipientContextScreen";
 import OccasionScreen from "./src/screens/quiz/sender/OccasionScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import FoodScreen from "./src/screens/quiz/categories/FoodScreen";
@@ -56,12 +56,12 @@ export default function App() {
           />
           <Stack.Screen
             options={defaultQuizScreenOptions}
-            name="Recipient"
+            name="Sender"
             component={SenderContextScreen}
           />
           <Stack.Screen
             options={defaultQuizScreenOptions}
-            name="Sender"
+            name="Recipient"
             component={RecipientContextScreen}
           />
           <Stack.Screen
