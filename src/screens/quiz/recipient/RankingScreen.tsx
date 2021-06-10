@@ -65,7 +65,7 @@ export default function RankingScreen({
               borderColor: "#000000",
               borderRadius: 5,
               backgroundColor: "#ffffff",
-              elevation: 10,
+              elevation: 5,
               shadowColor: "#000000",
               shadowOffset: { width: 1, height: 1 },
               shadowOpacity: 0.8,

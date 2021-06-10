@@ -9,8 +9,8 @@ import SenderCategoriesScreen from "./src/screens/quiz/sender/SenderCategoriesSc
 import SenderRecommendationScreen from "./src/screens/quiz/sender/SenderRecommendationScreen";
 import RecipientRecommendationScreen from "./src/screens/quiz/recipient/RecipientRecommendationScreen";
 import ErrorScreen from "./src/screens/ErrorScreen";
-import RecipientContextScreen from "./src/screens/quiz/sender/RecipientContextScreen";
-import SenderContextScreen from "./src/screens/quiz/recipient/SenderContextScreen";
+import SenderContextScreen from "./src/screens/quiz/sender/SenderContextScreen";
+import RecipientContextScreen from "./src/screens/quiz/recipient/RecipientContextScreen";
 import OccasionScreen from "./src/screens/quiz/sender/OccasionScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import FoodScreen from "./src/screens/quiz/categories/FoodScreen";
@@ -27,28 +27,7 @@ import RecipientIntroScreen from "./src/screens/quiz/recipient/RecipientIntroScr
 import SenderIntroScreen from "./src/screens/quiz/sender/SenderIntroScreen";
 import RankingScreen from "./src/screens/quiz/recipient/RankingScreen";
 
-const horizontalAnimation = {
-  cardStyleInterpolator: ({
-    current,
-    layouts,
-  }: {
-    current: any;
-    layouts: any;
-  }) => {
-    return {
-      cardStyle: {
-        transform: [
-          {
-            translateX: current.progress.interpolate({
-              inputRange: [0, 1],
-              outputRange: [layouts.screen.width, 0],
-            }),
-          },
-        ],
-      },
-    };
-  },
-};
+const defaultQuizScreenOptions = { title: "Quiz", headerLeft: () => null };
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -62,90 +41,97 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            options={horizontalAnimation}
+            options={{ title: "Home" }}
             name="Home"
             component={HomeScreen}
           />
-          <Stack.Screen name="SenderIntro" component={SenderIntroScreen} />
           <Stack.Screen
+            options={{ title: "" }}
+            name="SenderIntro"
+            component={SenderIntroScreen}
+          />
+          <Stack.Screen
+            options={{ title: "" }}
             name="RecipientIntro"
             component={RecipientIntroScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
-            name="Recipient"
+            options={defaultQuizScreenOptions}
+            name="Sender"
             component={SenderContextScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
-            name="Sender"
+            options={defaultQuizScreenOptions}
+            name="Recipient"
             component={RecipientContextScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="RecipientCategories"
             component={RecipientCategoriesScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="SenderCategories"
             component={SenderCategoriesScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Food"
             component={FoodScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Fashion"
             component={FashionScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Music"
             component={MusicScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Photography"
             component={PhotographyScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Sport"
             component={SportScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Fragrance"
             component={FragranceScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Gardening"
             component={GardeningScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Health & Beauty"
             component={HealthBeautyScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Home Decor"
             component={HomeDecorScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={defaultQuizScreenOptions}
             name="Occasions"
             component={OccasionScreen}
           />
           <Stack.Screen
+            options={{ title: "" }}
             name="SenderRecommendations"
             component={SenderRecommendationScreen}
           />
           <Stack.Screen
+            options={{ title: "" }}
             name="RecipientRecommendations"
             component={RecipientRecommendationScreen}
           />
@@ -155,7 +141,11 @@ export default function App() {
             component={BudgetScreen}
           />
           <Stack.Screen name="Ranking" component={RankingScreen} />
-          <Stack.Screen name="Error" component={ErrorScreen} />
+          <Stack.Screen
+            options={{ title: "" }}
+            name="Error"
+            component={ErrorScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );

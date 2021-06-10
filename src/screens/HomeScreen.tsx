@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   header: {
-    top: 15,
     width: "100%",
     padding: 20,
     alignItems: "center",
@@ -66,6 +65,6 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
-    marginVertical: "10%",
+    marginVertical: "5%",
   },
 });
