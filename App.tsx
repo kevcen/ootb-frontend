@@ -26,29 +26,6 @@ import HomeDecorScreen from "./src/screens/quiz/categories/HomeDecorScreen";
 import RecipientIntroScreen from "./src/screens/quiz/recipient/RecipientIntroScreen";
 import SenderIntroScreen from "./src/screens/quiz/sender/SenderIntroScreen";
 
-const horizontalAnimation = {
-  cardStyleInterpolator: ({
-    current,
-    layouts,
-  }: {
-    current: any;
-    layouts: any;
-  }) => {
-    return {
-      cardStyle: {
-        transform: [
-          {
-            translateX: current.progress.interpolate({
-              inputRange: [0, 1],
-              outputRange: [layouts.screen.width, 0],
-            }),
-          },
-        ],
-      },
-    };
-  },
-};
-
 export default function App() {
   const isLoadingComplete = useCachedResources();
 
@@ -61,15 +38,17 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            options={horizontalAnimation}
+            options={{ title: "Home" }}
             name="Home"
             component={HomeScreen}
           />
           <Stack.Screen
+            options={{ title: "" }}
             name="SenderIntro"
             component={SenderIntroScreen}
           />
           <Stack.Screen
+            options={{ title: "" }}
             name="RecipientIntro"
             component={RecipientIntroScreen}
           />
@@ -144,10 +123,12 @@ export default function App() {
             component={OccasionScreen}
           />
           <Stack.Screen
+            options={{ title: "" }}
             name="SenderRecommendations"
             component={SenderRecommendationScreen}
           />
           <Stack.Screen
+            options={{ title: "" }}
             name="RecipientRecommendations"
             component={RecipientRecommendationScreen}
           />
@@ -156,7 +137,11 @@ export default function App() {
             name="Budget"
             component={BudgetScreen}
           />
-          <Stack.Screen name="Error" component={ErrorScreen} />
+          <Stack.Screen
+            options={{ title: "" }}
+            name="Error"
+            component={ErrorScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
