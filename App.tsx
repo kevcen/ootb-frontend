@@ -25,6 +25,7 @@ import HealthBeautyScreen from "./src/screens/quiz/categories/HealthBeautyScreen
 import HomeDecorScreen from "./src/screens/quiz/categories/HomeDecorScreen";
 import RecipientIntroScreen from "./src/screens/quiz/recipient/RecipientIntroScreen";
 import SenderIntroScreen from "./src/screens/quiz/sender/SenderIntroScreen";
+import RankingScreen from "./src/screens/quiz/recipient/RankingScreen";
 
 const horizontalAnimation = {
   cardStyleInterpolator: ({
@@ -65,10 +66,7 @@ export default function App() {
             name="Home"
             component={HomeScreen}
           />
-          <Stack.Screen
-            name="SenderIntro"
-            component={SenderIntroScreen}
-          />
+          <Stack.Screen name="SenderIntro" component={SenderIntroScreen} />
           <Stack.Screen
             name="RecipientIntro"
             component={RecipientIntroScreen}
@@ -156,6 +154,7 @@ export default function App() {
             name="Budget"
             component={BudgetScreen}
           />
+          <Stack.Screen name="Ranking" component={RankingScreen} />
           <Stack.Screen name="Error" component={ErrorScreen} />
         </Stack.Navigator>
       </NavigationContainer>

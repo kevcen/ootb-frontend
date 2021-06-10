@@ -87,7 +87,7 @@ export default function RecommendationScreen({
         renderItem={({ item }: { item: Product }) => (
           <BasicView
             product={item}
-            onSelect={(product: Product, item : Item) => {
+            onSelect={(product: Product, item: Item) => {
               if (wishlist.current.has(product)) {
                 wishlist.current.delete(product);
               } else {
@@ -103,7 +103,9 @@ export default function RecommendationScreen({
       <PrimaryButton
         style={styles.footer}
         text={"Add selected to wishlist"}
-        onPress={() => {}}
+        onPress={() => {
+          navigation.navigate("Ranking");
+        }}
       />
     </View>
   );

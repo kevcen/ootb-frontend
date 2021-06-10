@@ -1,21 +1,28 @@
 import { StyleSheet, View, Text, Button, Pressable } from "react-native";
 
 export const styles = StyleSheet.create({
-  subtext:{
-    margin:5,
-    width:"70%",
-    textAlign:"center",
-    fontFamily:"roboto-thin"
+  subtext: {
+    margin: 5,
+    width: "70%",
+    textAlign: "center",
+    fontFamily: "roboto-thin",
+  },
+  heading2: {
+    fontFamily: "roboto-light",
   },
   viewCentered: {
     flex: 1,
     alignItems: "center",
     backgroundColor: "white",
   },
-  scrollable :{
-    width:"100%",
+  scrollable: {
+    width: "100%",
     backgroundColor: "white",
-    marginBottom:70,
+    marginBottom: 70,
+  },
+  scrollableNoMargin: {
+    width: "100%",
+    backgroundColor: "white",
   },
   space: {
     width: 20,
