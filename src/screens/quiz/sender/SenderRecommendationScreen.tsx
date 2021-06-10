@@ -147,7 +147,6 @@ export default function RecommendationScreen({
       />
 
       <Overlay
-        ModalComponent={Modal}
         isVisible={visible}
         onBackdropPress={toggleOverlay}
         style={styles.overlay}

@@ -48,7 +48,8 @@ export default (props: {
       style={[
         styles.view,
         {
-          borderColor: props.isActive ? primary : white,
+          borderColor:
+             props.isActive ? primary : white,
         },
       ]}
       onPress={() => props.onSelect(props.product, minItem)}
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 260,
     margin: 5,
-    borderWidth:2
+    borderWidth: 2,
   },
   image: {
     height: 200,
