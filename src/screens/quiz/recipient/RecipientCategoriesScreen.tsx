@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import Question from "../../../components/Question";
 import { buttonStyles } from "../../../styles/buttons";
@@ -17,7 +17,9 @@ export default function CategoriesScreen({
   route: any;
   navigation: any;
 }) {
-  const chosenCategories = new Set();
+  const [chosenCategories] = useState(new Set<string>());
+  const [arrayCategories, setChosenCategories] = useState(new Array());
+  const [initialPageNum] = useState(route.params.pagenum);
 
   return (
     <View style={styles.viewCentered}>
@@ -31,22 +33,29 @@ export default function CategoriesScreen({
           } else {
             chosenCategories.add(tagname);
           }
+          setChosenCategories(Array.from(chosenCategories));
         }}
       />
       <View style={styles.space} />
       <QuizNavigator
+        currentpage={{
+          pagename: "RecipientCategories",
+          params: { ...route.params },
+        }}
         navigation={navigation}
         prev={{ pagename: "Recipient" }}
         next={{
-          pagename: "Budget",
+          pagename: arrayCategories[0] || "Recommendations",
           params: {
+            chosenCategories,
+            prevpage: "",
+            nextpageindex: 1,
+            nextpages: arrayCategories,
             categories: chosenCategories,
-            isSender: false,
-            ...route.params,
           },
         }}
         pagenum={route.params.pagenum}
-        totalpages={route.params.totalpages}
+        totalpages={initialPageNum + chosenCategories.size}
       />
     </View>
   );

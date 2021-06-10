@@ -62,6 +62,10 @@ export default function BudgetScreen({
 
       <View style={styles.space} />
       <QuizNavigator
+        currentpage={{
+          pagename: "Budget",
+          params: { ...route.params },
+        }}
         navigation={navigation}
         prev={{
           pagename: route.params.isSender
@@ -70,7 +74,7 @@ export default function BudgetScreen({
         }}
         next={{
           pagename: "Recommendations",
-          params: { price: priceRange, ...route.params },
+          params: { price: priceRange },
         }}
         pagenum={route.params.pagenum}
         totalpages={route.params.totalpages}

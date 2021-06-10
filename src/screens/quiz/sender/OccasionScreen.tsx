@@ -28,6 +28,7 @@ export default function OccasionScreen({
       <View style={styles.space} />
       <QuizNavigator
         navigation={navigation}
+        currentpage={{ pagename: "Occasions", params: { ...route.params } }}
         prev={{ pagename: "Sender" }}
         next={{ pagename: "SenderCategories", params: { chosenOccasion } }}
         pagenum={route.params.pagenum}

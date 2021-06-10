@@ -9,6 +9,7 @@ export interface PageData {
 }
 
 export default (props: {
+  currentpage: PageData,
   navigation: any;
   prev?: PageData;
   next: PageData;
@@ -21,7 +22,9 @@ export default (props: {
 
   let navigatePrev = () => {
     props.navigation.navigate(props.prev?.pagename, {
+      ...props.currentpage.params,
       ...props.prev?.params,
+      nextpage:props.currentpage.pagename,
       pagenum: props.pagenum-1,
       totalpages: props.totalpages,
     });
@@ -29,7 +32,9 @@ export default (props: {
 
   let navigateNext = () => {
     props.navigation.navigate(props.next.pagename, {
+      ...props.currentpage.params,
       ...props.next.params,
+      prevpage:props.currentpage.pagename,
       pagenum: props.pagenum+1,
       totalpages: props.totalpages,
     });
@@ -55,7 +60,8 @@ export default (props: {
 const styles = StyleSheet.create({
   bottomNavbar: {
     width: "80%",
-    bottom: "25px",
+    padding: 25,
+    bottom:0,
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
