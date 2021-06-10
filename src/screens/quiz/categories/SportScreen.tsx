@@ -29,7 +29,7 @@ export default function RecipientContextScreen({
         }}
       >
         <Question questionText={"What sports do you play?"} />
-        <View style={styles.space} /** add new*//>
+        <View style={styles.space} /** add new*/ />
         <MultipleOptionQuestion
           tagdata={Sports}
           onTagPress={(sport) => {
@@ -68,7 +68,7 @@ export default function RecipientContextScreen({
         next={{
           pagename:
             route.params.nextpages[route.params.nextpageindex] ||
-            "Recommendations",
+            "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
             chosenPlaySports,

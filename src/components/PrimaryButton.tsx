@@ -9,16 +9,14 @@ import {
 } from "react-native";
 import { primary, secondary, white } from "../styles/Colors";
 
-export default (props: { onPress: () => any; text: string; style: any }) => {
+export default (props: { onPress: () => any; text: string; style?: any }) => {
   return (
     <TouchableHighlight
       underlayColor={secondary}
       onPress={props.onPress}
-      style={[styles.button ,props.style]}
+      style={[styles.button, props.style]}
     >
-      <Text style={styles.buttonText}>
-        {props.text.toUpperCase()}
-      </Text>
+      <Text style={styles.buttonText}>{props.text.toUpperCase()}</Text>
     </TouchableHighlight>
   );
 };

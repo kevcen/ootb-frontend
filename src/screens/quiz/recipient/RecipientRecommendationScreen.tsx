@@ -94,7 +94,7 @@ export default function RecommendationScreen({
         )}
         keyExtractor={(item) => item.name}
       />
-      <PrimaryButton text={"Add selected to wishlist"} />
+      <PrimaryButton text={"Add selected to wishlist"} onPress={() => {}} />
     </View>
   );
 }

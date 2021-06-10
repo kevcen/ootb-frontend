@@ -51,7 +51,7 @@ export default function RecipientContextScreen({
         }}
       />
       <View style={styles.space} />
-      <Question questionText={"Where do you usually shop?"} /> //
+      <Question questionText={"Where do you usually shop?"} />
       <View style={styles.space} />
       <MultipleOptionQuestion
         tagdata={ClothesStoreTypes}

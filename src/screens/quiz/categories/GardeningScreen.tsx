@@ -48,11 +48,7 @@ export default function RecipientContextScreen({
             }
           }}
         />
-        <Question
-          questionText={
-            "How much space do you have to plant?"
-          }
-        />
+        <Question questionText={"How much space do you have to plant?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
           tagdata={PlantSize}
@@ -81,7 +77,7 @@ export default function RecipientContextScreen({
         next={{
           pagename:
             route.params.nextpages[route.params.nextpageindex] ||
-            "Recommendations",
+            "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
             hasGreenhouse,

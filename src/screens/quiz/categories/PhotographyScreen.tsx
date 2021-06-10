@@ -29,8 +29,10 @@ export default function RecipientContextScreen({
         }}
       >
         <Question questionText={"How experienced are you with photography?"} />
-        <View style={styles.space} 
-        /** TODO: unselect other options after selection*//>
+        <View
+          style={styles.space}
+          /** TODO: unselect other options after selection*/
+        />
         <MultipleOptionQuestion
           tagdata={PhotographyExperience}
           onTagPress={(experience) => {
@@ -69,11 +71,11 @@ export default function RecipientContextScreen({
         next={{
           pagename:
             route.params.nextpages[route.params.nextpageindex] ||
-            "Recommendations",
+            "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
             chosenCameraTypes,
-            chosenExperience
+            chosenExperience,
           },
         }}
         pagenum={route.params.pagenum}

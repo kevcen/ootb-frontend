@@ -70,7 +70,7 @@ export default function RecipientContextScreen({
         next={{
           pagename:
             route.params.nextpages[route.params.nextpageindex] ||
-            "Recommendations",
+            "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
             chosenHomeRooms,
