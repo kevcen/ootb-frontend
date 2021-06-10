@@ -45,7 +45,7 @@ export default function CategoriesScreen({
         navigation={navigation}
         prev={{ pagename: "Recipient" }}
         next={{
-          pagename: arrayCategories[0] || "Recommendations",
+          pagename: arrayCategories[0] || "RecipientRecommendations",
           params: {
             chosenCategories,
             prevpage: "",

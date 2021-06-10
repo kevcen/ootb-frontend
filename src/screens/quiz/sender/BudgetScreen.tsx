@@ -68,10 +68,10 @@ export default function BudgetScreen({
         }}
         navigation={navigation}
         prev={{
-          pagename: "SenderCategories"
+          pagename: "SenderCategories",
         }}
         next={{
-          pagename: "Recommendations",
+          pagename: "SenderRecommendations",
           params: { price: priceRange },
         }}
         pagenum={route.params.pagenum}

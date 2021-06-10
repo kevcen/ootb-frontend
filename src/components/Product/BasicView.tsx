@@ -12,6 +12,7 @@ import Product from "../../../interfaces/Product";
 import { black } from "../../styles/Colors";
 import PrimaryText from "../PrimaryText";
 import QuickView from "./QuickView";
+import { primary } from "../../styles/Colors";
 
 let getCheapestItem = (items: Item[]): Item | undefined => {
   var highest = Number.POSITIVE_INFINITY;
@@ -27,7 +28,8 @@ let getCheapestItem = (items: Item[]): Item | undefined => {
 
 export default (props: {
   product: Product;
-  onSelect: (product: Product, item : Item) => any;
+  onSelect: (product: Product, item: Item) => any;
+  isActive?: boolean;
 }) => {
   const minItem: Item | undefined = getCheapestItem(props.product.items);
 
@@ -42,12 +44,18 @@ export default (props: {
   }
 
   return (
-    <TouchableHighlight style={styles.view} onPress={() => props.onSelect(props.product, minItem)}>
-    <View >
+    <TouchableHighlight
+      style={
+        (styles.view,
+        props.isActive ?? { borderWidth: 2, borderColor: primary })
+      }
+      onPress={() => props.onSelect(props.product, minItem)}
+    >
+      <View>
         <Image style={styles.image} source={{ uri: props.product.image }} />
-      <Text style={styles.text}>{props.product.name}</Text>
-      <Text style={styles.text}>{"£" + minItem.cost.toFixed(2)}</Text>
-    </View>
+        <Text style={styles.text}>{props.product.name}</Text>
+        <Text style={styles.text}>{"£" + minItem.cost.toFixed(2)}</Text>
+      </View>
     </TouchableHighlight>
   );
 };

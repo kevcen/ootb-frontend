@@ -5,13 +5,14 @@ import { FlatList, Linking, TouchableHighlight } from "react-native";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { Overlay } from "react-native-elements";
 import Modal from "modal-react-native-web";
-import Item from "../../interfaces/Item";
-import LoadingData from "../components/LoadingData";
-import PrimaryText from "../components/PrimaryText";
-import BasicView from "../components/Product/BasicView";
-import QuickView from "../components/Product/QuickView";
-import { primary, white } from "../styles/Colors";
-import Product from "../../interfaces/Product";
+import Item from "../../../../interfaces/Item";
+import LoadingData from "../../../components/LoadingData";
+import PrimaryText from "../../../components/PrimaryText";
+import PrimaryButton from "../../../components/PrimaryButton";
+import BasicView from "../../../components/Product/BasicView";
+import QuickView from "../../../components/Product/QuickView";
+import { primary, white } from "../../../styles/Colors";
+import Product from "../../../../interfaces/Product";
 
 export default function RecommendationScreen({
   route,
@@ -23,12 +24,7 @@ export default function RecommendationScreen({
   const [isLoading, setIsLoading] = useState(true);
   const chosenCategories: Set<String> = route.params?.categories;
   var [recommendations, setRecommendations] = useState([]);
-  const [visible, setVisible] = useState(false);
-  const [quickView, setQuickView] = useState(<View/>);
-
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  };
+  const [wishlist, setWishlist] = useState(new Set());
 
   // on component load, get results
   React.useEffect(() => {
@@ -80,6 +76,7 @@ export default function RecommendationScreen({
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
+      <PrimaryText text={"Your gift recommendations"} />
       <FlatList
         numColumns={2}
         style={styles.grid}
@@ -88,23 +85,16 @@ export default function RecommendationScreen({
         renderItem={({ item }: { item: Product }) => (
           <BasicView
             product={item}
-            onSelect={(product: Product, item: Item) => {
-              setQuickView(<QuickView product={product} item={item} />);
-              toggleOverlay();
+            onSelect={(product: Product) => {
+              wishlist.add(product);
+              setWishlist(new Set(wishlist));
             }}
+            isActive={wishlist.has(item)}
           />
         )}
         keyExtractor={(item) => item.name}
       />
-
-      <Overlay
-        ModalComponent={Modal}
-        isVisible={visible}
-        onBackdropPress={toggleOverlay}
-        style={styles.overlay}
-      >
-        {quickView}
-      </Overlay>
+      <PrimaryButton text={"Add selected to wishlist"} />
     </View>
   );
 }

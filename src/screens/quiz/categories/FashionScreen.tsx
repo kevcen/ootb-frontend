@@ -63,7 +63,9 @@ export default function RecipientContextScreen({
           },
         }}
         next={{
-          pagename: route.params.nextpages[route.params.nextpageindex] || "Recommendations",
+          pagename:
+            route.params.nextpages[route.params.nextpageindex] ||
+            "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
             doesCook,

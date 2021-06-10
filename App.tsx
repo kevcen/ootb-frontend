@@ -6,14 +6,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import useCachedResources from "./src/hooks/useCachedResources";
 import RecipientCategoriesScreen from "./src/screens/quiz/recipient/RecipientCategoriesScreen";
 import SenderCategoriesScreen from "./src/screens/quiz/sender/SenderCategoriesScreen";
-import RecommendationScreen from "./src/screens/RecommendationScreen";
+import SenderRecommendationScreen from "./src/screens/quiz/sender/SenderRecommendationScreen";
+import RecipientRecommendationScreen from "./src/screens/quiz/recipient/RecipientRecommendationScreen";
 import ErrorScreen from "./src/screens/ErrorScreen";
 import RecipientContextScreen from "./src/screens/quiz/sender/RecipientContextScreen";
 import SenderContextScreen from "./src/screens/quiz/recipient/SenderContextScreen";
 import OccasionScreen from "./src/screens/quiz/sender/OccasionScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import FoodScreen from "./src/screens/quiz/categories/FoodScreen";
-import BudgetScreen from "./src/screens/quiz/common/BudgetScreen";
+import BudgetScreen from "./src/screens/quiz/sender/BudgetScreen";
 
 const horizontalAnimation = {
   cardStyleInterpolator: ({
@@ -85,8 +86,12 @@ export default function App() {
             component={OccasionScreen}
           />
           <Stack.Screen
-            name="Recommendations"
-            component={RecommendationScreen}
+            name="SenderRecommendations"
+            component={SenderRecommendationScreen}
+          />
+          <Stack.Screen
+            name="RecipientRecommendations"
+            component={RecipientRecommendationScreen}
           />
           <Stack.Screen
             options={{ headerShown: false }}
