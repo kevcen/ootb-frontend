@@ -21,7 +21,7 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
         the person you are gifting to
       </Text>
 
-      <View style={{width:"100%", height:"50%",justifyContent:"center", alignItems:"center"}}>
+      <View style={{height:"100%",position:"absolute",justifyContent:"center", alignItems:"center"}}>
       <PrimaryButton onPress={navigateQuiz} text={"Lets go!"} />
     </View>
     </View>
