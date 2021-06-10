@@ -33,7 +33,7 @@ export default function RecommendationScreen({
   // on component load, get results
   React.useEffect(() => {
     // make post request to backend server
-    var promise = axios.post("http://localhost:8080/products", {
+    var promise = axios.post("https://gift-recommender-api.herokuapp.com/products", {
       categories: Array.from(chosenCategories),
       price: route.params?.price,
       gender: route.params?.gender,
