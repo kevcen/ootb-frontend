@@ -26,30 +26,9 @@ export default function RankingScreen({
   route: any;
   navigation: any;
 }) {
-  const selectedItems: Product[] = [
-    {
-      name: "KFC",
-      image:
-        "https://www.joc.com/sites/default/files/field_feature_image/KFC_0.png",
-      items: [],
-      categories: [],
-    },
-    {
-      name: "Chicken World",
-      image:
-        "https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/08/02/16/chicken-world.jpg?width=990&auto=webp&quality=75",
-      items: [],
-      categories: [],
-    },
-    {
-      name: "PFC",
-      image:
-        "https://video-images.vice.com/articles/59cbbf4efd5e413f367cc24c/lede/1506525062815-art-school-chicken-shop-tour.jpeg?crop=1xw:0.7449xh;0xw,0.2087xh&resize=500:*",
-      items: [],
-      categories: [],
-    },
-  ]; //route.params?.wishlist;
+  const selectedItems: Product[] = Array.from(route.params?.products || []);
 
+  // Data is ordered list of priority, first element is highest priority
   const [data, setData] = useState(selectedItems);
 
   const renderItem = useCallback(
