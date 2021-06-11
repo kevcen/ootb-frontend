@@ -58,7 +58,7 @@ export default (props: {
     >
       <View>
         <Image style={styles.image} source={{ uri: props.product.image }} />
-        <Text style={styles.text}>{props.product.name}</Text>
+        <Text style={styles.text} numberOfLines={1}>{props.product.name}</Text>
         <Text style={styles.text}>{"£" + minItem.cost.toFixed(2)}</Text>
       </View>
     </TouchableHighlight>
