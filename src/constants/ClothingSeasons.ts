@@ -1,15 +1,11 @@
 import TagData from "../interfaces/TagData";
 
-const clothingBrands: TagData[] = [
-  { title: "Nike" },
-  { title: "Adidas" },
-  { title: "Gucci" },
-  { title: "Off-White" },
-  { title: "Boohoo" },
-  { title: "Primark" },
-  { title: "Urban Outfits" },
-  { title: "Yeezy" },
-  { title: "None" },
+const clothingSeasons: TagData[] = [
+  { title: "Winter" },
+  { title: "Spring" },
+  { title: "Summer" },
+  { title: "Fall" },
+  { title: "Any" },
 ];
 
-export default clothingBrands;
+export default clothingSeasons;

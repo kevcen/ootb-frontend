@@ -6,7 +6,7 @@ import QuizNavigator from "../../../components/Quiz/QuizNavigator";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
 import FashionWear from "../../../constants/FashionWear";
 import ClothesStoreTypes from "../../../constants/ClothesStoreTypes";
-import ClothingBrands from "../../../constants/ClothingSeasons";
+import ClothingSeasons from "../../../constants/ClothingSeasons";
 import yesNo from "../../../constants/YesNo";
 import { styles } from "../../../styles/quiz";
 
@@ -18,7 +18,7 @@ export default function RecipientContextScreen({
   navigation: any;
 }) {
   var chosenClothesStoreTypes = new Set();
-  var chosenClothingBrands = new Set();
+  var chosenClothingSeasons = new Set();
   var chosenFashionWear = new Set();
 
   // TODO: unselect other options after selection
@@ -32,15 +32,15 @@ export default function RecipientContextScreen({
         }}
       >
         <View style={styles.space} />
-        <Question questionText={"What brands do you wear? if Any?"} />
+        <Question questionText={"Which seasons of wear would you like to be gifted?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
-          tagdata={ClothingBrands}
-          onTagPress={(brands) => {
-            if (chosenClothingBrands.has(brands)) {
-              chosenClothingBrands.delete(brands);
+          tagdata={ClothingSeasons}
+          onTagPress={(clothingSeason) => {
+            if (chosenClothingSeasons.has(clothingSeason)) {
+              chosenClothingSeasons.delete(clothingSeason);
             } else {
-              chosenClothingBrands.add(brands);
+              chosenClothingSeasons.add(clothingSeason);
             }
           }}
         />
@@ -91,7 +91,7 @@ export default function RecipientContextScreen({
           params: {
             nextpageindex: route.params.nextpageindex + 1,
             chosenClothesStoreTypes,
-            chosenClothingSeasons: chosenClothingBrands,
+            chosenClothingSeasons,
             chosenFashionWear,
           },
         }}
