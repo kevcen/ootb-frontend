@@ -56,7 +56,7 @@ export default function BudgetScreen({
         }}
         sliderLength={280}
         min={0}
-        max={100}
+        max={250}
         allowOverlap={true}
       />
 
