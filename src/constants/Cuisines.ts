@@ -7,6 +7,7 @@ const categories: TagData[] = [
   {title:"Mexican"},
   {title:"Korean"},
   {title:"British"},
+  {title:"Italian"},
   { title: "Any" },
 ];
 export default categories;

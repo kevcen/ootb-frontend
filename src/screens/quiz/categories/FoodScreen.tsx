@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
@@ -7,7 +7,9 @@ import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion"
 import Cuisines from "../../../constants/Cuisines";
 import DietaryRequirements from "../../../constants/DietaryRequirements";
 import yesNo from "../../../constants/YesNo";
+import AddNewButton from "../../../components/Quiz/AddNewButton";
 import { styles } from "../../../styles/quiz";
+import TagData from "../../../interfaces/TagData";
 
 export default function RecipientContextScreen({
   route,
@@ -20,6 +22,8 @@ export default function RecipientContextScreen({
   var doesCook = false;
   var chosenCuisines = new Set();
   var chosenDietaryRequirements = new Set();
+  var [cuis, setCuis] = useState(Cuisines.slice());
+  
 
   // TODO: unselect other options after selection
   return (
@@ -40,13 +44,19 @@ export default function RecipientContextScreen({
         <Question questionText={"What are your favorite cuisine?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
-          tagdata={Cuisines}
+          tagdata={cuis}
           onTagPress={(cuisine) => {
             if (chosenCuisines.has(cuisine)) {
               chosenCuisines.delete(cuisine);
             } else {
               chosenCuisines.add(cuisine);
             }
+          }}
+        />
+        <View style={styles.space} />
+        <AddNewButton
+          setCats={(cui: TagData) => {
+            setCuis(cuis.concat(cui));
           }}
         />
         <Question questionText={"Do you cook?"} />
@@ -58,7 +68,7 @@ export default function RecipientContextScreen({
 
         <Question
           questionText={
-            "Do you have any allergies? or special dieteary requirements?"
+            "Do you have any allergies? or special dietary requirements?"
           }
         />
         <View style={styles.space} />
@@ -95,6 +105,7 @@ export default function RecipientContextScreen({
             doesCook,
             doesDrink,
             chosenCuisines,
+            chosenDietaryRequirements,
           },
         }}
         pagenum={route.params.pagenum}

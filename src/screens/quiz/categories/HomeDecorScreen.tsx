@@ -29,7 +29,7 @@ export default function RecipientContextScreen({
           alignItems: "center",
         }}
       >
-        <Question questionText={"Which room do you want gifts for?"} />
+        <Question questionText={"What styles are your rooms?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
           tagdata={HomeStyles}
@@ -41,7 +41,7 @@ export default function RecipientContextScreen({
             }
           }}
         />
-        <Question questionText={"What styles are your rooms?"} />
+        <Question questionText={"Which room do you want gifts for?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
           tagdata={HomeRooms}

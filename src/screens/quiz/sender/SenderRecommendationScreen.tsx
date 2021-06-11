@@ -53,6 +53,7 @@ export default function RecommendationScreen({
       doesCook: route.params?.doesCook,
       doesDrink: route.params?.doesDrink,
       cuisines: Array.from(route.params?.chosenCuisines || new Set()),
+      dietaryRequirements: Array.from(route.params?.chosenDietaryRequirements || new Set()),
 
       //Fragrance
       perfumeTypes: Array.from(route.params?.chosenPerfumeTypes || new Set()),

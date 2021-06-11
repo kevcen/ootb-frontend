@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
@@ -9,6 +9,8 @@ import ClothesStoreTypes from "../../../constants/ClothesStoreTypes";
 import ClothingSeasons from "../../../constants/ClothingSeasons";
 import yesNo from "../../../constants/YesNo";
 import { styles } from "../../../styles/quiz";
+import AddNewButton from "../../../components/Quiz/AddNewButton";
+import TagData from "../../../interfaces/TagData";
 
 export default function RecipientContextScreen({
   route,
@@ -20,6 +22,7 @@ export default function RecipientContextScreen({
   var chosenClothesStoreTypes = new Set();
   var chosenClothingSeasons = new Set();
   var chosenFashionWear = new Set();
+  var [fashWear, setFashWear] = useState(FashionWear.slice());
 
   // TODO: unselect other options after selection
   return (
@@ -48,13 +51,19 @@ export default function RecipientContextScreen({
         <Question questionText={"What type of clothes do you like to wear?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
-          tagdata={FashionWear}
+          tagdata={fashWear}
           onTagPress={(wear) => {
             if (chosenFashionWear.has(wear)) {
               chosenFashionWear.delete(wear);
             } else {
               chosenFashionWear.add(wear);
             }
+          }}
+        />
+        <View style={styles.space} />
+        <AddNewButton
+          setCats={(wear: TagData) => {
+            setFashWear(fashWear.concat(wear));
           }}
         />
         <View style={styles.space} />
