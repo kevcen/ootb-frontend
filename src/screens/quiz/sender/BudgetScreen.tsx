@@ -17,7 +17,7 @@ export default function BudgetScreen({
   route: any;
   navigation: any;
 }) {
-  var [priceRange, setPriceRange] = useState([30, 500]);
+  var [priceRange, setPriceRange] = useState([10, 50]);
   const [isLoading, setIsLoading] = useState(false);
 
   if (isLoading) {
@@ -55,8 +55,8 @@ export default function BudgetScreen({
           return <SliderMarker markerValue={e.currentValue} />;
         }}
         sliderLength={280}
-        min={1}
-        max={1000}
+        min={0}
+        max={100}
         allowOverlap={true}
       />
 
