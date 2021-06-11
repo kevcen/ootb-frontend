@@ -14,7 +14,7 @@ export default function NotFoundScreen({
       <Text style={styles.title}>Oops an error occurred!</Text>
       <Text style={styles.errorText}>{error?.message}</Text>
       <TouchableOpacity
-        onPress={() => navigation.replace("Root")}
+        onPress={() => navigation.replace("Home")}
         style={styles.link}
       >
         <Text style={styles.linkText}>Go to home screen!</Text>

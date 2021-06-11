@@ -44,9 +44,7 @@ export default function RecipientContextScreen({
         }
         next={{
           pagename:
-            chosenGiftType == "Personalised"
-              ? "PersonalisedCategories"
-              : "RecipientCategories",
+            "RecipientCategories",
           params: { chosenGender, chosenGiftType },
         }}
         pagenum={1}
