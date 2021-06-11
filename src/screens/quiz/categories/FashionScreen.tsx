@@ -6,7 +6,7 @@ import QuizNavigator from "../../../components/Quiz/QuizNavigator";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
 import FashionWear from "../../../constants/FashionWear";
 import ClothesStoreTypes from "../../../constants/ClothesStoreTypes";
-import ClothingSeasons from "../../../constants/ClothingSeasons";
+import ClothingBrands from "../../../constants/ClothingSeasons";
 import yesNo from "../../../constants/YesNo";
 import { styles } from "../../../styles/quiz";
 
@@ -18,7 +18,7 @@ export default function RecipientContextScreen({
   navigation: any;
 }) {
   var chosenClothesStoreTypes = new Set();
-  var chosenClothingSeasons = new Set();
+  var chosenClothingBrands = new Set();
   var chosenFashionWear = new Set();
 
   // TODO: unselect other options after selection
@@ -32,20 +32,20 @@ export default function RecipientContextScreen({
         }}
       >
         <View style={styles.space} />
-        <Question questionText={"What season is it?"} />
+        <Question questionText={"What brands do you wear? if Any?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
-          tagdata={ClothingSeasons}
-          onTagPress={(season) => {
-            if (chosenClothingSeasons.has(season)) {
-              chosenClothingSeasons.delete(season);
+          tagdata={ClothingBrands}
+          onTagPress={(brands) => {
+            if (chosenClothingBrands.has(brands)) {
+              chosenClothingBrands.delete(brands);
             } else {
-              chosenClothingSeasons.add(season);
+              chosenClothingBrands.add(brands);
             }
           }}
         />
         <View style={styles.space} />
-        <Question questionText={"What type of wear do you like to wear?"} />
+        <Question questionText={"What type of clothes do you like to wear?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
           tagdata={FashionWear}
@@ -91,7 +91,7 @@ export default function RecipientContextScreen({
           params: {
             nextpageindex: route.params.nextpageindex + 1,
             chosenClothesStoreTypes,
-            chosenClothingSeasons,
+            chosenClothingSeasons: chosenClothingBrands,
             chosenFashionWear,
           },
         }}
