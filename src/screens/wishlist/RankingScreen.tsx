@@ -7,19 +7,19 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import Question from "../../../components/Question";
-import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
-import QuizNavigator from "../../../components/Quiz/QuizNavigator";
+import Question from "../../components/Question";
+import MultipleOptionQuestion from "../../components/Quiz/MultipleOptionQuestion";
+import QuizNavigator from "../../components/Quiz/QuizNavigator";
 import DraggableFlatList, {
   RenderItemParams,
 } from "react-native-draggable-flatlist";
-import { styles } from "../../../styles/quiz";
+import { styles } from "../../styles/quiz";
 import { Divider } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import Product from "../../../interfaces/Product";
-import PrimaryButton from "../../../components/PrimaryButton";
+import Product from "../../interfaces/Product";
+import PrimaryButton from "../../components/PrimaryButton";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { black } from "../../../styles/Colors";
+import { black } from "../../styles/Colors";
 
 export default function RankingScreen({
   route,
@@ -31,7 +31,7 @@ export default function RankingScreen({
   const selectedItems: Product[] = Array.from(route.params?.products || []);
 
   // Data is ordered list of priority, first element is highest priority
-  const [data, setData] = useState(selectedItems);
+  const [orderedWishlist, setOrderedWishlist] = useState(selectedItems);
 
   const renderItem = useCallback(
     ({ item, index, drag, isActive }: RenderItemParams<Product>) => {
@@ -92,10 +92,10 @@ export default function RankingScreen({
         />
         <View style={styles.space} />
         <DraggableFlatList
-          data={data}
+          data={orderedWishlist}
           renderItem={renderItem}
           keyExtractor={(item, index) => `draggable-item-${item.name}${index}`}
-          onDragEnd={({ data }) => setData(data)}
+          onDragEnd={({ data }) => setOrderedWishlist(data)}
           dragItemOverflow={false}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
@@ -122,7 +122,7 @@ export default function RankingScreen({
             alignSelf: "center",
           }}
           text={"Create wishlist"}
-          onPress={() => {}}
+          onPress={() => {navigation.navigate("CreateProfile", {wishlist : orderedWishlist})}}
         />
       </ScrollView>
     </View>

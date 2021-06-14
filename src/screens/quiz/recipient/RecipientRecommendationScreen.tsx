@@ -33,6 +33,7 @@ import Sports from "../../../constants/Sports";
 import TagData from "../../../interfaces/TagData";
 import Genders from "../../../constants/Genders";
 import Relationships from "../../../constants/Relationships";
+import {API_URL} from 'react-native-dotenv';
 
 
 function formatSet(set: any, allOptions: TagData[]) {
@@ -73,7 +74,7 @@ export default function RecommendationScreen({
   React.useEffect(() => {
     // make post request to backend server
     var promise = axios.post(
-      "http://localhost:8080/products",
+      `${API_URL}/products`,
       {
         categories: Array.from(route.params?.categories),
         price: route.params?.price,

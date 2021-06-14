@@ -5,13 +5,11 @@ import { FlatList, Linking, TouchableHighlight, Platform, Dimensions } from "rea
 import { StyleSheet, View, Text, Image } from "react-native";
 import { Overlay } from "react-native-elements";
 import Modal from "modal-react-native-web";
-import Item from "../../../../interfaces/Item";
 import LoadingData from "../../../components/LoadingData";
 import PrimaryText from "../../../components/PrimaryText";
 import BasicView from "../../../components/Product/BasicView";
 import QuickView from "../../../components/Product/QuickView";
 import { primary, white } from "../../../styles/Colors";
-import Product from "../../../../interfaces/Product";
 import ClothingSeasons from "../../../constants/ClothingSeasons";
 import ClothesStoreTypes from "../../../constants/ClothesStoreTypes";
 import FashionWear from "../../../constants/FashionWear";
@@ -32,6 +30,9 @@ import Sports from "../../../constants/Sports";
 import TagData from "../../../interfaces/TagData";
 import Genders from "../../../constants/Genders";
 import Relationships from "../../../constants/Relationships";
+import Product from "../../../interfaces/Product";
+import Item from "../../../interfaces/Item";
+import {API_URL} from 'react-native-dotenv';
 
 function formatSet(set: any, allOptions: TagData[]) {
   var res = new Set<string>(Array.from(set || new Set()));
@@ -62,7 +63,7 @@ export default function RecommendationScreen({
   // on component load, get results
   React.useEffect(() => {
     // make post request to backend server
-    var promise = axios.post("http://localhost:8080/products", {
+    var promise = axios.post(`${API_URL}/products`, {
       categories: Array.from(chosenCategories),
       price: route.params?.price,
       gender: formatSet(route.params?.gender, Genders),
