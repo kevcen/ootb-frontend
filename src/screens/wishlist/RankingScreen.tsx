@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  StyleSheet,
 } from "react-native";
 import Question from "../../components/Question";
 import MultipleOptionQuestion from "../../components/Quiz/MultipleOptionQuestion";
@@ -14,12 +15,13 @@ import DraggableFlatList, {
   RenderItemParams,
 } from "react-native-draggable-flatlist";
 import { styles } from "../../styles/quiz";
-import { Divider } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Product from "../../interfaces/Product";
 import PrimaryButton from "../../components/PrimaryButton";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { black } from "../../styles/Colors";
+import PrimaryButtonStyles from "../../styles/PrimaryButtonStyles";
+import { primary } from "../../styles/Colors";
+import { color } from "react-native-elements/dist/helpers";
 
 export default function RankingScreen({
   route,
@@ -32,29 +34,37 @@ export default function RankingScreen({
 
   // Data is ordered list of priority, first element is highest priority
   const [orderedWishlist, setOrderedWishlist] = useState(selectedItems);
+  const [isRead, setRead] = useState(false);
 
   const renderItem = useCallback(
     ({ item, index, drag, isActive }: RenderItemParams<Product>) => {
       return (
-        <View style={{ paddingVertical: 5, width: "90%", alignSelf: "center" }}>
-          <TouchableWithoutFeedback
+        <TouchableWithoutFeedback
+          style={{ padding: 5, width: "95%", alignSelf: "center" }}
+          onLongPress={drag}
+          delayLongPress={100}
+        >
+          <View
             style={{
-              alignItems: "center",
               paddingVertical: 10,
               flexDirection: "row",
               borderWidth: 2,
-              borderColor: "#fff",
+              borderColor: isActive ? primary : "#ffffff",
               borderRadius: 5,
-              backgroundColor: "#fff",
+              backgroundColor: "#ffffff",
               elevation: 5,
               shadowColor: "#000000",
               shadowOffset: { width: 0, height: 0 },
               shadowOpacity: 0.8,
               shadowRadius: 2,
             }}
-            onPressIn={drag}
           >
-            <Icon name="drag-indicator" size={30} color="#000000" />
+            <Icon
+              name="drag-indicator"
+              size={30}
+              color="#000000"
+              style={{ alignSelf: "center" }}
+            />
             <Image
               source={{ uri: item.image }}
               style={{
@@ -62,12 +72,34 @@ export default function RankingScreen({
                 width: 100,
               }}
             />
-            <Text style={{ padding: 10 }}>{item.name}</Text>
-          </TouchableWithoutFeedback>
-        </View>
+            <Text
+              style={{ textAlign: "left", width: "55%", margin: 5 }}
+              numberOfLines={2}
+            >
+              {item.name}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
       );
     },
     []
+  );
+
+  const header = (
+    <>
+      <Question questionText={"Rank your wishlist"} />
+      <Text style={styles.subtext}>
+        Hold, drag and drop items to rank from most wanted to least wanted
+      </Text>
+      <TouchableWithoutFeedback
+        onPress={() => setRead(true)}
+        style={{ width: "100%", alignItems:"center" }}
+      >
+        <Text style={[styles.subtext, { color: primary }]}>
+          Click once read to collapse
+        </Text>
+      </TouchableWithoutFeedback>
+    </>
   );
 
   return (
@@ -75,23 +107,16 @@ export default function RankingScreen({
       <ScrollView
         style={styles.scrollableNoMargin}
         contentContainerStyle={{
-          justifyContent: "center",
           alignItems: "center",
+          flex: 1,
         }}
       >
-        <Question questionText={"Rank your wishlist"} />
+        {!isRead && header}
         <View style={styles.space} />
         <Text style={{ fontFamily: "roboto-light" }}>Most wanted</Text>
-        <View
-          style={{
-            width: "60%",
-            height: 1,
-            margin: 5,
-            backgroundColor:black,
-          }}
-        />
-        <View style={styles.space} />
+        <View style={styles.seperator} />
         <DraggableFlatList
+          scrollEnabled={true}
           data={orderedWishlist}
           renderItem={renderItem}
           keyExtractor={(item, index) => `draggable-item-${item.name}${index}`}
@@ -99,30 +124,17 @@ export default function RankingScreen({
           dragItemOverflow={false}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          containerStyle={{
-            width: "100%",
-          }}
+          style={{ width: "100%" }}
         />
-        <View style={styles.space} />
-        <View
-          style={{
-            width: "60%",
-            height: 1,
-            margin: 5,
-            backgroundColor: black,
-          }}
-        />
-        <Text style={styles.heading2}>Least Wanted</Text>
-        <View style={styles.space} />
+        <View style={styles.seperator} />
+        <Text style={{ fontFamily: "roboto-light" }}>Least Wanted</Text>
         <View style={styles.space} />
         <PrimaryButton
-          style={{
-            bottom: 20,
-            width: "80%",
-            alignSelf: "center",
-          }}
+          style={PrimaryButtonStyles.bottom}
           text={"Create wishlist"}
-          onPress={() => {navigation.navigate("CreateProfile", {wishlist : orderedWishlist})}}
+          onPress={() => {
+            navigation.navigate("CreateProfile", { wishlist: orderedWishlist });
+          }}
         />
       </ScrollView>
     </View>

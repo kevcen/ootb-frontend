@@ -34,7 +34,7 @@ import TagData from "../../../interfaces/TagData";
 import Genders from "../../../constants/Genders";
 import Relationships from "../../../constants/Relationships";
 import {API_URL} from 'react-native-dotenv';
-
+import PrimaryButtonStyles from "../../../styles/PrimaryButtonStyles";
 
 function formatSet(set: any, allOptions: TagData[]) {
   var res = new Set<string>(Array.from(set || new Set()));

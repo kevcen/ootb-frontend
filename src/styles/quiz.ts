@@ -4,6 +4,7 @@ export const styles = StyleSheet.create({
   subtext: {
     margin: 5,
     width: "70%",
+    fontSize:16,
     textAlign: "center",
     fontFamily: "roboto-thin",
   },
@@ -23,6 +24,12 @@ export const styles = StyleSheet.create({
   scrollableNoMargin: {
     width: "100%",
     backgroundColor: "white",
+  },
+  seperator: {
+    width: "60%",
+    height: 1,
+    margin: 5,
+    backgroundColor: "black",
   },
   space: {
     width: 20,
