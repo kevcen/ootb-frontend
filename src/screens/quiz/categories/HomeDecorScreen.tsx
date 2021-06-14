@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
@@ -16,8 +16,8 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var chosenHomeRooms = new Set();
-  var chosenHomeStyles = new Set();
+  const chosenHomeRooms = useRef(new Set());
+  const chosenHomeStyles = useRef(new Set());
 
   // TODO: unselect other options after selection
   return (
@@ -34,10 +34,10 @@ export default function RecipientContextScreen({
         <MultipleOptionQuestion
           tagdata={HomeStyles}
           onTagPress={(homeStyle) => {
-            if (chosenHomeStyles.has(homeStyle)) {
-              chosenHomeStyles.delete(homeStyle);
+            if (chosenHomeStyles.current.has(homeStyle)) {
+              chosenHomeStyles.current.delete(homeStyle);
             } else {
-              chosenHomeStyles.add(homeStyle);
+              chosenHomeStyles.current.add(homeStyle);
             }
           }}
         />
@@ -46,10 +46,10 @@ export default function RecipientContextScreen({
         <MultipleOptionQuestion
           tagdata={HomeRooms}
           onTagPress={(homeRoom) => {
-            if (chosenHomeRooms.has(homeRoom)) {
-              chosenHomeRooms.delete(homeRoom);
+            if (chosenHomeRooms.current.has(homeRoom)) {
+              chosenHomeRooms.current.delete(homeRoom);
             } else {
-              chosenHomeRooms.add(homeRoom);
+              chosenHomeRooms.current.add(homeRoom);
             }
           }}
         />
@@ -73,8 +73,8 @@ export default function RecipientContextScreen({
             "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
-            chosenHomeRooms,
-            chosenHomeStyles,
+            chosenHomeRooms : chosenHomeRooms.current,
+            chosenHomeStyles : chosenHomeStyles.current,
           },
         }}
         pagenum={route.params.pagenum}

@@ -7,5 +7,6 @@ const FashionWear: TagData[] = [
   {title:"Loungewear"},
   {title:"Clubbing"},
   {title:"None"},
+  {title:"Any"},
 ];
 export default FashionWear;

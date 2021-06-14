@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as React from "react";
 import { useState } from "react";
-import { FlatList, Linking, TouchableHighlight, Platform } from "react-native";
+import { FlatList, Linking, TouchableHighlight, Platform, Dimensions } from "react-native";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { Overlay } from "react-native-elements";
 import Modal from "modal-react-native-web";
@@ -12,6 +12,35 @@ import BasicView from "../../../components/Product/BasicView";
 import QuickView from "../../../components/Product/QuickView";
 import { primary, white } from "../../../styles/Colors";
 import Product from "../../../../interfaces/Product";
+import ClothingSeasons from "../../../constants/ClothingSeasons";
+import ClothesStoreTypes from "../../../constants/ClothesStoreTypes";
+import FashionWear from "../../../constants/FashionWear";
+import Cuisines from "../../../constants/Cuisines";
+import DietaryRequirements from "../../../constants/DietaryRequirements";
+import PerfumeTypes from "../../../constants/PerfumeTypes";
+import FragranceFamilies from "../../../constants/FragranceFamilies";
+import PlantSizes from "../../../constants/PlantSizes";
+import PlantTypes from "../../../constants/PlantTypes";
+import BeautyProductTypes from "../../../constants/BeautyProductTypes";
+import HomeRooms from "../../../constants/HomeRooms";
+import HomeStyles from "../../../constants/HomeStyles";
+import Genres from "../../../constants/Genres";
+import Instruments from "../../../constants/Instruments";
+import CameraTypes from "../../../constants/CameraTypes";
+import PhotographyExperience from "../../../constants/PhotographyExperience";
+import Sports from "../../../constants/Sports";
+import TagData from "../../../interfaces/TagData";
+import Genders from "../../../constants/Genders";
+import Relationships from "../../../constants/Relationships";
+
+function formatSet(set: any, allOptions: TagData[]) {
+  var res = new Set<string>(Array.from(set || new Set()));
+  if (res.has("Any") || res.has("Prefer not to say") || res.has("Other") || res.size == 0) {
+    allOptions.forEach((tag) => res.add(tag.title));
+  }
+  console.log(res);
+  return Array.from(res).map(v => v.toLowerCase());
+}
 
 export default function RecommendationScreen({
   route,
@@ -33,62 +62,52 @@ export default function RecommendationScreen({
   // on component load, get results
   React.useEffect(() => {
     // make post request to backend server
-    var promise = axios.post("https://gift-recommender-api.herokuapp.com/products", {
+    var promise = axios.post("http://localhost:8080/products", {
       categories: Array.from(chosenCategories),
       price: route.params?.price,
-      gender: route.params?.gender,
-      relationship: route.params?.relationship,
+      gender: formatSet(route.params?.gender, Genders),
+      relationship: formatSet(route.params?.relationship, Relationships),
       occasion: route.params?.occasion,
 
       //Fashion
-      clothesStoreTypes: Array.from(
-        route.params?.chosenClothesStoreTypes || new Set()
-      ),
-      clothingSeasons: Array.from(
-        route.params?.chosenClothingSeasons || new Set()
-      ),
-      fashionWear: Array.from(route.params?.chosenFashionWear || new Set()),
+      clothesStoreTypes: formatSet(route.params?.chosenClothesStoreTypes, ClothesStoreTypes),
+      clothingSeasons: formatSet(route.params?.chosenClothingSeasons, ClothingSeasons),
+      fashionWear: formatSet(route.params?.chosenFashionWear, FashionWear),
 
       //Food
       doesCook: route.params?.doesCook,
       doesDrink: route.params?.doesDrink,
-      cuisines: Array.from(route.params?.chosenCuisines || new Set()),
-      dietaryRequirements: Array.from(route.params?.chosenDietaryRequirements || new Set()),
+      cuisines: formatSet(route.params?.chosenCuisines, Cuisines),
+      dietaryRequirements: formatSet(route.params?.chosenDietaryRequirements, DietaryRequirements),
 
       //Fragrance
-      perfumeTypes: Array.from(route.params?.chosenPerfumeTypes || new Set()),
-      fragranceFamilies: Array.from(
-        route.params?.chosenFragranceFamilies || new Set()
-      ),
+      perfumeTypes: formatSet(route.params?.chosenPerfumeTypes, PerfumeTypes),
+      fragranceFamilies: formatSet(route.params?.chosenFragranceFamilies, FragranceFamilies),
 
       //Gardening
       hasGreenhouse: route.params?.hasGreenhouse,
-      plantSizes: Array.from(route.params?.chosenPlantSizes || new Set()),
-      plantTypes: Array.from(route.params?.chosenPlantTypes || new Set()),
+      plantSizes: formatSet(route.params?.chosenPlantSizes, PlantSizes),
+      plantTypes: formatSet(route.params?.chosenPlantTypes, PlantTypes),
 
       //Health & Beauty
       likesMakeup: route.params?.likesMakeup,
-      beautyProductTypes: Array.from(
-        route.params?.chosenBeautyProductTypes || new Set()
-      ),
+      beautyProductTypes: formatSet(route.params?.chosenBeautyProductTypes, BeautyProductTypes),
 
       // Home Decor
-      homeRooms: Array.from(route.params?.chosenHomeRooms || new Set()),
-      homeStyles: Array.from(route.params?.chosenHomeStyles || new Set()),
+      homeRooms: formatSet(route.params?.chosenHomeRooms, HomeRooms),
+      homeStyles: formatSet(route.params?.chosenHomeStyles, HomeStyles),
 
       //Music
-      genres: Array.from(route.params?.chosenGenres || new Set()),
-      instruments: Array.from(route.params?.chosenInstruments || new Set()),
+      genres: formatSet(route.params?.chosenGenres, Genres),
+      instruments: formatSet(route.params?.chosenInstruments, Instruments),
 
       //Photography
-      cameraTypes: Array.from(route.params?.chosenCameraTypes || new Set()),
-      photographyExperience: Array.from(
-        route.params?.chosenExperience || new Set()
-      ),
+      cameraTypes: formatSet(route.params?.chosenCameraTypes, CameraTypes),
+      photographyExperience: formatSet(route.params?.chosenExperience, PhotographyExperience),
 
       //Sport
-      playSports: Array.from(route.params?.chosenPlaySports || new Set()),
-      watchSports: Array.from(route.params?.chosenWatchSports || new Set()),
+      playSports: formatSet(route.params?.chosenPlaySports, Sports),
+      watchSports: formatSet(route.params?.chosenWatchSports, Sports),
     });
 
     // create min artifical delay of 500 ms

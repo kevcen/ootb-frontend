@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useRef} from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
@@ -16,8 +16,8 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var likesMakeup = false;
-  var chosenBeautyProductTypes = new Set();
+  var [likesMakeup, setLikesMakeup] = useState(false);
+  var chosenBeautyProductTypes = useRef(new Set());
 
   // TODO: unselect other options after selection
   return (
@@ -33,17 +33,17 @@ export default function RecipientContextScreen({
         <View style={styles.space} />
         <SingleOptionQuestion
           tagdata={yesNo}
-          onTagPress={(tagname) => (likesMakeup = tagname == "Yes")}
+          onTagPress={(tagname) => (setLikesMakeup(tagname == "Yes"))}
         />
         <Question questionText={"What types of products do you want?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
           tagdata={BeautyProductTypes}
           onTagPress={(type) => {
-            if (chosenBeautyProductTypes.has(type)) {
-              chosenBeautyProductTypes.delete(type);
+            if (chosenBeautyProductTypes.current.has(type)) {
+              chosenBeautyProductTypes.current.delete(type);
             } else {
-              chosenBeautyProductTypes.add(type);
+              chosenBeautyProductTypes.current.add(type);
             }
           }}
         />
@@ -67,7 +67,7 @@ export default function RecipientContextScreen({
           params: {
             nextpageindex: route.params.nextpageindex + 1,
             likesMakeup,
-            chosenBeautyProductTypes,
+            chosenBeautyProductTypes: chosenBeautyProductTypes.current,
           },
         }}
         pagenum={route.params.pagenum}

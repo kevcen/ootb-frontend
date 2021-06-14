@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
@@ -17,8 +17,8 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var chosenPlaySports = new Set();
-  var chosenWatchSports = new Set();
+  var chosenPlaySports = useRef(new Set());
+  var chosenWatchSports = useRef(new Set());
   var [sports, setSports] = useState(Sports.slice());
 
   // TODO: unselect other options after selection
@@ -36,10 +36,10 @@ export default function RecipientContextScreen({
         <MultipleOptionQuestion
           tagdata={sports}
           onTagPress={(sport) => {
-            if (chosenPlaySports.has(sport)) {
-              chosenPlaySports.delete(sport);
+            if (chosenPlaySports.current.has(sport)) {
+              chosenPlaySports.current.delete(sport);
             } else {
-              chosenPlaySports.add(sport);
+              chosenPlaySports.current.add(sport);
             }
           }}
         />
@@ -54,10 +54,10 @@ export default function RecipientContextScreen({
         <MultipleOptionQuestion
           tagdata={sports}
           onTagPress={(sport) => {
-            if (chosenWatchSports.has(sport)) {
-              chosenWatchSports.delete(sport);
+            if (chosenWatchSports.current.has(sport)) {
+              chosenWatchSports.current.delete(sport);
             } else {
-              chosenWatchSports.add(sport);
+              chosenWatchSports.current.add(sport);
             }
           }}
         />
@@ -86,8 +86,8 @@ export default function RecipientContextScreen({
             "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
-            chosenPlaySports,
-            chosenWatchSports,
+            chosenPlaySports: chosenPlaySports.current,
+            chosenWatchSports: chosenWatchSports.current,
           },
         }}
         pagenum={route.params.pagenum}

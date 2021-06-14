@@ -13,7 +13,36 @@ import BasicView from "../../../components/Product/BasicView";
 import QuickView from "../../../components/Product/QuickView";
 import { primary, white } from "../../../styles/Colors";
 import Product from "../../../interfaces/Product";
+import ClothingSeasons from "../../../constants/ClothingSeasons";
+import ClothesStoreTypes from "../../../constants/ClothesStoreTypes";
+import FashionWear from "../../../constants/FashionWear";
+import Cuisines from "../../../constants/Cuisines";
+import DietaryRequirements from "../../../constants/DietaryRequirements";
+import PerfumeTypes from "../../../constants/PerfumeTypes";
+import FragranceFamilies from "../../../constants/FragranceFamilies";
+import PlantSizes from "../../../constants/PlantSizes";
+import PlantTypes from "../../../constants/PlantTypes";
+import BeautyProductTypes from "../../../constants/BeautyProductTypes";
+import HomeRooms from "../../../constants/HomeRooms";
+import HomeStyles from "../../../constants/HomeStyles";
+import Genres from "../../../constants/Genres";
+import Instruments from "../../../constants/Instruments";
+import CameraTypes from "../../../constants/CameraTypes";
+import PhotographyExperience from "../../../constants/PhotographyExperience";
+import Sports from "../../../constants/Sports";
+import TagData from "../../../interfaces/TagData";
+import Genders from "../../../constants/Genders";
+import Relationships from "../../../constants/Relationships";
 
+
+function formatSet(set: any, allOptions: TagData[]) {
+  var res = new Set<string>(Array.from(set || new Set()));
+  if (res.has("Any") || res.has("Prefer not to say") || res.has("Other") || res.size == 0) {
+    allOptions.forEach((tag) => res.add(tag.title));
+  }
+  console.log(res);
+  return Array.from(res).map(v => v.toLowerCase());
+}
 export default function RecommendationScreen({
   route,
   navigation,
@@ -44,13 +73,53 @@ export default function RecommendationScreen({
   React.useEffect(() => {
     // make post request to backend server
     var promise = axios.post(
-      "https://gift-recommender-api.herokuapp.com/products",
+      "http://localhost:8080/products",
       {
         categories: Array.from(route.params?.categories),
         price: route.params?.price,
-        gender: route.params?.gender,
-        relationship: route.params?.relationship,
+        gender: formatSet(route.params?.gender, Genders),
+        relationship: formatSet(route.params?.relationship, Relationships),
         occasion: route.params?.occasion,
+
+        //Fashion
+        clothesStoreTypes: formatSet(route.params?.chosenClothesStoreTypes, ClothesStoreTypes),
+        clothingSeasons: formatSet(route.params?.chosenClothingSeasons, ClothingSeasons),
+        fashionWear: formatSet(route.params?.chosenFashionWear, FashionWear),
+
+        //Food
+        doesCook: route.params?.doesCook,
+        doesDrink: route.params?.doesDrink,
+        cuisines: formatSet(route.params?.chosenCuisines, Cuisines),
+        dietaryRequirements: formatSet(route.params?.chosenDietaryRequirements, DietaryRequirements),
+
+        //Fragrance
+        perfumeTypes: formatSet(route.params?.chosenPerfumeTypes, PerfumeTypes),
+        fragranceFamilies: formatSet(route.params?.chosenFragranceFamilies, FragranceFamilies),
+
+        //Gardening
+        hasGreenhouse: route.params?.hasGreenhouse,
+        plantSizes: formatSet(route.params?.chosenPlantSizes, PlantSizes),
+        plantTypes: formatSet(route.params?.chosenPlantTypes, PlantTypes),
+
+        //Health & Beauty
+        likesMakeup: route.params?.likesMakeup,
+        beautyProductTypes: formatSet(route.params?.chosenBeautyProductTypes, BeautyProductTypes),
+
+        // Home Decor
+        homeRooms: formatSet(route.params?.chosenHomeRooms, HomeRooms),
+        homeStyles: formatSet(route.params?.chosenHomeStyles, HomeStyles),
+
+        //Music
+        genres: formatSet(route.params?.chosenGenres, Genres),
+        instruments: formatSet(route.params?.chosenInstruments, Instruments),
+
+        //Photography
+        cameraTypes: formatSet(route.params?.chosenCameraTypes, CameraTypes),
+        photographyExperience: formatSet(route.params?.chosenExperience, PhotographyExperience),
+
+        //Sport
+        playSports: formatSet(route.params?.chosenPlaySports, Sports),
+        watchSports: formatSet(route.params?.chosenWatchSports, Sports),
       }
     );
 

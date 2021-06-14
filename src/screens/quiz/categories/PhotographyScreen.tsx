@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
@@ -16,8 +16,8 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var chosenCameraTypes = new Set();
-  var chosenExperience = new Set();
+  var chosenCameraTypes = useRef(new Set());
+  var chosenExperience = useRef(new Set());
 
   return (
     <View style={styles.viewCentered}>
@@ -33,13 +33,13 @@ export default function RecipientContextScreen({
           style={styles.space}
           /** TODO: unselect other options after selection*/
         />
-        <MultipleOptionQuestion
+        <SingleOptionQuestion
           tagdata={PhotographyExperience}
           onTagPress={(experience) => {
-            if (chosenExperience.has(experience)) {
-              chosenExperience.delete(experience);
+            if (chosenExperience.current.has(experience)) {
+              chosenExperience.current.delete(experience);
             } else {
-              chosenExperience.add(experience);
+              chosenExperience.current.add(experience);
             }
           }}
         />
@@ -48,10 +48,10 @@ export default function RecipientContextScreen({
         <MultipleOptionQuestion
           tagdata={CameraTypes}
           onTagPress={(type) => {
-            if (chosenCameraTypes.has(type)) {
-              chosenCameraTypes.delete(type);
+            if (chosenCameraTypes.current.has(type)) {
+              chosenCameraTypes.current.delete(type);
             } else {
-              chosenCameraTypes.add(type);
+              chosenCameraTypes.current.add(type);
             }
           }}
         />
@@ -74,8 +74,8 @@ export default function RecipientContextScreen({
             "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
-            chosenCameraTypes,
-            chosenExperience,
+            chosenCameraTypes: chosenCameraTypes.current,
+            chosenExperience: chosenExperience.current,
           },
         }}
         pagenum={route.params.pagenum}

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
@@ -18,10 +18,11 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var chosenInstruments = new Set();
-  var chosenGenres = new Set();
-  var [instrs, setInstrs] = useState(Instruments.slice());
-  var [gens, setGens] = useState(Genres.slice());
+  var chosenInstruments = useRef(new Set());
+  var chosenGenres = useRef(new Set());
+  var [instruments, setInstruments] = useState(Instruments);
+  var [genres, setGenres] = useState(Genres);
+
   return (
     <View style={styles.viewCentered}>
       <ScrollView
@@ -34,38 +35,38 @@ export default function RecipientContextScreen({
         <Question questionText={"What instruments do you play?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
-          tagdata={instrs}
+          tagdata={instruments}
           onTagPress={(instrument) => {
-            if (chosenInstruments.has(instrument)) {
-              chosenInstruments.delete(instrument);
+            if (chosenInstruments.current.has(instrument)) {
+              chosenInstruments.current.delete(instrument);
             } else {
-              chosenInstruments.add(instrument);
+              chosenInstruments.current.add(instrument);
             }
           }}
         />
         <View style={styles.space} />
         <AddNewButton
           setCats={(instr: TagData) => {
-            setInstrs(instrs.concat(instr));
+            setInstruments(instruments.concat(instr));
           }}
         />
         <View style={styles.space} />
         <Question questionText={"What genres of music do you like?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
-          tagdata={gens}
+          tagdata={genres}
           onTagPress={(genre) => {
-            if (chosenGenres.has(genre)) {
-              chosenGenres.delete(genre);
+            if (chosenGenres.current.has(genre)) {
+              chosenGenres.current.delete(genre);
             } else {
-              chosenGenres.add(genre);
+              chosenGenres.current.add(genre);
             }
           }}
         />
         <View style={styles.space} />
         <AddNewButton
           setCats={(gen: TagData) => {
-            setGens(gens.concat(gen));
+            setGenres(genres.concat(gen));
           }}
         />
         <View style={styles.space} />

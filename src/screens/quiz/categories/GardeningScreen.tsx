@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
@@ -16,9 +16,9 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var hasGreenhouse = false;
-  var chosenPlantTypes = new Set();
-  var chosenPlantSizes = new Set();
+  var [hasGreenhouse, setHasGreenhouse] = useState(false);
+  var chosenPlantTypes = useRef(new Set());
+  var chosenPlantSizes = useRef(new Set());
 
   // TODO: unselect other options after selection
   return (
@@ -34,17 +34,17 @@ export default function RecipientContextScreen({
         <View style={styles.space} />
         <SingleOptionQuestion
           tagdata={yesNo}
-          onTagPress={(tagname) => (hasGreenhouse = tagname == "Yes")}
+          onTagPress={(tagname) => (setHasGreenhouse(tagname == "Yes"))}
         />
         <Question questionText={"What's your favourite type of plant?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
           tagdata={PlantTypes}
           onTagPress={(plantType) => {
-            if (chosenPlantTypes.has(plantType)) {
-              chosenPlantTypes.delete(plantType);
+            if (chosenPlantTypes.current.has(plantType)) {
+              chosenPlantTypes.current.delete(plantType);
             } else {
-              chosenPlantTypes.add(plantType);
+              chosenPlantTypes.current.add(plantType);
             }
           }}
         />
@@ -53,10 +53,10 @@ export default function RecipientContextScreen({
         <MultipleOptionQuestion
           tagdata={PlantSize}
           onTagPress={(plantSize) => {
-            if (chosenPlantSizes.has(plantSize)) {
-              chosenPlantSizes.delete(plantSize);
+            if (chosenPlantSizes.current.has(plantSize)) {
+              chosenPlantSizes.current.delete(plantSize);
             } else {
-              chosenPlantSizes.add(plantSize);
+              chosenPlantSizes.current.add(plantSize);
             }
           }}
         />
@@ -81,8 +81,8 @@ export default function RecipientContextScreen({
           params: {
             nextpageindex: route.params.nextpageindex + 1,
             hasGreenhouse,
-            chosenPlantSizes,
-            chosenPlantTypes,
+            chosenPlantSizes: chosenPlantSizes.current,
+            chosenPlantTypes: chosenPlantTypes.current,
           },
         }}
         pagenum={route.params.pagenum}

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
@@ -18,13 +18,12 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var doesDrink = false;
-  var doesCook = false;
-  var chosenCuisines = new Set();
-  var chosenDietaryRequirements = new Set();
+  var [doesDrink, setDoesDrink] = useState(false);
+  var [doesCook, setDoesCook] = useState(false);
+  var chosenCuisines = useRef(new Set());
+  var chosenDietaryRequirements = useRef(new Set());
   var [cuis, setCuis] = useState(Cuisines.slice());
   
-
   // TODO: unselect other options after selection
   return (
     <View style={styles.viewCentered}>
@@ -39,17 +38,21 @@ export default function RecipientContextScreen({
         <View style={styles.space} />
         <SingleOptionQuestion
           tagdata={yesNo}
-          onTagPress={(tagname) => (doesDrink = tagname == "Yes")}
+          onTagPress={(tagname) => {
+            console.log(tagname);
+            (setDoesDrink(tagname == "Yes"));
+            console.log(doesDrink);
+          }}
         />
         <Question questionText={"What are your favorite cuisine?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
           tagdata={cuis}
           onTagPress={(cuisine) => {
-            if (chosenCuisines.has(cuisine)) {
-              chosenCuisines.delete(cuisine);
+            if (chosenCuisines.current.has(cuisine)) {
+              chosenCuisines.current.delete(cuisine);
             } else {
-              chosenCuisines.add(cuisine);
+              chosenCuisines.current.add(cuisine);
             }
           }}
         />
@@ -63,7 +66,7 @@ export default function RecipientContextScreen({
         <View style={styles.space} />
         <SingleOptionQuestion
           tagdata={yesNo}
-          onTagPress={(tagname) => (doesCook = tagname == "Yes")}
+          onTagPress={(tagname) => (setDoesCook(tagname == "Yes"))}
         />
 
         <Question
@@ -75,10 +78,10 @@ export default function RecipientContextScreen({
         <MultipleOptionQuestion
           tagdata={DietaryRequirements}
           onTagPress={(dietaryRequirements) => {
-            if (chosenDietaryRequirements.has(dietaryRequirements)) {
-              chosenDietaryRequirements.delete(dietaryRequirements);
+            if (chosenDietaryRequirements.current.has(dietaryRequirements)) {
+              chosenDietaryRequirements.current.delete(dietaryRequirements);
             } else {
-              chosenDietaryRequirements.add(dietaryRequirements);
+              chosenDietaryRequirements.current.add(dietaryRequirements);
             }
           }}
         />
@@ -102,10 +105,10 @@ export default function RecipientContextScreen({
             "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
-            doesCook,
-            doesDrink,
-            chosenCuisines,
-            chosenDietaryRequirements,
+            doesCook: doesCook,
+            doesDrink: doesDrink,
+            chosenCuisines: chosenCuisines.current,
+            chosenDietaryRequirements: chosenDietaryRequirements.current,
           },
         }}
         pagenum={route.params.pagenum}

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
@@ -19,10 +19,11 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var chosenClothesStoreTypes = new Set();
-  var chosenClothingSeasons = new Set();
-  var chosenFashionWear = new Set();
-  var [fashWear, setFashWear] = useState(FashionWear.slice());
+  const chosenClothesStoreTypes = useRef(new Set());
+  const chosenClothingSeasons = useRef(new Set());
+  const chosenFashionWear = useRef(new Set());
+  const [fashWear, setFashWear] = useState(FashionWear);
+
 
   // TODO: unselect other options after selection
   return (
@@ -35,15 +36,15 @@ export default function RecipientContextScreen({
         }}
       >
         <View style={styles.space} />
-        <Question questionText={"Which seasons of wear would you like to be gifted?"} />
+        <Question questionText={"Which seasons of wear do you want to be gifted?"} />
         <View style={styles.space} />
         <MultipleOptionQuestion
           tagdata={ClothingSeasons}
           onTagPress={(clothingSeason) => {
-            if (chosenClothingSeasons.has(clothingSeason)) {
-              chosenClothingSeasons.delete(clothingSeason);
+            if (chosenClothingSeasons.current.has(clothingSeason)) {
+              chosenClothingSeasons.current.delete(clothingSeason);
             } else {
-              chosenClothingSeasons.add(clothingSeason);
+              chosenClothingSeasons.current.add(clothingSeason);
             }
           }}
         />
@@ -53,10 +54,10 @@ export default function RecipientContextScreen({
         <MultipleOptionQuestion
           tagdata={fashWear}
           onTagPress={(wear) => {
-            if (chosenFashionWear.has(wear)) {
-              chosenFashionWear.delete(wear);
+            if (chosenFashionWear.current.has(wear)) {
+              chosenFashionWear.current.delete(wear);
             } else {
-              chosenFashionWear.add(wear);
+              chosenFashionWear.current.add(wear);
             }
           }}
         />
@@ -72,10 +73,10 @@ export default function RecipientContextScreen({
         <MultipleOptionQuestion
           tagdata={ClothesStoreTypes}
           onTagPress={(store) => {
-            if (chosenClothesStoreTypes.has(store)) {
-              chosenClothesStoreTypes.delete(store);
+            if (chosenClothesStoreTypes.current.has(store)) {
+              chosenClothesStoreTypes.current.delete(store);
             } else {
-              chosenClothesStoreTypes.add(store);
+              chosenClothesStoreTypes.current.add(store);
             }
           }}
         />
@@ -99,9 +100,9 @@ export default function RecipientContextScreen({
             "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
-            chosenClothesStoreTypes,
-            chosenClothingSeasons,
-            chosenFashionWear,
+            chosenClothesStoreTypes : chosenClothesStoreTypes.current,
+            chosenClothingSeasons : chosenClothingSeasons.current,
+            chosenFashionWear : chosenFashionWear.current,
           },
         }}
         pagenum={route.params.pagenum}

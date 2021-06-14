@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Question from "../../../components/Question";
 import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
@@ -17,8 +17,8 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var chosenPerfumeTypes = new Set();
-  var chosenFragranceFamilies = new Set();
+  const chosenPerfumeTypes = useRef(new Set());
+  const chosenFragranceFamilies = useRef(new Set());
 
   return (
     <View style={styles.viewCentered}>
@@ -34,10 +34,10 @@ export default function RecipientContextScreen({
         <MultipleOptionQuestion
           tagdata={PerfumeTypes}
           onTagPress={(type) => {
-            if (chosenPerfumeTypes.has(type)) {
-              chosenPerfumeTypes.delete(type);
+            if (chosenPerfumeTypes.current.has(type)) {
+              chosenPerfumeTypes.current.delete(type);
             } else {
-              chosenPerfumeTypes.add(type);
+              chosenPerfumeTypes.current.add(type);
             }
           }}
         />
@@ -49,10 +49,10 @@ export default function RecipientContextScreen({
         <MultipleOptionQuestion
           tagdata={fragranceFamilies}
           onTagPress={(family) => {
-            if (chosenFragranceFamilies.has(family)) {
-              chosenFragranceFamilies.delete(family);
+            if (chosenFragranceFamilies.current.has(family)) {
+              chosenFragranceFamilies.current.delete(family);
             } else {
-              chosenFragranceFamilies.add(family);
+              chosenFragranceFamilies.current.add(family);
             }
           }}
         />
@@ -76,8 +76,8 @@ export default function RecipientContextScreen({
             "RecipientRecommendations",
           params: {
             nextpageindex: route.params.nextpageindex + 1,
-            chosenPerfumeTypes,
-            chosenFragranceFamilies,
+            chosenPerfumeTypes : chosenPerfumeTypes.current,
+            chosenFragranceFamilies : chosenFragranceFamilies.current,
           },
         }}
         pagenum={route.params.pagenum}
