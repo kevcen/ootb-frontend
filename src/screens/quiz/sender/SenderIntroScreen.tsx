@@ -7,7 +7,7 @@ import { styles } from "../../../styles/quiz";
 
 export default function HomeScreen({ navigation }: { navigation: any }) {
   const navigateQuiz = () => {
-    navigation.navigate("Sender");
+    navigation.navigate("Search");
   };
 
   return (
@@ -21,9 +21,16 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
         the person you are gifting to
       </Text>
 
-      <View style={{height:"100%",position:"absolute",justifyContent:"center", alignItems:"center"}}>
-      <PrimaryButton onPress={navigateQuiz} text={"Lets go!"} />
-    </View>
+      <View
+        style={{
+          height: "100%",
+          position: "absolute",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <PrimaryButton onPress={navigateQuiz} text={"Lets go!"} />
+      </View>
     </View>
   );
 }

@@ -11,6 +11,7 @@ import {
 import { SearchBar } from "react-native-elements";
 import User from "../../interfaces/User";
 import { styles } from "../../styles/quiz";
+import PrimaryButton from "../../components/PrimaryButton";
 
 export default function SearchScreen({
   route,
@@ -72,7 +73,7 @@ export default function SearchScreen({
     <View style={styles.viewCentered}>
       <View style={styles.space} />
       <SearchBar
-        placeholder="Search here"
+        placeholder="Search here for profile"
         onChangeText={(value) => {
           setSearchValue(value);
           fetch("https://gift-recommender-api.herokuapp.com/users/search", {
@@ -95,19 +96,37 @@ export default function SearchScreen({
         value={searchValue}
         platform="default"
       />
-      <FlatList
-        numColumns={2}
-        style={{
-          width: "95%",
-          marginTop: 10,
-        }}
-        columnWrapperStyle={{
-          justifyContent: "space-evenly",
-        }}
-        data={users}
-        renderItem={renderItem}
-        extraData={users}
-      />
+      {users.length == 0 || searchValue == "" ? (
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <View style={styles.space} />
+          <PrimaryButton
+            onPress={() => {
+              navigation.navigate("Sender");
+            }}
+            text={"Can't find the person? Take a quiz instead."}
+            // style={{ marginTop: 50 }}
+          />
+        </View>
+      ) : (
+        <FlatList
+          numColumns={2}
+          style={{
+            width: "95%",
+            marginTop: 10,
+          }}
+          columnWrapperStyle={{
+            justifyContent: "space-evenly",
+          }}
+          data={users}
+          renderItem={renderItem}
+          extraData={users}
+        />
+      )}
     </View>
   );
 }
