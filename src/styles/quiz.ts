@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   subtext: {
     margin: 5,
     width: "70%",
-    fontSize:16,
+    fontSize: 16,
     textAlign: "center",
     fontFamily: "roboto-thin",
   },
@@ -30,6 +30,25 @@ export const styles = StyleSheet.create({
     height: 1,
     margin: 5,
     backgroundColor: "black",
+  },
+  input: {
+    width: "90%",
+    height: 40,
+    margin: 5,
+    borderWidth: 1,
+    paddingLeft: 10,
+  },
+  button: {
+    width: "90%",
+    height: 40,
+    margin: 5,
+    borderWidth: 1,
+    paddingLeft: 10,
+  },
+  row: { 
+    flexDirection: "row", 
+    width: "95%", 
+    justifyContent: "space-between" 
   },
   space: {
     width: 20,

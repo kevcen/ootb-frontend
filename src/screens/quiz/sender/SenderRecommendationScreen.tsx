@@ -1,7 +1,13 @@
 import axios from "axios";
 import * as React from "react";
 import { useState } from "react";
-import { FlatList, Linking, TouchableHighlight, Platform, Dimensions } from "react-native";
+import {
+  FlatList,
+  Linking,
+  TouchableHighlight,
+  Platform,
+  Dimensions,
+} from "react-native";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { Overlay } from "react-native-elements";
 import Modal from "modal-react-native-web";
@@ -32,15 +38,20 @@ import Genders from "../../../constants/Genders";
 import Relationships from "../../../constants/Relationships";
 import Product from "../../../interfaces/Product";
 import Item from "../../../interfaces/Item";
-import {API_URL} from 'react-native-dotenv';
+import { API_URL } from "react-native-dotenv";
 
 function formatSet(set: any, allOptions: TagData[]) {
   var res = new Set<string>(Array.from(set || new Set()));
-  if (res.has("Any") || res.has("Prefer not to say") || res.has("Other") || res.size == 0) {
+  if (
+    res.has("Any") ||
+    res.has("Prefer not to say") ||
+    res.has("Other") ||
+    res.size == 0
+  ) {
     allOptions.forEach((tag) => res.add(tag.title));
   }
   console.log(res);
-  return Array.from(res).map(v => v.toLowerCase());
+  return Array.from(res).map((v) => v.toLowerCase());
 }
 
 export default function RecommendationScreen({
@@ -63,53 +74,75 @@ export default function RecommendationScreen({
   // on component load, get results
   React.useEffect(() => {
     // make post request to backend server
-    var promise = axios.post(`${API_URL}/products`, {
-      categories: Array.from(chosenCategories),
-      price: route.params?.price,
-      gender: formatSet(route.params?.gender, Genders),
-      relationship: formatSet(route.params?.relationship, Relationships),
-      occasion: route.params?.occasion,
+    var promise = axios.post(
+      `${API_URL}/products`,
+      {
+        categories: Array.from(chosenCategories),
+        price: route.params?.price,
+        gender: formatSet(route.params?.gender, Genders),
+        relationship: formatSet(route.params?.relationship, Relationships),
+        occasion: route.params?.occasion,
 
-      //Fashion
-      clothesStoreTypes: formatSet(route.params?.chosenClothesStoreTypes, ClothesStoreTypes),
-      clothingSeasons: formatSet(route.params?.chosenClothingSeasons, ClothingSeasons),
-      fashionWear: formatSet(route.params?.chosenFashionWear, FashionWear),
+        //Fashion
+        clothesStoreTypes: formatSet(
+          route.params?.chosenClothesStoreTypes,
+          ClothesStoreTypes
+        ),
+        clothingSeasons: formatSet(
+          route.params?.chosenClothingSeasons,
+          ClothingSeasons
+        ),
+        fashionWear: formatSet(route.params?.chosenFashionWear, FashionWear),
 
-      //Food
-      doesCook: route.params?.doesCook,
-      doesDrink: route.params?.doesDrink,
-      cuisines: formatSet(route.params?.chosenCuisines, Cuisines),
-      dietaryRequirements: formatSet(route.params?.chosenDietaryRequirements, DietaryRequirements),
+        //Food
+        doesCook: route.params?.doesCook,
+        doesDrink: route.params?.doesDrink,
+        cuisines: formatSet(route.params?.chosenCuisines, Cuisines),
+        dietaryRequirements: formatSet(
+          route.params?.chosenDietaryRequirements,
+          DietaryRequirements
+        ),
 
-      //Fragrance
-      perfumeTypes: formatSet(route.params?.chosenPerfumeTypes, PerfumeTypes),
-      fragranceFamilies: formatSet(route.params?.chosenFragranceFamilies, FragranceFamilies),
+        //Fragrance
+        perfumeTypes: formatSet(route.params?.chosenPerfumeTypes, PerfumeTypes),
+        fragranceFamilies: formatSet(
+          route.params?.chosenFragranceFamilies,
+          FragranceFamilies
+        ),
 
-      //Gardening
-      hasGreenhouse: route.params?.hasGreenhouse,
-      plantSizes: formatSet(route.params?.chosenPlantSizes, PlantSizes),
-      plantTypes: formatSet(route.params?.chosenPlantTypes, PlantTypes),
+        //Gardening
+        hasGreenhouse: route.params?.hasGreenhouse,
+        plantSizes: formatSet(route.params?.chosenPlantSizes, PlantSizes),
+        plantTypes: formatSet(route.params?.chosenPlantTypes, PlantTypes),
 
-      //Health & Beauty
-      likesMakeup: route.params?.likesMakeup,
-      beautyProductTypes: formatSet(route.params?.chosenBeautyProductTypes, BeautyProductTypes),
+        //Health & Beauty
+        likesMakeup: route.params?.likesMakeup,
+        beautyProductTypes: formatSet(
+          route.params?.chosenBeautyProductTypes,
+          BeautyProductTypes
+        ),
 
-      // Home Decor
-      homeRooms: formatSet(route.params?.chosenHomeRooms, HomeRooms),
-      homeStyles: formatSet(route.params?.chosenHomeStyles, HomeStyles),
+        // Home Decor
+        homeRooms: formatSet(route.params?.chosenHomeRooms, HomeRooms),
+        homeStyles: formatSet(route.params?.chosenHomeStyles, HomeStyles),
 
-      //Music
-      genres: formatSet(route.params?.chosenGenres, Genres),
-      instruments: formatSet(route.params?.chosenInstruments, Instruments),
+        //Music
+        genres: formatSet(route.params?.chosenGenres, Genres),
+        instruments: formatSet(route.params?.chosenInstruments, Instruments),
 
-      //Photography
-      cameraTypes: formatSet(route.params?.chosenCameraTypes, CameraTypes),
-      photographyExperience: formatSet(route.params?.chosenExperience, PhotographyExperience),
+        //Photography
+        cameraTypes: formatSet(route.params?.chosenCameraTypes, CameraTypes),
+        photographyExperience: formatSet(
+          route.params?.chosenExperience,
+          PhotographyExperience
+        ),
 
-      //Sport
-      playSports: formatSet(route.params?.chosenPlaySports, Sports),
-      watchSports: formatSet(route.params?.chosenWatchSports, Sports),
-    });
+        //Sport
+        playSports: formatSet(route.params?.chosenPlaySports, Sports),
+        watchSports: formatSet(route.params?.chosenWatchSports, Sports),
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
 
     // create min artifical delay of 500 ms
     setTimeout(() => {
@@ -145,29 +178,31 @@ export default function RecommendationScreen({
     );
   }
   const webQuickView = (
-  <Overlay
-    ModalComponent={Modal}
-    isVisible={visible}
-    onBackdropPress={toggleOverlay}
-    style={styles.overlay}
-  >
-    {quickView}
-  </Overlay>);
+    <Overlay
+      ModalComponent={Modal}
+      isVisible={visible}
+      onBackdropPress={toggleOverlay}
+      style={styles.overlay}
+    >
+      {quickView}
+    </Overlay>
+  );
 
   const phoneQuickView = (
-  <Overlay
-    isVisible={visible}
-    onBackdropPress={toggleOverlay}
-    style={styles.overlay}
-  >
-    {quickView}
-  </Overlay>);
-  
+    <Overlay
+      isVisible={visible}
+      onBackdropPress={toggleOverlay}
+      style={styles.overlay}
+    >
+      {quickView}
+    </Overlay>
+  );
+
   const itemQuickView = Platform.select({
     ios: phoneQuickView,
     android: phoneQuickView,
     default: webQuickView,
-  })
+  });
   return (
     <View style={styles.view}>
       <View style={styles.header}>
@@ -178,7 +213,7 @@ export default function RecommendationScreen({
         style={styles.grid}
         columnWrapperStyle={styles.list}
         data={recommendations}
-        renderItem={({ item:product }: { item: Product }) => (
+        renderItem={({ item: product }: { item: Product }) => (
           <BasicView
             product={product}
             onLongPress={(minItem: Item) => {

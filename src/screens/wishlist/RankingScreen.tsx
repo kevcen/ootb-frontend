@@ -124,7 +124,7 @@ export default function RankingScreen({
           dragItemOverflow={false}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          style={{ width: "100%" }}
+          style={{ width: "100%"}}
         />
         <View style={styles.seperator} />
         <Text style={{ fontFamily: "roboto-light" }}>Least Wanted</Text>
