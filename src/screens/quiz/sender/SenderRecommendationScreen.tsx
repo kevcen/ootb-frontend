@@ -177,6 +177,8 @@ export default function RecommendationScreen({
       </View>
     );
   }
+
+  // Platform independent quickviews
   const webQuickView = (
     <Overlay
       ModalComponent={Modal}

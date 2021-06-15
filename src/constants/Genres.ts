@@ -7,6 +7,7 @@ const genres: TagData[] = [
   {title:"Classical"},
   {title:"Jazz"},
   {title:"Electronic"},
+  {title:"Rap"},
   { title: "Any" },
 ];
 export default genres;
