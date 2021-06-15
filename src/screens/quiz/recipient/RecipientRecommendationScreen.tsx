@@ -33,15 +33,21 @@ import Sports from "../../../constants/Sports";
 import TagData from "../../../interfaces/TagData";
 import Genders from "../../../constants/Genders";
 import Relationships from "../../../constants/Relationships";
-
+import { API_URL } from "react-native-dotenv";
+import PrimaryButtonStyles from "../../../styles/PrimaryButtonStyles";
 
 function formatSet(set: any, allOptions: TagData[]) {
   var res = new Set<string>(Array.from(set || new Set()));
-  if (res.has("Any") || res.has("Prefer not to say") || res.has("Other") || res.size == 0) {
+  if (
+    res.has("Any") ||
+    res.has("Prefer not to say") ||
+    res.has("Other") ||
+    res.size == 0
+  ) {
     allOptions.forEach((tag) => res.add(tag.title));
   }
   console.log(res);
-  return Array.from(res).map(v => v.toLowerCase());
+  return Array.from(res).map((v) => v.toLowerCase());
 }
 export default function RecommendationScreen({
   route,
@@ -73,7 +79,7 @@ export default function RecommendationScreen({
   React.useEffect(() => {
     // make post request to backend server
     var promise = axios.post(
-      "http://localhost:8080/products",
+      `${API_URL}/products`,
       {
         categories: Array.from(route.params?.categories),
         price: route.params?.price,
@@ -82,19 +88,31 @@ export default function RecommendationScreen({
         occasion: route.params?.occasion,
 
         //Fashion
-        clothesStoreTypes: formatSet(route.params?.chosenClothesStoreTypes, ClothesStoreTypes),
-        clothingSeasons: formatSet(route.params?.chosenClothingSeasons, ClothingSeasons),
+        clothesStoreTypes: formatSet(
+          route.params?.chosenClothesStoreTypes,
+          ClothesStoreTypes
+        ),
+        clothingSeasons: formatSet(
+          route.params?.chosenClothingSeasons,
+          ClothingSeasons
+        ),
         fashionWear: formatSet(route.params?.chosenFashionWear, FashionWear),
 
         //Food
         doesCook: route.params?.doesCook,
         doesDrink: route.params?.doesDrink,
         cuisines: formatSet(route.params?.chosenCuisines, Cuisines),
-        dietaryRequirements: formatSet(route.params?.chosenDietaryRequirements, DietaryRequirements),
+        dietaryRequirements: formatSet(
+          route.params?.chosenDietaryRequirements,
+          DietaryRequirements
+        ),
 
         //Fragrance
         perfumeTypes: formatSet(route.params?.chosenPerfumeTypes, PerfumeTypes),
-        fragranceFamilies: formatSet(route.params?.chosenFragranceFamilies, FragranceFamilies),
+        fragranceFamilies: formatSet(
+          route.params?.chosenFragranceFamilies,
+          FragranceFamilies
+        ),
 
         //Gardening
         hasGreenhouse: route.params?.hasGreenhouse,
@@ -103,7 +121,10 @@ export default function RecommendationScreen({
 
         //Health & Beauty
         likesMakeup: route.params?.likesMakeup,
-        beautyProductTypes: formatSet(route.params?.chosenBeautyProductTypes, BeautyProductTypes),
+        beautyProductTypes: formatSet(
+          route.params?.chosenBeautyProductTypes,
+          BeautyProductTypes
+        ),
 
         // Home Decor
         homeRooms: formatSet(route.params?.chosenHomeRooms, HomeRooms),
@@ -115,12 +136,16 @@ export default function RecommendationScreen({
 
         //Photography
         cameraTypes: formatSet(route.params?.chosenCameraTypes, CameraTypes),
-        photographyExperience: formatSet(route.params?.chosenExperience, PhotographyExperience),
+        photographyExperience: formatSet(
+          route.params?.chosenExperience,
+          PhotographyExperience
+        ),
 
         //Sport
         playSports: formatSet(route.params?.chosenPlaySports, Sports),
         watchSports: formatSet(route.params?.chosenWatchSports, Sports),
-      }
+      },
+      { headers: { "Content-Type": "application/json" } }
     );
 
     // create min artifical delay of 600 ms
@@ -186,7 +211,10 @@ export default function RecommendationScreen({
   return (
     <View style={styles.view}>
       <View style={styles.header}>
-        <PrimaryText style={{textAlign:"left",width:"90%",margin:15}} text={"Your gift recommendations"} />
+        <PrimaryText
+          style={{ textAlign: "left", width: "90%", margin: 15 }}
+          text={"Your gift recommendations"}
+        />
       </View>
       <FlatList
         numColumns={2}

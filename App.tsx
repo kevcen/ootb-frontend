@@ -25,8 +25,9 @@ import HealthBeautyScreen from "./src/screens/quiz/categories/HealthBeautyScreen
 import HomeDecorScreen from "./src/screens/quiz/categories/HomeDecorScreen";
 import RecipientIntroScreen from "./src/screens/quiz/recipient/RecipientIntroScreen";
 import SenderIntroScreen from "./src/screens/quiz/sender/SenderIntroScreen";
-import RankingScreen from "./src/screens/quiz/recipient/RankingScreen";
 import SearchScreen from "./src/screens/quiz/SearchScreen";
+import RankingScreen from "./src/screens/wishlist/RankingScreen";
+import CreateProfileScreen from "./src/screens/wishlist/CreateProfileScreen";
 
 let defaultQuizScreenOptions = (title?: string) => {
   return {
@@ -148,6 +149,7 @@ export default function App() {
           />
           <Stack.Screen name="Ranking" component={RankingScreen} />
           <Stack.Screen name="Search" component={SearchScreen} />
+          <Stack.Screen name="CreateProfile" component={CreateProfileScreen} />
           <Stack.Screen
             options={{ title: "" }}
             name="Error"
