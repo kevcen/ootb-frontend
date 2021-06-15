@@ -28,6 +28,7 @@ import SenderIntroScreen from "./src/screens/quiz/sender/SenderIntroScreen";
 import SearchScreen from "./src/screens/quiz/SearchScreen";
 import RankingScreen from "./src/screens/wishlist/RankingScreen";
 import CreateProfileScreen from "./src/screens/wishlist/CreateProfileScreen";
+import WishlistScreen from "./src/screens/wishlist/WishlistScreen";
 
 let defaultQuizScreenOptions = (title?: string) => {
   return {
@@ -149,6 +150,7 @@ export default function App() {
           />
           <Stack.Screen name="Ranking" component={RankingScreen} />
           <Stack.Screen name="Search" component={SearchScreen} />
+          <Stack.Screen name="Wishlist" component={WishlistScreen} />
           <Stack.Screen name="CreateProfile" component={CreateProfileScreen} />
           <Stack.Screen
             options={{ title: "" }}

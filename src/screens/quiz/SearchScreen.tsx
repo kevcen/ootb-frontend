@@ -33,7 +33,11 @@ export default function SearchScreen({
   }) => {
     return (
       <Pressable
-        onPress={() => {}} //  WHERE NAVIGATION SHOULD BE
+        onPress={() => {
+          navigation.navigate("Wishlist", {
+            user: item,
+          });
+        }}
         style={
           (styles.viewCentered,
           {
