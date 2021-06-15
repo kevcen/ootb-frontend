@@ -26,8 +26,14 @@ import HomeDecorScreen from "./src/screens/quiz/categories/HomeDecorScreen";
 import RecipientIntroScreen from "./src/screens/quiz/recipient/RecipientIntroScreen";
 import SenderIntroScreen from "./src/screens/quiz/sender/SenderIntroScreen";
 import RankingScreen from "./src/screens/quiz/recipient/RankingScreen";
+import SearchScreen from "./src/screens/quiz/SearchScreen";
 
-let defaultQuizScreenOptions= (title? : string) => {return { title: "Quiz" + (title ? " - " + title : ""), headerLeft: () => null }};
+let defaultQuizScreenOptions = (title?: string) => {
+  return {
+    title: "Quiz" + (title ? " - " + title : ""),
+    headerLeft: () => null,
+  };
+};
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -141,6 +147,7 @@ export default function App() {
             component={BudgetScreen}
           />
           <Stack.Screen name="Ranking" component={RankingScreen} />
+          <Stack.Screen name="Search" component={SearchScreen} />
           <Stack.Screen
             options={{ title: "" }}
             name="Error"
