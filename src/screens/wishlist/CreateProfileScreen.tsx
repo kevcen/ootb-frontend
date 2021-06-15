@@ -93,7 +93,6 @@ export default function CreateProfileScreen({
     /* End Creation */
     setLoading(true);
     /* Post Data */
-    console.log(API_URL);
     axios
       .post(`${API_URL}/users`, data, {
         headers: {
