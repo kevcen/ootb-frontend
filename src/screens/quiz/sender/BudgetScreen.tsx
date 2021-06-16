@@ -17,7 +17,7 @@ export default function BudgetScreen({
   route: any;
   navigation: any;
 }) {
-  var [priceRange, setPriceRange] = useState([10, 100]);
+  var [priceRange, setPriceRange] = useState([0, 100]);
   const [isLoading, setIsLoading] = useState(false);
 
   if (isLoading) {
