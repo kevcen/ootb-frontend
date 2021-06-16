@@ -3,7 +3,7 @@ import TagData from "../interfaces/TagData";
 const sports: TagData[] = [
   { title: "Football" },
   { title: "Cricket" },
-  { title: "Hocket"},
+  { title: "Hockey"},
   { title: "Tennis" },
   { title: "Volleyball" },
   { title: "Table Tennis" },
