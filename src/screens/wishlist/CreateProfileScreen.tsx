@@ -40,6 +40,7 @@ import FormData from "form-data";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import axios from "axios";
 import { API_URL } from "react-native-dotenv";
+import mime from 'mime';
 
 export default function CreateProfileScreen({
   route,
@@ -84,13 +85,11 @@ export default function CreateProfileScreen({
       data.append("countryCode", country.cca2);
     }
     if (profileImage) {
+      const newImageUri =  "file:///" + profileImage.uri.split("file:/").join("");
       data.append("image", {
-        name: `${Date.now()}`,
-        type: "image/*",
-        uri:
-          Platform.OS === "android"
-            ? profileImage.uri
-            : profileImage.uri.replace("file://", ""),
+        uri : newImageUri,
+        type: mime.getType(newImageUri),
+        name: newImageUri.split("/").pop()
       });
     }
     /* End Creation */

@@ -7,13 +7,14 @@ import {
   FlatList,
   ListRenderItem,
   Pressable,
-  Platform
+  Platform,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import User from "../../interfaces/User";
 import { styles } from "../../styles/quiz";
 import PrimaryButton from "../../components/PrimaryButton";
 import { API_URL } from "react-native-dotenv";
+import axios from "axios";
 
 export default function SearchScreen({
   route,
@@ -84,18 +85,18 @@ export default function SearchScreen({
         placeholder="Search here for profile..."
         onChangeText={(value) => {
           setSearchValue(value);
-          fetch(`${API_URL}/users/search`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              searchValue: value,
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              setUsers(data);
+          axios
+            .post(
+              `${API_URL}/users/search`,
+              { searchValue: value },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+            .then((response) => {
+              setUsers(response.data);
             });
           forceUpdate(!updated);
         }}
@@ -103,7 +104,11 @@ export default function SearchScreen({
         inputContainerStyle={{ backgroundColor: "transparent", borderWidth: 0 }}
         inputStyle={{ backgroundColor: "transparent", borderWidth: 0 }}
         value={searchValue}
-        platform={(Platform.OS != "android" && Platform.OS != "ios") ? "default" : Platform.OS}
+        platform={
+          Platform.OS != "android" && Platform.OS != "ios"
+            ? "default"
+            : Platform.OS
+        }
       />
       {users.length == 0 || searchValue == "" ? (
         <View

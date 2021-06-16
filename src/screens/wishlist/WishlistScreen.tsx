@@ -29,7 +29,7 @@ export default function WishlistScreen({
   route: any;
   navigation: any;
 }) {
-  var user: User = route.params.user;
+  var user: User = route.params?.user;
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const [quickView, setQuickView] = useState(<View />);
@@ -50,8 +50,9 @@ export default function WishlistScreen({
       { headers: { "Content-Type": "application/json" } }
     )
 
+    setIsLoading(true)
     // create min artifical delay of 600 ms
-    let timer = setTimeout(() => {
+    setTimeout(() => {
       promise
         .then((response) => {
           console.log(response.data);
@@ -64,14 +65,12 @@ export default function WishlistScreen({
           setIsLoading(false);
         });
     }, 600);
-    return () => {
-      clearTimeout(timer);
-    };
   }, []);
 
   if (isLoading) {
     return <WishlistLoading />;
   }
+
   // Platform independent quickviews
   const webQuickView = (
     <Overlay
