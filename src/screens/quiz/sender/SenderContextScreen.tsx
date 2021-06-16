@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import Question from "../../../components/Question";
 import { buttonStyles } from "../../../styles/buttons";
@@ -15,8 +15,8 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var gender = "";
-  var relationship = "";
+  var [gender, setGender] = useState("");
+  var [relationship, setRelationship] = useState("");
 
   return (
     <View style={styles.viewCentered}>
@@ -26,7 +26,7 @@ export default function RecipientContextScreen({
       <View style={styles.space} />
       <SingleOptionQuestion
         tagdata={Genders}
-        onTagPress={(name) => (gender = name)}
+        onTagPress={(name) => setGender(name)}
       />
       <View style={styles.space} />
       <Question
@@ -37,13 +37,13 @@ export default function RecipientContextScreen({
       <View style={styles.space} />
       <SingleOptionQuestion
         tagdata={Relationships}
-        onTagPress={(name) => (relationship = name)}
+        onTagPress={(name) => setRelationship(name)}
       />
       <View style={styles.space} />
       <QuizNavigator
         navigation={navigation}
         prev={{pagename:"SenderIntro"}}
-        next={{ pagename: "Occasions", params: { gender: [gender], relationship: new Set(relationship) } }}
+        next={{ pagename: "Occasions", params: { gender: [gender], relationship: [relationship] } }}
         currentpage={{ pagename: "Sender", params: { ...route.params } }}
         pagenum={1}
         totalpages={4}

@@ -122,6 +122,10 @@ export default function WishlistScreen({
               setQuickView(<QuickView product={product} item={minItem} />);
               toggleOverlay();
             }}
+            onSelect={(minItem: Item) => {
+              setQuickView(<QuickView product={product} item={minItem} />);
+              toggleOverlay();
+            }}
           />
         )}
         keyExtractor={(item) => item.name}

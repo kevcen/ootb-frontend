@@ -42,6 +42,7 @@ function formatSet(set: any, allOptions: TagData[]) {
     res.has("Any") ||
     res.has("Prefer not to say") ||
     res.has("Other") ||
+    res.has("") ||
     res.size == 0
   ) {
     allOptions.forEach((tag) => res.add(tag.title));

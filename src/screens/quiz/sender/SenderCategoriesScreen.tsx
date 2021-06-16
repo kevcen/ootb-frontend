@@ -15,7 +15,7 @@ export default function CategoriesScreen({
   route: any;
   navigation: any;
 }) {
-  const chosenCategories = new Set();
+  const chosenCategories = useRef(new Set());
   var [cats, setCats] = useState(Categories.slice());
 
   return (
@@ -25,10 +25,10 @@ export default function CategoriesScreen({
       <MultipleOptionQuestion
         tagdata={cats}
         onTagPress={(tagname) => {
-          if (chosenCategories.has(tagname)) {
-            chosenCategories.delete(tagname);
+          if (chosenCategories.current.has(tagname)) {
+            chosenCategories.current.delete(tagname);
           } else {
-            chosenCategories.add(tagname);
+            chosenCategories.current.add(tagname);
           }
         }}
       />
@@ -46,7 +46,7 @@ export default function CategoriesScreen({
         next={{
           pagename: "Budget",
           params: {
-            categories: chosenCategories,
+            categories: chosenCategories.current,
           },
         }}
         pagenum={route.params.pagenum}

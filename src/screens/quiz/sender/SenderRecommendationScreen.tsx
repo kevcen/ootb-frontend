@@ -42,10 +42,12 @@ import { API_URL } from "react-native-dotenv";
 
 function formatSet(set: any, allOptions: TagData[]) {
   var res = new Set<string>(Array.from(set || new Set()));
+  console.log(res);
   if (
     res.has("Any") ||
     res.has("Prefer not to say") ||
     res.has("Other") ||
+    res.has("") ||
     res.size == 0
   ) {
     allOptions.forEach((tag) => res.add(tag.title));
@@ -219,6 +221,10 @@ export default function RecommendationScreen({
           <BasicView
             product={product}
             onLongPress={(minItem: Item) => {
+              setQuickView(<QuickView product={product} item={minItem} />);
+              toggleOverlay();
+            }}
+            onSelect={(minItem: Item) => {
               setQuickView(<QuickView product={product} item={minItem} />);
               toggleOverlay();
             }}
