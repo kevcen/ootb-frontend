@@ -56,6 +56,12 @@ function formatSet(set: any, allOptions: TagData[]) {
   return Array.from(res).map((v) => v.toLowerCase());
 }
 
+function formatBool(val: any) {
+  if (val == undefined) {
+    return true;
+  }
+  return val
+}
 export default function RecommendationScreen({
   route,
   navigation,
@@ -68,7 +74,7 @@ export default function RecommendationScreen({
   var [recommendations, setRecommendations] = useState([]);
   const [visible, setVisible] = useState(false);
   const [quickView, setQuickView] = useState(<View />);
-
+  console.log(route.params?.likesMakeup);
   const toggleOverlay = () => {
     setVisible(!visible);
   };
@@ -97,8 +103,8 @@ export default function RecommendationScreen({
         fashionWear: formatSet(route.params?.chosenFashionWear, FashionWear),
 
         //Food
-        doesCook: route.params?.doesCook,
-        doesDrink: route.params?.doesDrink,
+        doesCook: formatBool(route.params?.doesCook),
+        doesDrink: formatBool(route.params?.doesDrink),
         cuisines: formatSet(route.params?.chosenCuisines, Cuisines),
         dietaryRequirements: formatSet(
           route.params?.chosenDietaryRequirements,
@@ -113,12 +119,12 @@ export default function RecommendationScreen({
         ),
 
         //Gardening
-        hasGreenhouse: route.params?.hasGreenhouse,
+        hasGreenhouse: formatBool(route.params?.hasGreenhouse),
         plantSizes: formatSet(route.params?.chosenPlantSizes, PlantSizes),
         plantTypes: formatSet(route.params?.chosenPlantTypes, PlantTypes),
 
         //Health & Beauty
-        likesMakeup: route.params?.likesMakeup,
+        likesMakeup: formatBool(route.params?.likesMakeup),
         beautyProductTypes: formatSet(
           route.params?.chosenBeautyProductTypes,
           BeautyProductTypes
