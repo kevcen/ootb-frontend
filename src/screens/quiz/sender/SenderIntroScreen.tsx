@@ -17,8 +17,9 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
       <Question questionText={"Finding the best gift for someone"} />
       <View style={styles.space} />
       <Text style={styles.subtext}>
-        Take our detailed quiz to get a list of recommendations that best fit
-        the person you are gifting to
+        We can help you by showing their wishlist if they have an account with us
+        and you can choose to take our detailed quiz instead to get a list of 
+        recommendations that best fit the person you are gifting to.
       </Text>
 
       <View

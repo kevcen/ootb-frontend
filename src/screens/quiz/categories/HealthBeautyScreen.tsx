@@ -16,7 +16,7 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var [likesMakeup, setLikesMakeup] = useState(false);
+  var [likesMakeup, setLikesMakeup] = useState(true);
   var chosenBeautyProductTypes = useRef(new Set());
 
   // TODO: unselect other options after selection

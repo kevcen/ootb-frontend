@@ -9,6 +9,7 @@ import { styles } from "../../../styles/quiz";
 import SingleOptionQuestion from "../../../components/Quiz/SingleOptionQuestion";
 import QuizNavigator from "../../../components/Quiz/QuizNavigator";
 import { useState } from "react";
+import MultipleOptionQuestion from "../../../components/Quiz/MultipleOptionQuestion";
 
 export default function RecipientContextScreen({
   navigation,
@@ -18,7 +19,6 @@ export default function RecipientContextScreen({
   const [gender, setChosenGender] = useState("");
   const [chosenGiftType, setChosenGiftType] = useState("");
 
-  // TODO: unselect other options after selection
   return (
     <View style={styles.viewCentered}>
       <Question questionText={"What gender do you identify with?"} />
@@ -29,7 +29,7 @@ export default function RecipientContextScreen({
 
       <Question questionText={"What gifts would you prefer to receive?"} />
       <View style={styles.space} />
-      <SingleOptionQuestion
+      <MultipleOptionQuestion
         tagdata={GiftTypes}
         onTagPress={setChosenGiftType}
       />

@@ -16,7 +16,7 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var [hasGreenhouse, setHasGreenhouse] = useState(false);
+  var [hasGreenhouse, setHasGreenhouse] = useState(true);
   var chosenPlantTypes = useRef(new Set());
   var chosenPlantSizes = useRef(new Set());
 

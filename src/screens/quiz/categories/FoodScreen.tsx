@@ -18,8 +18,8 @@ export default function RecipientContextScreen({
   route: any;
   navigation: any;
 }) {
-  var [doesDrink, setDoesDrink] = useState(false);
-  var [doesCook, setDoesCook] = useState(false);
+  var [doesDrink, setDoesDrink] = useState(true);
+  var [doesCook, setDoesCook] = useState(true);
   var chosenCuisines = useRef(new Set());
   var chosenDietaryRequirements = useRef(new Set());
   var [cuis, setCuis] = useState(Cuisines.slice());
