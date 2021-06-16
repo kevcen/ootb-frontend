@@ -48,6 +48,7 @@ export default function CreateProfileScreen({
   route: any;
   navigation: any;
 }) {
+  const interests: String[] = route.params?.interests;
   const orderedWishlist: Product[] = route.params?.wishlist;
   const [countryCode, setCountryCode] = useState<CountryCode>("GB");
   const [profileImage, setProfileImage] = useState<ImageInfo>();
@@ -64,6 +65,7 @@ export default function CreateProfileScreen({
   const [isLoading, setLoading] = useState(false);
 
   function createProfile(
+    interests: String[],
     wishlist: Product[],
     profileImage: ImageInfo | undefined,
     firstName: string,
@@ -74,6 +76,7 @@ export default function CreateProfileScreen({
     /* Create form data */
     let data = new FormData();
     data.append("wishlist", JSON.stringify(wishlist));
+    data.append("interests", JSON.stringify(interests));
     data.append("firstname", firstName);
     data.append("lastname", lastName);
     data.append("isPublic", isPublic);
@@ -242,6 +245,7 @@ export default function CreateProfileScreen({
           var passed: boolean = checkForm();
           if (passed) {
             createProfile(
+              interests,
               orderedWishlist,
               profileImage,
               firstName,

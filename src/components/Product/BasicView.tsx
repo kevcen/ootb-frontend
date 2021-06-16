@@ -14,39 +14,34 @@ import PrimaryText from "../PrimaryText";
 import QuickView from "./QuickView";
 import { primary } from "../../styles/Colors";
 
-let getCheapestItem = (items: Item[]): Item | undefined => {
+let getCheapestItem = (items: Item[] | undefined): Item | undefined => {
   var highest = Number.POSITIVE_INFINITY;
   var minItem: Item | undefined;
-  for (let item of items) {
-    if (item.cost < highest) {
-      highest = item.cost;
-      minItem = item;
+  if (items) {
+    for (let item of items) {
+      if (item.cost < highest) {
+        highest = item.cost;
+        minItem = item;
+      }
     }
   }
+
   return minItem;
 };
 
 export default (props: {
   product: Product;
-  onSelect?: (item: Item) => any;
-  onLongPress?: (item: Item) => any;
+  onSelect?: (item: Item | undefined) => any;
+  onLongPress?: (item: Item | undefined) => any;
   isActive?: boolean;
 }) => {
   const minItem: Item | undefined = getCheapestItem(props.product.items);
 
-  if (!minItem) {
-    return (
-      <View style={styles.view}>
-        <PrimaryText
-          text={`We have no records of items for "${props.product.name}"`}
-        />
-      </View>
-    );
-  }
-
   return (
     <TouchableHighlight
-      onLongPress={()=> {props.onLongPress ? props.onLongPress(minItem) : null }}
+      onLongPress={() => {
+        props.onLongPress ? props.onLongPress(minItem) : null;
+      }}
       underlayColor="#0000"
       style={[
         styles.view,
@@ -54,12 +49,16 @@ export default (props: {
           borderColor: props.isActive ? primary : white,
         },
       ]}
-      onPress={()=> {props.onSelect ? props.onSelect(minItem) : null }}
+      onPress={() => {
+        props.onSelect ? props.onSelect(minItem) : null;
+      }}
     >
       <View>
         <Image style={styles.image} source={{ uri: props.product.image }} />
-        <Text style={styles.text} numberOfLines={1}>{props.product.name}</Text>
-        <Text style={styles.text}>{"£" + minItem.cost.toFixed(2)}</Text>
+        <Text style={styles.text} numberOfLines={1}>
+          {props.product.name}
+        </Text>
+        {minItem && <Text style={styles.text}>{"£" + minItem.cost.toFixed(2)}</Text>}
       </View>
     </TouchableHighlight>
   );
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.5,
     borderRadius: 5,
-    height: 260,
+    maxHeight: 260,
     margin: 5,
     borderWidth: 2,
   },

@@ -73,11 +73,13 @@ export default function RecommendationScreen({
   const navigateToRankPage = () => {
     navigation.navigate("Ranking", {
       products: Array.from(wishlist.current),
+      interests: Array.from(route.params?.categories)
     });
   };
 
   // on component load, get results
   React.useEffect(() => {
+    console.log(API_URL)
     // make post request to backend server
     var promise = axios.post(
       `${API_URL}/products`,

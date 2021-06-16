@@ -220,10 +220,6 @@ export default function RecommendationScreen({
         renderItem={({ item: product }: { item: Product }) => (
           <BasicView
             product={product}
-            onLongPress={(minItem: Item) => {
-              setQuickView(<QuickView product={product} item={minItem} />);
-              toggleOverlay();
-            }}
             onSelect={(minItem: Item) => {
               setQuickView(<QuickView product={product} item={minItem} />);
               toggleOverlay();

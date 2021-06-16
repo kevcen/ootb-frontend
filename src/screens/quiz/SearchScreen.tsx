@@ -13,6 +13,7 @@ import { SearchBar } from "react-native-elements";
 import User from "../../interfaces/User";
 import { styles } from "../../styles/quiz";
 import PrimaryButton from "../../components/PrimaryButton";
+import { API_URL } from "react-native-dotenv";
 
 export default function SearchScreen({
   route,
@@ -80,17 +81,16 @@ export default function SearchScreen({
     <View style={styles.viewCentered}>
       <View style={styles.space} />
       <SearchBar
-        extraData={updated}
         placeholder="Search here for profile..."
         onChangeText={(value) => {
           setSearchValue(value);
-          fetch("https://gift-recommender-api.herokuapp.com/users/search", {
+          fetch(`${API_URL}/users/search`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              searchValue: searchValue,
+              searchValue: value,
             }),
           })
             .then((response) => response.json())

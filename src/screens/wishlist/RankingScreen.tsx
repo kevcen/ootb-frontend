@@ -30,6 +30,7 @@ export default function RankingScreen({
   route: any;
   navigation: any;
 }) {
+  const interests: String[] = Array.from(route.params?.interests || []);
   const selectedItems: Product[] = Array.from(route.params?.products || []);
 
   // Data is ordered list of priority, first element is highest priority
@@ -93,7 +94,7 @@ export default function RankingScreen({
       </Text>
       <TouchableWithoutFeedback
         onPress={() => setRead(true)}
-        style={{ width: "100%", alignItems:"center" }}
+        style={{ width: "100%", alignItems: "center" }}
       >
         <Text style={[styles.subtext, { color: primary }]}>
           Click once read to collapse
@@ -124,7 +125,7 @@ export default function RankingScreen({
           dragItemOverflow={false}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          style={{ width: "100%"}}
+          style={{ width: "100%" }}
         />
         <View style={styles.seperator} />
         <Text style={{ fontFamily: "roboto-light" }}>Least Wanted</Text>
@@ -133,7 +134,10 @@ export default function RankingScreen({
           style={PrimaryButtonStyles.bottom}
           text={"Create wishlist"}
           onPress={() => {
-            navigation.navigate("CreateProfile", { wishlist: orderedWishlist });
+            navigation.navigate("CreateProfile", {
+              wishlist: orderedWishlist,
+              interests,
+            });
           }}
         />
       </ScrollView>

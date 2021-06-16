@@ -20,6 +20,7 @@ import axios from "axios";
 import Product from "../../interfaces/Product";
 import Item from "../../interfaces/Item";
 import WishlistLoading from "../../components/WishlistLoading";
+import { API_URL } from "react-native-dotenv";
 
 export default function WishlistScreen({
   route,
@@ -42,7 +43,7 @@ export default function WishlistScreen({
   React.useEffect(() => {
     // make post request to backend server
     var promise = axios.post(
-      "https://gift-recommender-api.herokuapp.com/users/wishlist",
+      `${API_URL}/users/wishlist`,
       {
         userId: user.id,
       },
