@@ -7,6 +7,7 @@ import {
   FlatList,
   ListRenderItem,
   Pressable,
+  Platform
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import User from "../../interfaces/User";
@@ -23,6 +24,8 @@ export default function SearchScreen({
   var [searchValue, setSearchValue] = useState("");
 
   var [users, setUsers] = useState([]);
+
+  const [updated, forceUpdate] = useState(true);
 
   let renderItem: ListRenderItem<User> = ({
     item,
@@ -77,7 +80,8 @@ export default function SearchScreen({
     <View style={styles.viewCentered}>
       <View style={styles.space} />
       <SearchBar
-        placeholder="Search here for profile"
+        extraData={updated}
+        placeholder="Search here for profile..."
         onChangeText={(value) => {
           setSearchValue(value);
           fetch("https://gift-recommender-api.herokuapp.com/users/search", {
@@ -93,12 +97,13 @@ export default function SearchScreen({
             .then((data) => {
               setUsers(data);
             });
+          forceUpdate(!updated);
         }}
         containerStyle={{ backgroundColor: "transparent", borderWidth: 0 }}
         inputContainerStyle={{ backgroundColor: "transparent", borderWidth: 0 }}
         inputStyle={{ backgroundColor: "transparent", borderWidth: 0 }}
         value={searchValue}
-        platform="default"
+        platform={(Platform.OS != "android" && Platform.OS != "ios") ? "default" : Platform.OS}
       />
       {users.length == 0 || searchValue == "" ? (
         <View
