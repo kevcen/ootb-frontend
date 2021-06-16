@@ -15,7 +15,7 @@ export default function RecipientContextScreen({
 }: {
   navigation: any;
 }) {
-  const [chosenGender, setChosenGender] = useState("");
+  const [gender, setChosenGender] = useState("");
   const [chosenGiftType, setChosenGiftType] = useState("");
 
   // TODO: unselect other options after selection
@@ -45,7 +45,7 @@ export default function RecipientContextScreen({
         next={{
           pagename:
             "RecipientCategories",
-          params: { chosenGender, chosenGiftType },
+          params: { gender, chosenGiftType },
         }}
         pagenum={1}
         totalpages={2}
