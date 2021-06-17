@@ -95,7 +95,7 @@ export default function SearchScreen({
           setSearchValue(value);
           axios
             .post(
-              `${Constants.manifest.extra?.API_URL}/users/search`,
+              `https://gift-recommender-api.herokuapp.com/users/search`,
               { searchValue: value },
               {
                 headers: {

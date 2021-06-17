@@ -43,7 +43,7 @@ export default function WishlistScreen({
   React.useEffect(() => {
     // make post request to backend server
     var promise = axios.post(
-      `${Constants.manifest.extra?.API_URL}/users/wishlist`,
+      `https://gift-recommender-api.herokuapp.com/users/wishlist`,
       {
         userId: user.id,
       },

@@ -88,7 +88,7 @@ export default function CreateProfileScreen({
     setLoading(true);
     /* Post Data */
     axios
-      .post(`${Constants.manifest.extra?.API_URL}/users`, data, {
+      .post(`https://gift-recommender-api.herokuapp.com/users`, data, {
         headers: {
           Accept: "application/json",
           "Content-Type": "multipart/form-data",
