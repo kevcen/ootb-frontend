@@ -40,7 +40,7 @@ import FormData from "form-data";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import axios from "axios";
 import { API_URL } from "react-native-dotenv";
-import mime from 'mime';
+import mime from "mime";
 
 export default function CreateProfileScreen({
   route,
@@ -58,7 +58,7 @@ export default function CreateProfileScreen({
   const [country, setCountry] = useState<Country>();
   const [isCountryPickerOpen, setIsCountryPickerOpen] = useState(false);
   const [isPublic, setPublic] = useState(true);
-
+  const [updated, forceUpdate] = useState(false);
   const [countryError, setCountryError] = useState(false);
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
@@ -85,11 +85,18 @@ export default function CreateProfileScreen({
       data.append("countryCode", country.cca2);
     }
     if (profileImage) {
-      const newImageUri =  "file:///" + profileImage.uri.split("file:/").join("");
+      let localUri = profileImage.uri;
+      let filename = localUri.split("/").pop() ||`${Date.now()}.jpg`;
+
+      // Infer the type of the image
+      let match = /\.(\w+)$/.exec(filename);
+      let type = match ? `image/${match[1]}` : `image`;
+
+      console.log(profileImage.uri);
       data.append("image", {
-        uri : newImageUri,
-        type: mime.getType(newImageUri),
-        name: newImageUri.split("/").pop()
+        uri: localUri,
+        type: type, 
+        name: filename,
       });
     }
     /* End Creation */
@@ -161,8 +168,10 @@ export default function CreateProfileScreen({
         <View style={styles.space} />
         <AvatarUpload
           initials={firstName[0] + lastName[0]}
-          default={countryCode}
-          onFileChange={(image: ImageInfo) => setProfileImage(image)}
+          default={"GB"}
+          onFileChange={(image: ImageInfo) => {
+            setProfileImage(image);
+          }}
         />
         <View style={styles.space} />
         <View style={styles.row}>

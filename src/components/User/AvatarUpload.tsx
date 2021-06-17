@@ -4,28 +4,22 @@ import { Avatar } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 
-const defaultPreview =
-  "https://cdn4.iconfinder.com/data/icons/basic-ui-pack-flat-s94-1/64/Basic_UI_Icon_Pack_-_Flat_user-512.png";
 export default (props: {
   initials: string;
   default: string;
   onFileChange?: (file: ImageInfo) => any;
 }) => {
-  const [image, setImage]: any = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-      }
-    })();
-  }, []);
+  const [image, setImage] = useState("");
 
   const pickImage = async () => {
+    if (Platform.OS !== "web") {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
+    }
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -33,12 +27,15 @@ export default (props: {
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-      if (props.onFileChange) {
-        props.onFileChange(result);
-      }
+    if (result.cancelled === true) {
+      return;
     }
+
+    if (props.onFileChange) {
+      props.onFileChange(result);
+    }
+
+    setImage(result.uri);
   };
 
   return (
@@ -51,12 +48,8 @@ export default (props: {
             ? props.initials.toUpperCase()
             : props.default
         }
-        onPress={pickImage}
-        source={
-          image && {
-            uri: image,
-          }
-        }
+        onPress={(pickImage)}
+        source={image ? { uri: image } : undefined}
         overlayContainerStyle={{ backgroundColor: "darkgrey" }}
         activeOpacity={0.6}
       />
