@@ -32,6 +32,7 @@ import WishlistScreen from "./src/screens/wishlist/WishlistScreen";
 import { Button } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Icon } from "react-native-elements";
+import SendEmailScreen from "./src/screens/wishlist/SendEmailScreen";
 
 let defaultQuizScreenOptions = (navigationRef: any, title?: string) => {
   return {
@@ -188,7 +189,12 @@ export default function App() {
             component={CreateProfileScreen}
           />
           <Stack.Screen
-            options={{ title: "" }}
+            options={{ title: "", headerRight: HomeButton(navigationRef)}}
+            name="SendEmail"
+            component={SendEmailScreen}
+          />
+          <Stack.Screen
+            options={{ title: "" , headerRight: HomeButton(navigationRef)}}
             name="Error"
             component={ErrorScreen}
           />
