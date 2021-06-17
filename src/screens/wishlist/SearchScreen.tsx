@@ -14,7 +14,6 @@ import User from "../../interfaces/User";
 import { styles } from "../../styles/quiz";
 import PrimaryButton from "../../components/PrimaryButton";
 import axios from "axios";
-import AvatarUpload from "../../components/User/AvatarUpload";
 import { Avatar } from "react-native-elements/dist/avatar/Avatar";
 import Constants from "expo-constants";
 

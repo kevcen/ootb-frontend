@@ -25,6 +25,7 @@ export default ({ setCats }: { setCats: any }) => {
               onSubmitEditing={() => {
                 setCats({ title: text });
                 setCurrentlyWriting(!currentlyWriting);
+                onChangeText("")
               }}
               textAlign={"center"}
               value={text}
