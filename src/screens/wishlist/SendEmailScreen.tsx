@@ -59,7 +59,7 @@ export default function SendEmailScreen({
         onPress={() => {
           console.log(emails);
           axios.post(
-            `http://localhost:8080/users/sendemail`,
+            `https://gift-recommender-api.herokuapp.com/users/sendemail`,
             {
               emailAddresses : emails.current,
               userId : route.params.userId,
