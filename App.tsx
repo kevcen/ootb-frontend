@@ -29,6 +29,7 @@ import SearchScreen from "./src/screens/wishlist/SearchScreen";
 import RankingScreen from "./src/screens/wishlist/RankingScreen";
 import CreateProfileScreen from "./src/screens/wishlist/CreateProfileScreen";
 import WishlistScreen from "./src/screens/wishlist/WishlistScreen";
+import ChipInScreen from "./src/screens/quiz/sender/ChipInScreen";
 
 let defaultQuizScreenOptions = (title?: string) => {
   return {

@@ -21,6 +21,10 @@ import Product from "../../interfaces/Product";
 import Item from "../../interfaces/Item";
 import WishlistLoading from "../../components/WishlistLoading";
 import Constants from "expo-constants";
+import CircleSlider from "react-native-circle-slider";
+import PrimaryButton from "../../components/PrimaryButton";
+import { Slider } from "react-native-elements";
+import { Animated } from "react-native";
 
 export default function WishlistScreen({
   route,
@@ -35,6 +39,8 @@ export default function WishlistScreen({
   const [quickView, setQuickView] = useState(<View />);
   var [wishlist, setWishlist] = useState([]);
   var [bannerState, setBannerState] = useState<boolean[]>([]);
+  var [chipIn, setChipIn] = useState<boolean[]>([]);
+  var [chipValue, setChipValue] = useState(0);
 
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -59,6 +65,7 @@ export default function WishlistScreen({
           console.log(response.data);
           setWishlist(response.data);
           setBannerState(new Array(response.data.length).fill(false));
+          setChipIn(new Array(response.data.length).fill(false));
         })
         .catch((error) => {
           navigation.navigate("Error", { error });
@@ -157,6 +164,53 @@ export default function WishlistScreen({
                             bannerState[index] = true;
                           }
                         });
+                    }}
+                    updateChipIn={() => {
+                      setQuickView(
+                        <View>
+                          <Slider
+                            value={chipValue}
+                            onValueChange={(value: number) => {
+                              setChipValue(value);
+                            }}
+                            maximumValue={minItem?.cost}
+                            thumbStyle={{
+                              height: 40,
+                              width: 40,
+                              backgroundColor: "transparent",
+                            }}
+                            thumbProps={{
+                              Component: Animated.Image,
+                              source: {
+                                uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
+                              },
+                            }}
+                          />
+                          <PrimaryButton
+                            text={"Chip in"}
+                            onPress={() => {
+                              fetch(
+                                `${Constants.manifest.extra?.API_URL}/users/chipin`,
+                                {
+                                  method: "POST",
+                                  headers: {
+                                    Accept: "application/json",
+                                    "Content-Type": "application/json",
+                                  },
+                                  body: JSON.stringify({
+                                    productId: product.id,
+                                    userId: user.id,
+                                    money: chipValue,
+                                    payerName: "asddsadsda",
+                                  }),
+                                }
+                              );
+                              toggleOverlay();
+                            }}
+                          />
+                        </View>
+                      );
+                      chipIn[index] = true;
                     }}
                   />
                 );

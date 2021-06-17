@@ -13,6 +13,8 @@ export default (props: {
   item?: Item;
   navigation?: any;
   updateBought?: any;
+  updateChipIn?: any;
+  wishlistParams?: any;
 }) => {
   return (
     <View style={styles.container}>
@@ -34,26 +36,24 @@ export default (props: {
         }}
         text={props.item ? "view on website" : "see related items"}
       ></PrimaryButton>
-      <PrimaryButton
-        style={{ borderRadius: 100, alignSelf: "center", margin: 10 }}
-        onPress={() => {
-          props.updateBought();
-        }}
-        text={"Mark as interested in buying"}
-      ></PrimaryButton>
-      <PrimaryButton
-        style={{ borderRadius: 100, alignSelf: "center", margin: 10 }}
-        onPress={() => {
-          if (props.item) {
-            Linking.openURL(props.item.website);
-          } else {
-            props.navigation.navigate("SenderRecommendations", {
-              categories: [props.product.name],
-            });
-          }
-        }}
-        text={props.item ? "Chip in purchase" : "Chip in purchase"}
-      ></PrimaryButton>
+      {props.item && (
+        <PrimaryButton
+          style={{ borderRadius: 100, alignSelf: "center", margin: 10 }}
+          onPress={() => {
+            props.updateBought();
+          }}
+          text={"Mark as interested in buying"}
+        ></PrimaryButton>
+      )}
+      {props.item && (
+        <PrimaryButton
+          style={{ borderRadius: 100, alignSelf: "center", margin: 10 }}
+          onPress={() => {
+            props.updateChipIn();
+          }}
+          text={"Chip in purchase"}
+        ></PrimaryButton>
+      )}
     </View>
   );
 };
