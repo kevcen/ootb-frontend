@@ -17,6 +17,7 @@ import { primary } from "../../styles/Colors";
 let getCheapestItem = (items: Item[] | undefined): Item | undefined => {
   var highest = Number.POSITIVE_INFINITY;
   var minItem: Item | undefined;
+  console.log(items)
   if (items) {
     for (let item of items) {
       if (item.cost < highest) {

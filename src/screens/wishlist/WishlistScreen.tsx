@@ -139,20 +139,20 @@ export default function WishlistScreen({
     <View style={styles.view}>
       <View style={styles.header}>
         <PrimaryText
-          text={`This profile is ${
+          text={
             user.public
-              ? "public, you can view the wishlist of the user below"
-              : "private, you can only see categories that interest this user"
-          }`}
+              ? `This is ${user.firstname}'s wishlist`
+              : `${user.firstname}'s has a private profile, so you can only see their interests`
+          }
         />
-        <View style={{width:"90%", flex:1, flexDirection:"row"}}>
-        <Image
-          source={{ uri: user.image }}
-          style={{ height: 100, width: 100 }}
-        />
-        <Text style={{width:"80%", padding:10}}>
-          {user.firstname} {user.lastname}
-        </Text>
+        <View style={{ width: "90%", flex: 1, flexDirection: "row" }}>
+          <Image
+            source={{ uri: user.image }}
+            style={{ height: 100, width: 100 }}
+          />
+          <Text style={{ width: "80%", padding: 10 }}>
+            {user.firstname} {user.lastname}
+          </Text>
         </View>
       </View>
 
