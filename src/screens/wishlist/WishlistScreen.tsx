@@ -50,7 +50,7 @@ export default function WishlistScreen({
   React.useEffect(() => {
     // make post request to backend server
     var promise = axios.post(
-      `${Constants.manifest.extra?.API_URL}/users/wishlist`,
+      `https://gift-recommender-api.herokuapp.com/users/wishlist`,
       {
         userId: user.id,
       },
@@ -233,26 +233,25 @@ export default function WishlistScreen({
               : `${user.firstname}'s has a private profile, so you can only see their interests`
           }
         />
-        <View
-          style={{
-            paddingHorizontal: 15,
-            width: "100%",
-            flex: 1,
-            flexDirection: "row",
-          }}
-        >
-          <Avatar
-            size="xlarge"
-            title={(user.firstname[0] + user.lastname[0]).toUpperCase()}
-            source={user.image ? { uri: user.image } : undefined}
-            overlayContainerStyle={{ backgroundColor: "darkgrey" }}
-            activeOpacity={0.6}
-          />
+      </View>
+      <View
+        style={{
+          paddingHorizontal: 15,
+          width: "100%",
+          flexDirection: "row",
+        }}
+      >
+        <Avatar
+          size="xlarge"
+          title={(user.firstname[0] + user.lastname[0]).toUpperCase()}
+          source={user.image ? { uri: user.image } : undefined}
+          overlayContainerStyle={{ backgroundColor: "darkgrey" }}
+          activeOpacity={0.6}
+        />
 
-          <Text style={{ width: "80%", padding: 10, fontSize: 20 }}>
-            {user.firstname} {user.lastname}
-          </Text>
-        </View>
+        <Text style={{ width: "80%", padding: 10, fontSize: 20 }}>
+          {user.firstname} {user.lastname}
+        </Text>
       </View>
 
       {wishlistView}

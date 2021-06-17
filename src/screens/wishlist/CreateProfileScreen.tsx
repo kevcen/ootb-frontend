@@ -45,8 +45,10 @@ export default function CreateProfileScreen({
   const [countryError, setCountryError] = useState(false);
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
+  const [update, forceUpdate] = useState(false);
 
   const [isLoading, setLoading] = useState(false);
+  var userId: number | null = null;
 
   async function createProfile(
     interests: String[],
@@ -88,7 +90,7 @@ export default function CreateProfileScreen({
     setLoading(true);
     /* Post Data */
     axios
-      .post(`${Constants.manifest.extra?.API_URL}/users`, data, {
+      .post(`https://gift-recommender-api.herokuapp.com/users`, data, {
         headers: {
           Accept: "application/json",
           "Content-Type": "multipart/form-data",
@@ -96,7 +98,9 @@ export default function CreateProfileScreen({
       })
       .then((response) => {
         console.log(response.data);
+        userId = response.data.id;
         alert("Successfully created your profile");
+        navigation.navigate("SendEmail", {userId});
       })
       .catch((error) => {
         console.log(error);
@@ -157,6 +161,7 @@ export default function CreateProfileScreen({
           initials={(firstName[0] ?? "G") + (lastName[0] ?? "B")}
           onFileChange={(image: ImageInfo) => {
             setProfileImage(image);
+            forceUpdate(!update);
           }}
         />
         <View style={styles.space} />
@@ -174,6 +179,7 @@ export default function CreateProfileScreen({
               onChangeText={(text) => {
                 setFirstName(text);
                 setFirstNameError(false);
+                forceUpdate(!update);
               }}
             />
           </View>
@@ -190,6 +196,7 @@ export default function CreateProfileScreen({
               onChangeText={(text) => {
                 setLastName(text);
                 setLastNameError(false);
+                forceUpdate(!update);
               }}
             />
           </View>

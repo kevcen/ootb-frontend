@@ -76,7 +76,7 @@ export default (props: {
         size="xlarge"
         rounded
         title={props.initials.toUpperCase()}
-        source={image ? { uri: image } : undefined}
+        source={props.image ? { uri: props.image } : undefined}
         overlayContainerStyle={{ backgroundColor: "darkgrey" }}
         activeOpacity={0.6}
       />
