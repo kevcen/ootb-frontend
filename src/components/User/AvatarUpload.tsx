@@ -3,7 +3,7 @@ import { View, Text, Platform } from "react-native";
 import { Avatar } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
-import uploadToAnonymousFilesAsync from 'anonymous-files'; 
+import uploadToAnonymousFilesAsync from "anonymous-files";
 
 export default (props: {
   image: string;
@@ -19,7 +19,7 @@ export default (props: {
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== "granted") {
         alert("Sorry, we need camera roll permissions to make this work!");
-        return
+        return;
       }
     }
 
@@ -37,7 +37,7 @@ export default (props: {
     if (props.onFileChange) {
       props.onFileChange(result);
     }
-    
+
     setImage(result.uri);
   };
 
@@ -46,10 +46,8 @@ export default (props: {
       <Avatar
         size="xlarge"
         rounded
-        title={
-         props.initials.toUpperCase()
-        }
-        onPress={(pickImage)}
+        title={props.initials.toString().toUpperCase()}
+        onPress={pickImage}
         source={image ? { uri: image } : undefined}
         overlayContainerStyle={{ backgroundColor: "darkgrey" }}
         activeOpacity={0.6}
