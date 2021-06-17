@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { View, TextInput, TouchableWithoutFeedback } from "react-native";
+import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard } from "react-native";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { styles } from "../../../styles/quiz";
 import SliderMarker from "../../../components/Quiz/SliderMarker";
 import Question from "../../../components/Question";
 import QuizNavigator from "../../../components/Quiz/QuizNavigator";
+import { Label } from "native-base";
 
 export default function BudgetScreen({
   route,
@@ -34,6 +35,8 @@ export default function BudgetScreen({
   };
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
     <View style={styles.viewCentered}>
       <Question questionText={"What price range should the gift be?"} />
       <View style={styles.space} />
@@ -44,6 +47,7 @@ export default function BudgetScreen({
         enabledOne={true}
         enabledTwo={true}
         enableLabel={true}
+       
         selectedStyle={{
           backgroundColor: "gold",
         }}
@@ -74,7 +78,9 @@ export default function BudgetScreen({
         allowOverlap={true}
       />
 
+
       <View style={styles.row}>
+
         <TextInput
           placeholder="Min"
           style={[
@@ -83,11 +89,11 @@ export default function BudgetScreen({
           ]}
           keyboardType={"numeric"}
           textAlign={"center"}
-          maxLength={3}
-          value={tempMin.toString()}
+          maxLength={4}
+          value={"£" + tempMin.toString()}
           onChangeText={(e) => {
-            if (!isNaN(Number(e))) {
-              setTempMin(Number(e));
+            if (!isNaN(Number(e.substring(1)))) {
+              setTempMin(Number(e.substring(1)));
             }
           }}
           onBlur={() => {
@@ -106,11 +112,11 @@ export default function BudgetScreen({
           ]}
           keyboardType={"numeric"}
           textAlign={"center"}
-          maxLength={3}
-          value={tempMax.toString()}
+          maxLength={4}
+          value={"£" + tempMax.toString()}
           onChangeText={(e) => {
-            if (!isNaN(Number(e))) {
-              setTempMax(Number(e));
+            if (!isNaN(Number(e.substring(1)))) {
+              setTempMax(Number(e.substring(1)));
             }
           }}
           onBlur={() => {
@@ -156,5 +162,7 @@ export default function BudgetScreen({
         />
       )}
     </View>
+    </TouchableWithoutFeedback>
+
   );
 }
