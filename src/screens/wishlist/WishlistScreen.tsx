@@ -15,7 +15,7 @@ import Modal from "modal-react-native-web";
 import LoadingData from "../../components/LoadingData";
 import PrimaryText from "../../components/PrimaryText";
 import BasicView from "../../components/Product/BasicView";
-import QuickView from "../../components/Product/QuickView";
+import SeeMarkChipQuickView from "../../components/Product/SeeMarkChipQuickView";
 import axios from "axios";
 import Product from "../../interfaces/Product";
 import Item from "../../interfaces/Item";
@@ -34,6 +34,7 @@ export default function WishlistScreen({
   const [visible, setVisible] = useState(false);
   const [quickView, setQuickView] = useState(<View />);
   var [wishlist, setWishlist] = useState([]);
+  var [bannerState, setBannerState] = useState<boolean[]>([]);
 
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -57,6 +58,7 @@ export default function WishlistScreen({
         .then((response) => {
           console.log(response.data);
           setWishlist(response.data);
+          setBannerState(new Array(response.data.length).fill(false));
         })
         .catch((error) => {
           navigation.navigate("Error", { error });
@@ -116,21 +118,53 @@ export default function WishlistScreen({
         style={styles.grid}
         columnWrapperStyle={styles.list}
         data={wishlist}
-        renderItem={({ item: product }: { item: Product }) => (
-          <BasicView
-            product={product}
-            onSelect={(minItem: Item | undefined) => {
-              setQuickView(
-                <QuickView
-                  product={product}
-                  item={minItem}
-                  navigation={navigation}
-                />
-              );
-              toggleOverlay();
-            }}
-          />
-        )}
+        renderItem={({
+          item: product,
+          index,
+        }: {
+          item: Product;
+          index: number;
+        }) => {
+          return (
+            <BasicView
+              addBanner={bannerState[index]}
+              product={product}
+              onSelect={(minItem: Item | undefined) => {
+                setQuickView(
+                  <SeeMarkChipQuickView
+                    product={product}
+                    item={minItem}
+                    navigation={navigation}
+                    updateBought={() => {
+                      fetch(
+                        `${Constants.manifest.extra?.API_URL}/users/interested`,
+                        {
+                          method: "POST",
+                          headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                            productId: product.id,
+                            userId: user.id,
+                          }),
+                        }
+                      )
+                        .then((response) => response.json())
+                        .then((data) => {
+                          // change this disgusting if
+                          if (data.length > 0) {
+                            bannerState[index] = true;
+                          }
+                        });
+                    }}
+                  />
+                );
+                toggleOverlay();
+              }}
+            />
+          );
+        }}
         keyExtractor={(item) => item.name}
       />
     );
@@ -145,16 +179,23 @@ export default function WishlistScreen({
               : `${user.firstname}'s has a private profile, so you can only see their interests`
           }
         />
-        <View style={{ paddingHorizontal:15, width: "100%", flex: 1, flexDirection: "row" }}>
-        <Avatar
-          size="xlarge"
-          title={(user.firstname[0] + user.lastname[0]).toUpperCase() || "GB"}
-          source={user.image ? { uri: user.image } : undefined}
-          overlayContainerStyle={{ backgroundColor: "darkgrey" }}
-          activeOpacity={0.6}
-        />
-        
-          <Text style={{ width: "80%", padding: 10, fontSize:20 }}>
+        <View
+          style={{
+            paddingHorizontal: 15,
+            width: "100%",
+            flex: 1,
+            flexDirection: "row",
+          }}
+        >
+          <Avatar
+            size="xlarge"
+            title={(user.firstname[0] + user.lastname[0]).toUpperCase() || "GB"}
+            source={user.image ? { uri: user.image } : undefined}
+            overlayContainerStyle={{ backgroundColor: "darkgrey" }}
+            activeOpacity={0.6}
+          />
+
+          <Text style={{ width: "80%", padding: 10, fontSize: 20 }}>
             {user.firstname} {user.lastname}
           </Text>
         </View>
