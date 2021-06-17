@@ -189,7 +189,7 @@ export default function WishlistScreen({
         >
           <Avatar
             size="xlarge"
-            title={(user.firstname[0] + user.lastname[0]).toUpperCase() || "GB"}
+            title={(user.firstname[0] + user.lastname[0]).toUpperCase()}
             source={user.image ? { uri: user.image } : undefined}
             overlayContainerStyle={{ backgroundColor: "darkgrey" }}
             activeOpacity={0.6}

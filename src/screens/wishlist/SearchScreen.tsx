@@ -65,7 +65,7 @@ export default function SearchScreen({
         <Avatar
           size="xlarge"
           rounded
-          title={(item.firstname[0] + item.lastname[0]).toUpperCase() || "GB"}
+          title={(item.firstname[0] + item.lastname[0]).toUpperCase()}
           source={item.image ? { uri: item.image } : undefined}
           overlayContainerStyle={{ backgroundColor: "darkgrey" }}
           activeOpacity={0.6}
