@@ -3,6 +3,7 @@ node_modules/
 npm-debug.*
 yarn-debug.*
 package-lock.json
+.env
 
 # generated
 .expo/
@@ -24,4 +25,3 @@ yarn.lock
 
 # macOS
 .DS_Store
-.env
