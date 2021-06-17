@@ -40,7 +40,6 @@ import FormData from "form-data";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import axios from "axios";
 import { API_URL } from "react-native-dotenv";
-import mime from "mime";
 
 export default function CreateProfileScreen({
   route,
@@ -58,14 +57,13 @@ export default function CreateProfileScreen({
   const [country, setCountry] = useState<Country>();
   const [isCountryPickerOpen, setIsCountryPickerOpen] = useState(false);
   const [isPublic, setPublic] = useState(true);
-  const [updated, forceUpdate] = useState(false);
   const [countryError, setCountryError] = useState(false);
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
 
   const [isLoading, setLoading] = useState(false);
 
-  function createProfile(
+  async function createProfile(
     interests: String[],
     wishlist: Product[],
     profileImage: ImageInfo | undefined,
@@ -86,18 +84,22 @@ export default function CreateProfileScreen({
     }
     if (profileImage) {
       let localUri = profileImage.uri;
-      let filename = localUri.split("/").pop() ||`${Date.now()}.jpg`;
+      let filename = localUri.split("/").pop() || `${Date.now()}.jpg`;
 
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
       let type = match ? `image/${match[1]}` : `image`;
 
-      console.log(profileImage.uri);
-      data.append("image", {
-        uri: localUri,
-        type: type, 
-        name: filename,
-      });
+      let blob = await fetch(localUri).then((res) => res.blob());
+
+      data.append(
+        "image",
+        blob ?? {
+          uri: localUri,
+          type: type,
+          name: filename,
+        }
+      );
     }
     /* End Creation */
     setLoading(true);

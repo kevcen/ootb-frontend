@@ -3,6 +3,7 @@ import { View, Text, Platform } from "react-native";
 import { Avatar } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
+import uploadToAnonymousFilesAsync from 'anonymous-files'; 
 
 export default (props: {
   initials: string;
@@ -11,12 +12,13 @@ export default (props: {
 }) => {
   const [image, setImage] = useState("");
 
-  const pickImage = async () => {
+  let pickImage = async () => {
     if (Platform.OS !== "web") {
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== "granted") {
         alert("Sorry, we need camera roll permissions to make this work!");
+        return
       }
     }
 
@@ -34,7 +36,7 @@ export default (props: {
     if (props.onFileChange) {
       props.onFileChange(result);
     }
-
+    
     setImage(result.uri);
   };
 
