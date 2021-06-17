@@ -41,6 +41,7 @@ export default function WishlistScreen({
 
   // on component load, get results
   React.useEffect(() => {
+    console.log(API_URL);
     // make post request to backend server
     var promise = axios.post(
       `${API_URL}/users/wishlist`,
@@ -48,9 +49,9 @@ export default function WishlistScreen({
         userId: user.id,
       },
       { headers: { "Content-Type": "application/json" } }
-    )
+    );
 
-    setIsLoading(true)
+    setIsLoading(true);
     // create min artifical delay of 600 ms
     setTimeout(() => {
       promise
@@ -99,10 +100,10 @@ export default function WishlistScreen({
     default: webQuickView,
   });
 
-
   // Displaying dependent on wishlist items
-  const wishlistView = wishlist.length == 0 
-    ? <View
+  const wishlistView =
+    wishlist.length == 0 ? (
+      <View
         style={[
           styles.view,
           { justifyContent: "center", alignItems: "center" },
@@ -110,7 +111,8 @@ export default function WishlistScreen({
       >
         <PrimaryText text={"This user doesn't have a wishlist!"} />
       </View>
-    : <FlatList
+    ) : (
+      <FlatList
         numColumns={2}
         style={styles.grid}
         columnWrapperStyle={styles.list}
@@ -118,28 +120,41 @@ export default function WishlistScreen({
         renderItem={({ item: product }: { item: Product }) => (
           <BasicView
             product={product}
-            onLongPress={(minItem: Item) => {
-              setQuickView(<QuickView product={product} item={minItem} />);
-              toggleOverlay();
-            }}
-            onSelect={(minItem: Item) => {
-              setQuickView(<QuickView product={product} item={minItem} />);
+            onSelect={(minItem: Item | undefined) => {
+              setQuickView(
+                <QuickView
+                  product={product}
+                  item={minItem}
+                  navigation={navigation}
+                />
+              );
               toggleOverlay();
             }}
           />
         )}
         keyExtractor={(item) => item.name}
       />
+    );
+
   return (
     <View style={styles.view}>
       <View style={styles.header}>
+        <PrimaryText
+          text={`This profile is ${
+            user.public
+              ? "public, you can view the wishlist of the user below"
+              : "private, you can only see categories that interest this user"
+          }`}
+        />
+        <View style={{width:"90%", flex:1, flexDirection:"row"}}>
         <Image
           source={{ uri: user.image }}
           style={{ height: 100, width: 100 }}
         />
-        <Text>
+        <Text style={{width:"80%", padding:10}}>
           {user.firstname} {user.lastname}
         </Text>
+        </View>
       </View>
 
       {wishlistView}

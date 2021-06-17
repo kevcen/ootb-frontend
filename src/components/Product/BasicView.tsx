@@ -7,8 +7,8 @@ import {
   TouchableHighlight,
   Linking,
 } from "react-native";
-import Item from "../../../interfaces/Item";
-import Product from "../../../interfaces/Product";
+import Item from "../../interfaces/Item";
+import Product from "../../interfaces/Product";
 import { black, white } from "../../styles/Colors";
 import PrimaryText from "../PrimaryText";
 import QuickView from "./QuickView";

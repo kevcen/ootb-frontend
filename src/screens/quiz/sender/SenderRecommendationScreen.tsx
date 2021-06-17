@@ -74,7 +74,6 @@ export default function RecommendationScreen({
   var [recommendations, setRecommendations] = useState([]);
   const [visible, setVisible] = useState(false);
   const [quickView, setQuickView] = useState(<View />);
-  console.log(route.params?.likesMakeup);
   const toggleOverlay = () => {
     setVisible(!visible);
   };
@@ -226,7 +225,7 @@ export default function RecommendationScreen({
         renderItem={({ item: product }: { item: Product }) => (
           <BasicView
             product={product}
-            onSelect={(minItem: Item) => {
+            onSelect={(minItem: Item | undefined) => {
               setQuickView(<QuickView product={product} item={minItem} />);
               toggleOverlay();
             }}
