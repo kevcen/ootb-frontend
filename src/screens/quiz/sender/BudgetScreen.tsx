@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, TextInput, TouchableWithoutFeedback, Keyboard} from "react-native";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { styles } from "../../../styles/quiz";
 import { buttonStyles } from "../../../styles/buttons";
@@ -17,14 +17,44 @@ export default function BudgetScreen({
   route: any;
   navigation: any;
 }) {
-  var [priceRange, setPriceRange] = useState([0, 100]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [min, onChangeMin] = React.useState(0);
+  const [max, onChangeMax] = React.useState(1000);
+  var [priceRange, setPriceRange] = useState([0, 200]);
+  var nextMin = 0
+  var nextMax = 1000
 
-  if (isLoading) {
-    return <LoadingData />;
-  }
+  const HideKeyboard = ({ children }) => (
+    <TouchableWithoutFeedback onPress={() => {
+        // Keyboard.dismiss()
+        if (validMin(nextMin) && validMax(nextMax)) {
+          onChangeMin(nextMin)
+          onChangeMax(nextMax)
+        }
+        console.log("clicked out")
+    }}>
+      {children}
+    </TouchableWithoutFeedback>
+  );
+
+  // const DismissKeyboard = () => (
+  //   <TouchableWithoutFeedback 
+  //     onPress={() => 
+  //       Keyboard.dismiss()
+        
+  //     }>
+  //   </TouchableWithoutFeedback>
+  //   );
+
+  const validMin = (min: Number) => {
+    return min < max
+  };
+
+  const validMax = (max: Number) => {
+    return min < max
+  };
 
   return (
+
     <View style={styles.viewCentered}>
       <Question questionText={"What price range should the gift be?"} />
       <View style={styles.space} />
@@ -34,6 +64,7 @@ export default function BudgetScreen({
         isMarkersSeparated={true}
         enabledOne={true}
         enabledTwo={true}
+        enableLabel={true}
         selectedStyle={{
           backgroundColor: "gold",
         }}
@@ -43,8 +74,10 @@ export default function BudgetScreen({
         onValuesChangeFinish={(values) => {
           priceRange[0] = values[0];
           priceRange[1] = values[1];
+          onChangeMin(values[0])
+          onChangeMax(values[1])
         }}
-        values={priceRange}
+        values={[Number(min), Number(max)]}
         trackStyle={{
           height: 10,
         }}
@@ -54,13 +87,45 @@ export default function BudgetScreen({
         customMarkerRight={(e) => {
           return <SliderMarker markerValue={e.currentValue} />;
         }}
-        sliderLength={280}
+        sliderLength={300}
         min={0}
-        max={250}
+        max={200}
         allowOverlap={true}
       />
 
-      <View style={styles.space} />
+    <HideKeyboard>
+
+    <View style={styles.row}>  
+
+
+      <TextInput
+              placeholder="Min"
+              style={styles.numericInput}  
+              keyboardType={'numeric'}
+              textAlign={'center'}
+              maxLength={3}
+              value = {min.toString()}
+              onChangeText={e => {
+                nextMin = Number(e)
+              }} 
+        />
+
+        <TextInput
+              placeholder="Max"
+              style={styles.numericInput}  
+              keyboardType={'numeric'}
+              textAlign={'center'}
+              maxLength={3}
+              value = {max.toString()}
+              onChangeText={e => {
+                nextMax = Number(e)
+              }}
+        />  
+     
+    </View>  
+    </HideKeyboard>
+
+    <View style={styles.space} />
       <QuizNavigator
         currentpage={{
           pagename: "Budget",
@@ -78,5 +143,6 @@ export default function BudgetScreen({
         totalpages={route.params.totalpages}
       />
     </View>
+
   );
 }
