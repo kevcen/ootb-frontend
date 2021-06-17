@@ -34,7 +34,6 @@ import TagData from "../../../interfaces/TagData";
 import Genders from "../../../constants/Genders";
 import Relationships from "../../../constants/Relationships";
 import PrimaryButtonStyles from "../../../styles/PrimaryButtonStyles";
-import Constants from "expo-constants";
 
 function formatSet(set: any, allOptions: TagData[]) {
   var res = new Set<string>(Array.from(set || new Set()));
@@ -89,7 +88,7 @@ export default function RecommendationScreen({
   React.useEffect(() => {
     // make post request to backend server
     var promise = axios.post(
-      `${Constants.manifest.extra?.API_URL}/products`,
+      `https://gift-recommender-api.herokuapp.com/products`,
       {
         categories: Array.from(route.params?.categories),
         price: route.params?.price,

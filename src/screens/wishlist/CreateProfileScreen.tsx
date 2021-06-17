@@ -1,45 +1,30 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
-  Pressable,
-  Image,
   TouchableOpacity,
   ScrollView,
   TextInput,
-  Switch,
-  Button,
   Platform,
 } from "react-native";
 import Question from "../../components/Question";
-import MultipleOptionQuestion from "../../components/Quiz/MultipleOptionQuestion";
-import QuizNavigator from "../../components/Quiz/QuizNavigator";
-import DraggableFlatList, {
-  RenderItemParams,
-} from "react-native-draggable-flatlist";
 import { styles } from "../../styles/quiz";
-import { Avatar, Divider } from "react-native-elements";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import Product from "../../interfaces/Product";
 import PrimaryButton from "../../components/PrimaryButton";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { black, primary } from "../../styles/Colors";
 import PrimaryButtonStyles from "../../styles/PrimaryButtonStyles";
 import AvatarUpload from "../../components/User/AvatarUpload";
-import PrimaryText from "../../components/PrimaryText";
 import PrivatePublicToggler from "../../components/User/PrivatePublicToggler";
 import CountryPicker, {
   Country,
   CountryCode,
-  TranslationLanguageCodeList,
 } from "react-native-country-picker-modal";
-import { Picker } from "native-base";
 import ErrorText from "../../components/ErrorText";
 import LoadingData from "../../components/LoadingData";
 import FormData from "form-data";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import axios from "axios";
 import Constants from "expo-constants";
+import mime from "mime";
 
 export default function CreateProfileScreen({
   route,
@@ -84,28 +69,26 @@ export default function CreateProfileScreen({
     }
     if (profileImage) {
       let localUri = profileImage.uri;
-      let filename = localUri.split("/").pop() || `${Date.now()}.jpg`;
 
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
-
-      let blob = await fetch(localUri).then((res) => res.blob());
-
-      data.append(
-        "image",
-        blob ?? {
+      if (Platform.OS === "web") {
+        let blob = dataURItoBlob(localUri);
+        data.append("image", blob);
+      } else {
+        let filename = localUri.split("/").pop() || `${Date.now()}.jpg`;
+        // Infer the type of the image
+        let type = mime.getType(localUri);
+        data.append("image", {
           uri: localUri,
-          type: type,
+          type,
           name: filename,
-        }
-      );
+        });
+      }
     }
     /* End Creation */
     setLoading(true);
     /* Post Data */
     axios
-      .post(`${Constants.manifest.extra?.API_URL}/users`, data, {
+      .post(`https://gift-recommender-api.herokuapp.com/users`, data, {
         headers: {
           Accept: "application/json",
           "Content-Type": "multipart/form-data",
@@ -116,6 +99,7 @@ export default function CreateProfileScreen({
         alert("Successfully created your profile");
       })
       .catch((error) => {
+        console.log(error);
         navigation.navigate("Error", { error });
       })
       .finally(() => setLoading(false));
@@ -170,8 +154,7 @@ export default function CreateProfileScreen({
         <View style={styles.space} />
         <AvatarUpload
           image={profileImage?.uri}
-          initials={firstName[0] + lastName[0]}
-          default={"GB"}
+          initials={(firstName[0] ?? "G") + (lastName[0] ?? "B")}
           onFileChange={(image: ImageInfo) => {
             setProfileImage(image);
           }}
@@ -269,4 +252,22 @@ export default function CreateProfileScreen({
       />
     </View>
   );
+}
+function dataURItoBlob(dataURI: string) {
+  // convert base64/URLEncoded data component to raw binary data held in a string
+  var byteString;
+  if (dataURI.split(",")[0].indexOf("base64") >= 0)
+    byteString = atob(dataURI.split(",")[1]);
+  else byteString = unescape(dataURI.split(",")[1]);
+
+  // separate out the mime component
+  var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+  // write the bytes of the string to a typed array
+  var ia = new Uint8Array(byteString.length);
+  for (var i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+
+  return new Blob([ia], { type: mimeString });
 }
