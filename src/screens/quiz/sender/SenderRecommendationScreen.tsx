@@ -38,7 +38,7 @@ import Genders from "../../../constants/Genders";
 import Relationships from "../../../constants/Relationships";
 import Product from "../../../interfaces/Product";
 import Item from "../../../interfaces/Item";
-import { API_URL } from "react-native-dotenv";
+import Constants from "expo-constants";
 
 function formatSet(set: any, allOptions: TagData[]) {
   var res = new Set<string>(Array.from(set || new Set()));
@@ -82,7 +82,7 @@ export default function RecommendationScreen({
   React.useEffect(() => {
     // make post request to backend server
     var promise = axios.post(
-      `${API_URL}/products`,
+      `${Constants.manifest.extra?.API_URL}/products`,
       {
         categories: Array.from(chosenCategories),
         price: route.params?.price,

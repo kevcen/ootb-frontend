@@ -13,10 +13,10 @@ import { SearchBar } from "react-native-elements";
 import User from "../../interfaces/User";
 import { styles } from "../../styles/quiz";
 import PrimaryButton from "../../components/PrimaryButton";
-import { API_URL } from "react-native-dotenv";
 import axios from "axios";
 import AvatarUpload from "../../components/User/AvatarUpload";
 import { Avatar } from "react-native-elements/dist/avatar/Avatar";
+import Constants from "expo-constants";
 
 export default function SearchScreen({
   route,
@@ -96,7 +96,7 @@ export default function SearchScreen({
           setSearchValue(value);
           axios
             .post(
-              `${API_URL}/users/search`,
+              `${Constants.manifest.extra?.API_URL}/users/search`,
               { searchValue: value },
               {
                 headers: {

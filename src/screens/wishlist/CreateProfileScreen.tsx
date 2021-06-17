@@ -39,7 +39,7 @@ import LoadingData from "../../components/LoadingData";
 import FormData from "form-data";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import axios from "axios";
-import { API_URL } from "react-native-dotenv";
+import Constants from "expo-constants";
 
 export default function CreateProfileScreen({
   route,
@@ -105,7 +105,7 @@ export default function CreateProfileScreen({
     setLoading(true);
     /* Post Data */
     axios
-      .post(`${API_URL}/users`, data, {
+      .post(`${Constants.manifest.extra?.API_URL}/users`, data, {
         headers: {
           Accept: "application/json",
           "Content-Type": "multipart/form-data",
@@ -169,6 +169,7 @@ export default function CreateProfileScreen({
         <Question questionText={"Create your profile"} />
         <View style={styles.space} />
         <AvatarUpload
+          image={profileImage?.uri}
           initials={firstName[0] + lastName[0]}
           default={"GB"}
           onFileChange={(image: ImageInfo) => {

@@ -20,7 +20,7 @@ import axios from "axios";
 import Product from "../../interfaces/Product";
 import Item from "../../interfaces/Item";
 import WishlistLoading from "../../components/WishlistLoading";
-import { API_URL } from "react-native-dotenv";
+import Constants from "expo-constants";
 
 export default function WishlistScreen({
   route,
@@ -41,10 +41,9 @@ export default function WishlistScreen({
 
   // on component load, get results
   React.useEffect(() => {
-    console.log(API_URL);
     // make post request to backend server
     var promise = axios.post(
-      `${API_URL}/users/wishlist`,
+      `${Constants.manifest.extra?.API_URL}/users/wishlist`,
       {
         userId: user.id,
       },

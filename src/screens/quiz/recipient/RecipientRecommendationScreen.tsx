@@ -33,8 +33,8 @@ import Sports from "../../../constants/Sports";
 import TagData from "../../../interfaces/TagData";
 import Genders from "../../../constants/Genders";
 import Relationships from "../../../constants/Relationships";
-import { API_URL } from "react-native-dotenv";
 import PrimaryButtonStyles from "../../../styles/PrimaryButtonStyles";
+import Constants from "expo-constants";
 
 function formatSet(set: any, allOptions: TagData[]) {
   var res = new Set<string>(Array.from(set || new Set()));
@@ -87,10 +87,9 @@ export default function RecommendationScreen({
 
   // on component load, get results
   React.useEffect(() => {
-    console.log(API_URL);
     // make post request to backend server
     var promise = axios.post(
-      `${API_URL}/products`,
+      `${Constants.manifest.extra?.API_URL}/products`,
       {
         categories: Array.from(route.params?.categories),
         price: route.params?.price,
@@ -234,7 +233,7 @@ export default function RecommendationScreen({
           <BasicView
             key={product.name}
             product={product}
-            onLongPress={(minItem: Item) => {
+            onLongPress={(minItem: Item | undefined) => {
               setQuickView(<QuickView product={product} item={minItem} />);
               toggleOverlay();
             }}

@@ -6,12 +6,12 @@ import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import uploadToAnonymousFilesAsync from "anonymous-files";
 
 export default (props: {
-  image: string;
+  image?: string;
   initials: string;
   default: string;
   onFileChange?: (file: ImageInfo) => any;
 }) => {
-  const [image, setImage] = useState(props.image);
+  const [image, setImage] = useState(props.image || "");
 
   let pickImage = async () => {
     if (Platform.OS !== "web") {
