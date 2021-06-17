@@ -29,16 +29,32 @@ import SearchScreen from "./src/screens/wishlist/SearchScreen";
 import RankingScreen from "./src/screens/wishlist/RankingScreen";
 import CreateProfileScreen from "./src/screens/wishlist/CreateProfileScreen";
 import WishlistScreen from "./src/screens/wishlist/WishlistScreen";
+import { Button } from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { Icon } from "react-native-elements";
 
-let defaultQuizScreenOptions = (title?: string) => {
+let defaultQuizScreenOptions = (navigationRef: any, title?: string) => {
   return {
     title: "Quiz" + (title ? " - " + title : ""),
     headerLeft: () => null,
+    headerRight: HomeButton(navigationRef),
   };
 };
 
+let HomeButton = (navigationRef: any) => () =>
+  (
+    <TouchableWithoutFeedback
+      style={{ flex: 1, justifyContent: "center", padding: 15 }}
+      onPress={() => navigationRef.current?.navigate("Home")}
+    >
+      <Icon name="home" />
+    </TouchableWithoutFeedback>
+  );
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
+
+  const navigationRef = React.useRef(null);
 
   const Stack = createStackNavigator();
 
@@ -46,7 +62,7 @@ export default function App() {
     return null;
   } else {
     return (
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <Stack.Navigator>
           <Stack.Screen
             options={{ title: "Home", headerShown: false }}
@@ -54,104 +70,123 @@ export default function App() {
             component={HomeScreen}
           />
           <Stack.Screen
-            options={{ title: "" }}
+            options={{
+              title: "",
+              headerRight: HomeButton(navigationRef),
+            }}
             name="SenderIntro"
             component={SenderIntroScreen}
           />
           <Stack.Screen
-            options={{ title: "" }}
+            options={{ title: "", headerRight: HomeButton(navigationRef) }}
             name="RecipientIntro"
             component={RecipientIntroScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("")}
+            options={defaultQuizScreenOptions(navigationRef)}
             name="Sender"
             component={SenderContextScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("")}
+            options={defaultQuizScreenOptions(navigationRef)}
             name="Recipient"
             component={RecipientContextScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Categories")}
+            options={defaultQuizScreenOptions(navigationRef, "Categories")}
             name="RecipientCategories"
             component={RecipientCategoriesScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Categories")}
+            options={defaultQuizScreenOptions(navigationRef, "Categories")}
             name="SenderCategories"
             component={SenderCategoriesScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Food")}
+            options={defaultQuizScreenOptions(navigationRef, "Food")}
             name="Food"
             component={FoodScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Fashion")}
+            options={defaultQuizScreenOptions(navigationRef, "Fashion")}
             name="Fashion"
             component={FashionScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Music")}
+            options={defaultQuizScreenOptions(navigationRef, "Music")}
             name="Music"
             component={MusicScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Photography")}
+            options={defaultQuizScreenOptions(navigationRef, "Photography")}
             name="Photography"
             component={PhotographyScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Sport")}
+            options={defaultQuizScreenOptions(navigationRef, "Sport")}
             name="Sport"
             component={SportScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Fragrance")}
+            options={defaultQuizScreenOptions(navigationRef, "Fragrance")}
             name="Fragrance"
             component={FragranceScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Fragrance")}
+            options={defaultQuizScreenOptions(navigationRef, "Fragrance")}
             name="Gardening"
             component={GardeningScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Health & Beauty")}
+            options={defaultQuizScreenOptions(navigationRef, "Health & Beauty")}
             name="Health & Beauty"
             component={HealthBeautyScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Home Decor")}
+            options={defaultQuizScreenOptions(navigationRef, "Home Decor")}
             name="Home Decor"
             component={HomeDecorScreen}
           />
           <Stack.Screen
-            options={defaultQuizScreenOptions("Occasions")}
+            options={defaultQuizScreenOptions(navigationRef, "Occasions")}
             name="Occasions"
             component={OccasionScreen}
           />
           <Stack.Screen
-            options={{ title: "" }}
+            options={defaultQuizScreenOptions(navigationRef, "Occasions")}
+            name="Budget"
+            component={BudgetScreen}
+          />
+          <Stack.Screen
+            options={{ title: "", headerRight: HomeButton(navigationRef) }}
             name="SenderRecommendations"
             component={SenderRecommendationScreen}
           />
           <Stack.Screen
-            options={{ title: "" }}
+            options={{ title: "", headerRight: HomeButton(navigationRef) }}
             name="RecipientRecommendations"
             component={RecipientRecommendationScreen}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
-            name="Budget"
-            component={BudgetScreen}
+            options={{ headerRight: HomeButton(navigationRef) }}
+            name="Ranking"
+            component={RankingScreen}
           />
-          <Stack.Screen name="Ranking" component={RankingScreen} />
-          <Stack.Screen name="Search" component={SearchScreen} />
-          <Stack.Screen name="Wishlist" component={WishlistScreen} />
-          <Stack.Screen name="CreateProfile" component={CreateProfileScreen} />
+          <Stack.Screen
+            options={{ headerRight: HomeButton(navigationRef) }}
+            name="Search"
+            component={SearchScreen}
+          />
+          <Stack.Screen
+            options={{ headerRight: HomeButton(navigationRef) }}
+            name="Wishlist"
+            component={WishlistScreen}
+          />
+          <Stack.Screen
+            options={{ headerRight: HomeButton(navigationRef) }}
+            name="CreateProfile"
+            component={CreateProfileScreen}
+          />
           <Stack.Screen
             options={{ title: "" }}
             name="Error"
