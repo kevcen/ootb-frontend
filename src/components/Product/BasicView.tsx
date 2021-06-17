@@ -17,7 +17,7 @@ import { primary } from "../../styles/Colors";
 let getCheapestItem = (items: Item[] | undefined): Item | undefined => {
   var highest = Number.POSITIVE_INFINITY;
   var minItem: Item | undefined;
-  console.log(items)
+  console.log(items);
   if (items) {
     for (let item of items) {
       if (item.cost < highest) {
@@ -35,6 +35,7 @@ export default (props: {
   onSelect?: (item: Item | undefined) => any;
   onLongPress?: (item: Item | undefined) => any;
   isActive?: boolean;
+  addBanner?: boolean;
 }) => {
   const minItem: Item | undefined = getCheapestItem(props.product.items);
 
@@ -48,6 +49,7 @@ export default (props: {
         styles.view,
         {
           borderColor: props.isActive ? primary : white,
+          opacity: props.addBanner ? 0.4 : 1,
         },
       ]}
       onPress={() => {
@@ -55,11 +57,20 @@ export default (props: {
       }}
     >
       <View>
+        {props.addBanner ? (
+          <View style={styles.viewCrossed}>
+            <Text style={styles.textBanner}>Already bought</Text>
+          </View>
+        ) : (
+          <View />
+        )}
         <Image style={styles.image} source={{ uri: props.product.image }} />
         <Text style={styles.text} numberOfLines={1}>
           {props.product.name}
         </Text>
-        {minItem && <Text style={styles.text}>{"£" + minItem.cost.toFixed(2)}</Text>}
+        {minItem && (
+          <Text style={styles.text}>{"£" + minItem.cost.toFixed(2)}</Text>
+        )}
       </View>
     </TouchableHighlight>
   );
@@ -85,5 +96,15 @@ const styles = StyleSheet.create({
   },
   text: {
     margin: 2,
+  },
+  viewCrossed: {
+    zIndex: 999,
+    alignItems: "center",
+    position: "absolute",
+    width: "100%",
+    backgroundColor: "blue",
+  },
+  textBanner: {
+    color: "white",
   },
 });
