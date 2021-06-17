@@ -6,11 +6,12 @@ import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import uploadToAnonymousFilesAsync from 'anonymous-files'; 
 
 export default (props: {
+  image: string;
   initials: string;
   default: string;
   onFileChange?: (file: ImageInfo) => any;
 }) => {
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(props.image);
 
   let pickImage = async () => {
     if (Platform.OS !== "web") {
@@ -46,9 +47,7 @@ export default (props: {
         size="xlarge"
         rounded
         title={
-          props.initials.length == 2
-            ? props.initials.toUpperCase()
-            : props.default
+         props.initials.toUpperCase()
         }
         onPress={(pickImage)}
         source={image ? { uri: image } : undefined}

@@ -15,6 +15,8 @@ import { styles } from "../../styles/quiz";
 import PrimaryButton from "../../components/PrimaryButton";
 import { API_URL } from "react-native-dotenv";
 import axios from "axios";
+import AvatarUpload from "../../components/User/AvatarUpload";
+import { Avatar } from "react-native-elements/dist/avatar/Avatar";
 
 export default function SearchScreen({
   route,
@@ -56,16 +58,23 @@ export default function SearchScreen({
             shadowRadius: 2,
             margin: 5,
             padding: 10,
+            justifyContent:"center",
+            alignItems:"center"
           })
         }
       >
-        <Image
-          source={{ uri: item.image }}
-          style={{ height: 125, width: 125, marginBottom: 5 }}
+        <Avatar
+          size="xlarge"
+          rounded
+          title={(item.firstname[0] + item.lastname[0]).toUpperCase() || "GB"}
+          source={item.image ? { uri: item.image } : undefined}
+          overlayContainerStyle={{ backgroundColor: "darkgrey" }}
+          activeOpacity={0.6}
         />
         <Text
           numberOfLines={2}
           style={{
+            padding:10,
             width: 125,
             justifyContent: "center",
             alignItems: "center",

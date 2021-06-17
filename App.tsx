@@ -25,7 +25,7 @@ import HealthBeautyScreen from "./src/screens/quiz/categories/HealthBeautyScreen
 import HomeDecorScreen from "./src/screens/quiz/categories/HomeDecorScreen";
 import RecipientIntroScreen from "./src/screens/quiz/recipient/RecipientIntroScreen";
 import SenderIntroScreen from "./src/screens/quiz/sender/SenderIntroScreen";
-import SearchScreen from "./src/screens/quiz/SearchScreen";
+import SearchScreen from "./src/screens/wishlist/SearchScreen";
 import RankingScreen from "./src/screens/wishlist/RankingScreen";
 import CreateProfileScreen from "./src/screens/wishlist/CreateProfileScreen";
 import WishlistScreen from "./src/screens/wishlist/WishlistScreen";

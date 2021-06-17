@@ -3,7 +3,7 @@ interface User {
   public : boolean,
   firstname: string;
   lastname: string;
-  image: string;
+  image: string  | undefined;
   createdAt: string;
   updatedAt: string;
 }
