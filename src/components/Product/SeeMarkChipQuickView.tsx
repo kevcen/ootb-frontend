@@ -15,7 +15,7 @@ export default (props: {
   updateBought?: any;
   updateChipIn?: any;
   wishlistParams?: any;
-}) => {
+}) => {us
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{ uri: props.product.image }} />

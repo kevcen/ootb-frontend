@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { View, Image, Text } from "react-native";
 import User from "../../interfaces/User";
 import {
@@ -36,12 +36,11 @@ export default function WishlistScreen({
   var user: User = route.params?.user;
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(false);
-  const [quickView, setQuickView] = useState(<View />);
   var [wishlist, setWishlist] = useState([]);
+  const [quickView, setQuickView] = useState(<></>);
   var [bannerState, setBannerState] = useState<boolean[]>([]);
   var [chipIn, setChipIn] = useState<boolean[]>([]);
-  var [chipValue, setChipValue] = useState(0);
-
+  const chipValue = useRef<number>(0);
   const toggleOverlay = () => {
     setVisible(!visible);
   };
@@ -121,6 +120,7 @@ export default function WishlistScreen({
       </View>
     ) : (
       <FlatList
+        extraData={quickView}
         numColumns={2}
         style={styles.grid}
         columnWrapperStyle={styles.list}
@@ -144,7 +144,7 @@ export default function WishlistScreen({
                     navigation={navigation}
                     updateBought={() => {
                       fetch(
-                        `${Constants.manifest.extra?.API_URL}/users/interested`,
+                        `https://gift-recommender-api.herokuapp.com/users/interested`,
                         {
                           method: "POST",
                           headers: {
@@ -168,41 +168,27 @@ export default function WishlistScreen({
                     updateChipIn={() => {
                       setQuickView(
                         <View>
-                          <Slider
-                            value={chipValue}
-                            onValueChange={(value: number) => {
-                              setChipValue(value);
-                            }}
-                            maximumValue={minItem?.cost}
-                            thumbStyle={{
-                              height: 40,
-                              width: 40,
-                              backgroundColor: "transparent",
-                            }}
-                            thumbProps={{
-                              Component: Animated.Image,
-                              source: {
-                                uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
-                              },
-                            }}
+                          <SliderComponent
+                            maxCost={minItem?.cost}
+                            onChangeChipIn={(value: number) =>
+                              (chipValue.current = value)
+                            }
                           />
                           <PrimaryButton
                             text={"Chip in"}
                             onPress={() => {
-                              fetch(
-                                `${Constants.manifest.extra?.API_URL}/users/chipin`,
+                              axios.post(
+                                `http://localhost:8080/users/chip`,
                                 {
-                                  method: "POST",
+                                  productId: product.id,
+                                  userId: user.id,
+                                  money: Math.round(chipValue.current),
+                                  payerName: "asddsadsda",
+                                },
+                                {
                                   headers: {
-                                    Accept: "application/json",
                                     "Content-Type": "application/json",
                                   },
-                                  body: JSON.stringify({
-                                    productId: product.id,
-                                    userId: user.id,
-                                    money: chipValue,
-                                    payerName: "asddsadsda",
-                                  }),
                                 }
                               );
                               toggleOverlay();
@@ -287,3 +273,35 @@ const styles = StyleSheet.create({
     backgroundColor: white,
   },
 });
+
+let SliderComponent = (props: {
+  maxCost: number | undefined;
+  onChangeChipIn: (value: number) => any;
+}) => {
+  const [value, setValue] = useState(0);
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: "stretch",
+        justifyContent: "center",
+      }}
+    >
+      <Slider
+        value={value}
+        onValueChange={(value: number) => {
+          props.onChangeChipIn(value);
+          setValue(value);
+        }}
+        maximumValue={props.maxCost}
+        thumbStyle={{
+          height: 40,
+          width: 40,
+          backgroundColor: "black",
+        }}
+      />
+      <Text>Amount chipping in: £{value.toFixed(2)}</Text>
+    </View>
+  );
+};

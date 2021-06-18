@@ -57,8 +57,8 @@ export default function SearchScreen({
             shadowRadius: 2,
             margin: 5,
             padding: 10,
-            justifyContent:"center",
-            alignItems:"center"
+            justifyContent: "center",
+            alignItems: "center",
           })
         }
       >
@@ -73,7 +73,7 @@ export default function SearchScreen({
         <Text
           numberOfLines={2}
           style={{
-            padding:10,
+            padding: 10,
             width: 125,
             justifyContent: "center",
             alignItems: "center",
