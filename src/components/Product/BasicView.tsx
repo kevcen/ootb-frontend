@@ -35,7 +35,8 @@ export default (props: {
   onSelect?: (item: Item | undefined) => any;
   onLongPress?: (item: Item | undefined) => any;
   isActive?: boolean;
-  addBanner?: boolean;
+  isFaded?: boolean;
+  banner?: string;
 }) => {
   const minItem: Item | undefined = getCheapestItem(props.product.items);
 
@@ -49,7 +50,7 @@ export default (props: {
         styles.view,
         {
           borderColor: props.isActive ? primary : white,
-          opacity: props.addBanner ? 0.4 : 1,
+          opacity: props.isFaded ? 0.4 : (props.banner ? 0.7 : 1),
         },
       ]}
       onPress={() => {
@@ -57,12 +58,10 @@ export default (props: {
       }}
     >
       <View>
-        {props.addBanner ? (
+        {props.banner && (
           <View style={styles.viewCrossed}>
-            <Text style={styles.textBanner}>Already bought</Text>
+            <Text style={styles.textBanner}>{props.banner}</Text>
           </View>
-        ) : (
-          <View />
         )}
         <Image style={styles.image} source={{ uri: props.product.image }} />
         <Text style={styles.text} numberOfLines={1}>
@@ -99,12 +98,17 @@ const styles = StyleSheet.create({
   },
   viewCrossed: {
     zIndex: 999,
+    alignSelf:"center",
     alignItems: "center",
     position: "absolute",
     width: "100%",
+    padding:10,
     backgroundColor: "blue",
+    borderRadius:5
   },
   textBanner: {
+    fontSize: 20,
     color: "white",
+    textAlign:"center"
   },
 });

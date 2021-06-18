@@ -6,6 +6,7 @@ interface User {
   image: string  | undefined;
   createdAt: string;
   updatedAt: string;
+  interests : Array<string>;
 }
 
 export default User;

@@ -9,7 +9,7 @@ import {
   Dimensions,
   StyleSheet,
 } from "react-native";
-import { primary, white } from "../../styles/Colors";
+import { black, primary, white } from "../../styles/Colors";
 import { Avatar, Overlay } from "react-native-elements";
 import Modal from "modal-react-native-web";
 import LoadingData from "../../components/LoadingData";
@@ -25,6 +25,7 @@ import CircleSlider from "react-native-circle-slider";
 import PrimaryButton from "../../components/PrimaryButton";
 import { Slider } from "react-native-elements";
 import { Animated } from "react-native";
+import { Input } from "react-native-elements/dist/input/Input";
 
 export default function WishlistScreen({
   route,
@@ -33,13 +34,13 @@ export default function WishlistScreen({
   route: any;
   navigation: any;
 }) {
-  var user: User = route.params?.user;
+  const user: User = route.params?.user;
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(false);
-  var [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
   const [quickView, setQuickView] = useState(<></>);
-  var [bannerState, setBannerState] = useState<boolean[]>([]);
-  var [chipIn, setChipIn] = useState<boolean[]>([]);
+  const [boughtState, setBoughtState] = useState<boolean[]>([]);
+  const [totalChippedIn, setTotalChippedIn] = useState<number[]>([]);
   const chipValue = useRef<number>(0);
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -55,19 +56,37 @@ export default function WishlistScreen({
       },
       { headers: { "Content-Type": "application/json" } }
     );
-
-    setIsLoading(true);
     // create min artifical delay of 600 ms
     setTimeout(() => {
       promise
+        .catch((error) => navigation.navigate("Error", { error }))
         .then((response) => {
-          console.log(response.data);
-          setWishlist(response.data);
-          setBannerState(new Array(response.data.length).fill(false));
-          setChipIn(new Array(response.data.length).fill(false));
+          var wishlist = response.data;
+          setWishlist(wishlist);
+          setBoughtState(new Array(wishlist.length).fill(false));
+          setTotalChippedIn(new Array(wishlist.length).fill(0));
+
+          // get bought status
+          return Promise.all(
+            wishlist.map((product: { id: number }, idx: number) =>
+              axios.get(
+                `https://gift-recommender-api.herokuapp.com/users/wishlist/${user.id}/${product.id}`
+              )
+            )
+          );
         })
-        .catch((error) => {
-          navigation.navigate("Error", { error });
+        .then((responses) => {
+          responses.forEach((response: any, idx: number) => {
+            if (response.data) {
+              boughtState[idx] = response.data.alreadyBought;
+              totalChippedIn[idx] = response.data.chippedInTotal;
+            }
+          });
+          setBoughtState(boughtState);
+          setTotalChippedIn(totalChippedIn);
+        })
+        .catch(() => {
+          return;
         })
         .finally(() => {
           setIsLoading(false);
@@ -132,13 +151,29 @@ export default function WishlistScreen({
           item: Product;
           index: number;
         }) => {
+          var bannerText;
+          var isFaded;
+          var totalLeftToChipIn =
+            (product.items ? product.items[0].cost : 0) - totalChippedIn[index];
+          if (boughtState[index]) {
+            bannerText = "Bought";
+            isFaded = true;
+          } else if (0 < totalLeftToChipIn && totalLeftToChipIn < 20) {
+            bannerText = `Only chip in £${totalLeftToChipIn.toFixed(
+              2
+            )} and make ${user.firstname}'s day`;
+          }
           return (
             <BasicView
-              addBanner={bannerState[index]}
+              banner={bannerText}
+              isFaded={isFaded}
               product={product}
               onSelect={(minItem: Item | undefined) => {
                 setQuickView(
                   <SeeMarkChipQuickView
+                    alreadyBought={boughtState[index]}
+                    totalChippedIn={totalChippedIn[index]}
+                    user={user}
                     product={product}
                     item={minItem}
                     navigation={navigation}
@@ -161,42 +196,80 @@ export default function WishlistScreen({
                         .then((data) => {
                           // change this disgusting if
                           if (data.length > 0) {
-                            bannerState[index] = true;
+                            boughtState[index] = true;
+                            toggleOverlay();
                           }
                         });
                     }}
                     updateChipIn={() => {
                       setQuickView(
-                        <View>
+                        <View style={{
+                          shadowColor: black,
+                          shadowOffset: { width: 0, height: 1 },
+                          shadowRadius: 4,
+                          shadowOpacity: 0.5,
+                          borderRadius: 5,
+                          minWidth: "90%",
+                          alignItems:"center"
+                        }}>
                           <SliderComponent
-                            maxCost={minItem?.cost}
+                            total={minItem?.cost || 0}
+                            currentlyChippingIn={chipValue.current}
+                            alreadyChippedIn={totalChippedIn[index]}
+                            maxCost={
+                              (minItem?.cost || 0) - totalChippedIn[index]
+                            }
                             onChangeChipIn={(value: number) =>
                               (chipValue.current = value)
                             }
                           />
                           <PrimaryButton
+                          style={{marginBottom:20}}
                             text={"Chip in"}
                             onPress={() => {
-                              axios.post(
-                                `http://localhost:8080/users/chip`,
-                                {
-                                  productId: product.id,
-                                  userId: user.id,
-                                  money: Math.round(chipValue.current),
-                                  payerName: "asddsadsda",
-                                },
-                                {
-                                  headers: {
-                                    "Content-Type": "application/json",
+                              axios
+                                .post(
+                                  `https://gift-recommender-api.herokuapp.com/users/chip`,
+                                  {
+                                    productId: product.id,
+                                    userId: user.id,
+                                    money: Math.round(chipValue.current),
+                                    payerName: "asddsadsda",
+                                    totalCost: minItem?.cost || 0,
                                   },
-                                }
-                              );
+                                  {
+                                    headers: {
+                                      "Content-Type": "application/json",
+                                    },
+                                  }
+                                )
+                                .then(() => {
+                                  totalChippedIn[index] += Math.round(
+                                    chipValue.current
+                                  );
+                                  chipValue.current = 0;
+                                  setTotalChippedIn(totalChippedIn);
+                                  if (
+                                    (minItem?.cost || 0) -
+                                      totalChippedIn[index] <=
+                                    0
+                                  ) {
+                                    alert(
+                                      `Thank you for buying ${product.name} for ${user.firstname}`
+                                    );
+                                    boughtState[index] = true;
+                                    setBoughtState(boughtState);
+                                  } else {
+                                    alert(
+                                      `Thank you for chipping in to buy ${product.name} for ${user.firstname}. We will notify you once enough people chip in to buy the gift`
+                                    );
+                                  }
+                                });
                               toggleOverlay();
                             }}
                           />
                         </View>
                       );
-                      chipIn[index] = true;
                     }}
                   />
                 );
@@ -234,10 +307,29 @@ export default function WishlistScreen({
           overlayContainerStyle={{ backgroundColor: "darkgrey" }}
           activeOpacity={0.6}
         />
-
-        <Text style={{ width: "80%", padding: 10, fontSize: 20 }}>
-          {user.firstname} {user.lastname}
-        </Text>
+        <View
+          style={{
+            width: "60%",
+            flexDirection: "column",
+          }}
+        >
+          <Text style={{ padding: 10, fontSize: 20 }}>
+            {user.firstname} {user.lastname}
+          </Text>
+          <Text style={{ padding: 10, fontSize: 20 }}>Interests:</Text>
+          {user.interests.map((interest) => {
+            if (
+              ["a", "e", "i", "o", "u"].includes(
+                interest.substring(interest.length - 1).toLowerCase()
+              )
+            ) {
+              interest += "'s";
+            }
+            return (
+              <Text style={{ marginLeft: 20, fontSize: 16 }}>- {interest}</Text>
+            );
+          })}
+        </View>
       </View>
 
       {wishlistView}
@@ -277,17 +369,24 @@ const styles = StyleSheet.create({
 let SliderComponent = (props: {
   maxCost: number | undefined;
   onChangeChipIn: (value: number) => any;
+  total: number;
+  alreadyChippedIn: number;
+  currentlyChippingIn: number;
 }) => {
   const [value, setValue] = useState(0);
 
   return (
     <View
       style={{
-        flex: 1,
-        alignItems: "stretch",
-        justifyContent: "center",
+        width: "80%",
       }}
     >
+      <ChipInHeader
+        total={props.total}
+        alreadyChippedIn={props.alreadyChippedIn}
+        currentlyChippingIn={value}
+      />
+
       <Slider
         value={value}
         onValueChange={(value: number) => {
@@ -296,12 +395,40 @@ let SliderComponent = (props: {
         }}
         maximumValue={props.maxCost}
         thumbStyle={{
-          height: 40,
-          width: 40,
+          height: 20,
+          width: 20,
           backgroundColor: "black",
         }}
       />
-      <Text>Amount chipping in: £{value.toFixed(2)}</Text>
+      <Text style={{padding:20}}>Amount chipping in: £{value.toFixed(2)}</Text>
+    </View>
+  );
+};
+
+let ChipInHeader = (props: {
+  total: number;
+  alreadyChippedIn: number;
+  currentlyChippingIn: number;
+}) => {
+  return (
+    <View
+      style={{
+        alignSelf: "center",
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-between",
+        padding:20
+      }}
+    >
+      <Text>Total Cost: £{props.total.toFixed(2)}</Text>
+      <Text>
+        Left: £
+        {(
+          props.total -
+          props.alreadyChippedIn -
+          props.currentlyChippingIn
+        ).toFixed(2)}
+      </Text>
     </View>
   );
 };

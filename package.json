@@ -42,7 +42,6 @@
     "mime": "^2.5.2",
     "modal-react-native-web": "^0.2.0",
     "native-base": "^2.15.2",
-    "nodemailer": "^6.6.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",

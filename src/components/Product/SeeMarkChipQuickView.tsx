@@ -1,21 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Text, Image, Linking } from "react-native";
-import beautyProductTypes from "../../constants/BeautyProductTypes";
 import Item from "../../interfaces/Item";
 import Product from "../../interfaces/Product";
-import Navigation from "../../navigation";
-import { black, white } from "../../styles/Colors";
+import { black } from "../../styles/Colors";
 import PrimaryButton from "../PrimaryButton";
-import Constants from "expo-constants";
+import User from "../../interfaces/User";
+import axios from "axios";
+import PrimaryText from "../PrimaryText";
 
 export default (props: {
+  user: User;
   product: Product;
   item?: Item;
   navigation?: any;
   updateBought?: any;
   updateChipIn?: any;
   wishlistParams?: any;
-}) => {us
+  totalChippedIn: number;
+  alreadyBought : boolean;
+}) => {
+
+  if (props.alreadyBought) {
+    return (
+      <View style={styles.container}>
+        <Image style={styles.image} source={{ uri: props.product.image }} />
+        <PrimaryText
+          style={{ alignSelf: "center" }}
+          text={"Item has already been purchased"}
+        />
+        <PrimaryButton
+          style={{ borderRadius: 100, alignSelf: "center", margin: 10 }}
+          onPress={() => {
+            if (props.item) {
+              Linking.openURL(props.item.website);
+            } else {
+              props.navigation.navigate("SenderRecommendations", {
+                categories: [props.product.name],
+              });
+            }
+          }}
+          text={props.item ? "view on website" : "see related items"}
+        ></PrimaryButton>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{ uri: props.product.image }} />
@@ -42,7 +70,7 @@ export default (props: {
           onPress={() => {
             props.updateBought();
           }}
-          text={"Mark as interested in buying"}
+          text={"Mark As Bought"}
         ></PrimaryButton>
       )}
       {props.item && (
@@ -51,7 +79,7 @@ export default (props: {
           onPress={() => {
             props.updateChipIn();
           }}
-          text={"Chip in purchase"}
+          text={"Chip In"}
         ></PrimaryButton>
       )}
     </View>

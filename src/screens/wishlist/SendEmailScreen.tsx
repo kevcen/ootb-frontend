@@ -1,14 +1,10 @@
 import axios from "axios";
-import { Button } from "native-base";
-import React, { useRef } from "react";
-import { useState } from "react";
+import React, { useRef,useState } from "react";
 import { TextInput, View ,StyleSheet, Text, Pressable, TouchableHighlight} from "react-native";
-import { API_URL } from "react-native-dotenv";
 import PrimaryButton from "../../components/PrimaryButton";
 import Question from "../../components/Question";
 import { black } from "../../styles/Colors";
 import { styles } from "../../styles/quiz";
-const nodemailer = require("nodemailer");
 
 export default function SendEmailScreen({
   route,
