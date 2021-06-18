@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, TextInput } from "react-native";
 import User from "../../interfaces/User";
 import {
   FlatList,
@@ -44,6 +44,78 @@ export default function WishlistScreen({
   const chipValue = useRef<number>(0);
   const toggleOverlay = () => {
     setVisible(!visible);
+  };
+
+  let SliderComponent = (props: {
+    maxCost: number | undefined;
+    onChangeChipIn: (value: number) => any;
+    total: number;
+    alreadyChippedIn: number;
+    currentlyChippingIn: number;
+  }) => {
+    const [value, setValue] = useState(0);
+
+    return (
+      <View
+        style={{
+          width: "100%",
+        }}
+      >
+        <ChipInHeader
+          total={props.total}
+          alreadyChippedIn={props.alreadyChippedIn}
+          currentlyChippingIn={value}
+        />
+
+        <Slider
+          value={value}
+          onValueChange={(value: number) => {
+            props.onChangeChipIn(value);
+            setValue(value);
+          }}
+          maximumValue={props.maxCost}
+          thumbStyle={{
+            height: 20,
+            width: 20,
+            backgroundColor: "black",
+          }}
+        />
+        <Text style={{ padding: 20 }}>
+          Chipping in: £{value.toFixed(2)}
+        </Text>
+
+        <TextInput style={{alignSelf:"center", borderWidth:1, width:"100%", minHeight : 80, padding:10, margin:20}} placeholder={"Add a message for "+ user.firstname +" to see"} textAlign={"left"}>
+        </TextInput>
+      </View>
+    );
+  };
+
+  let ChipInHeader = (props: {
+    total: number;
+    alreadyChippedIn: number;
+    currentlyChippingIn: number;
+  }) => {
+    return (
+      <View
+        style={{
+          alignSelf: "center",
+          flexDirection: "row",
+          width: "100%",
+          justifyContent: "space-between",
+          padding: 20,
+        }}
+      >
+        <Text>Total Cost: £{props.total.toFixed(2)}</Text>
+        <Text>
+          Left: £
+          {(
+            props.total -
+            props.alreadyChippedIn -
+            props.currentlyChippingIn
+          ).toFixed(2)}
+        </Text>
+      </View>
+    );
   };
 
   // on component load, get results
@@ -203,15 +275,17 @@ export default function WishlistScreen({
                     }}
                     updateChipIn={() => {
                       setQuickView(
-                        <View style={{
-                          shadowColor: black,
-                          shadowOffset: { width: 0, height: 1 },
-                          shadowRadius: 4,
-                          shadowOpacity: 0.5,
-                          borderRadius: 5,
-                          minWidth: "90%",
-                          alignItems:"center"
-                        }}>
+                        <View
+                          style={{
+                            shadowColor: black,
+                            shadowOffset: { width: 0, height: 1 },
+                            shadowRadius: 4,
+                            shadowOpacity: 0.5,
+                            borderRadius: 5,
+                            minWidth: "90%",
+                            alignItems: "center",
+                          }}
+                        >
                           <SliderComponent
                             total={minItem?.cost || 0}
                             currentlyChippingIn={chipValue.current}
@@ -224,7 +298,7 @@ export default function WishlistScreen({
                             }
                           />
                           <PrimaryButton
-                          style={{marginBottom:20}}
+                            style={{ marginBottom: 20 }}
                             text={"Chip in"}
                             onPress={() => {
                               axios
@@ -365,70 +439,3 @@ const styles = StyleSheet.create({
     backgroundColor: white,
   },
 });
-
-let SliderComponent = (props: {
-  maxCost: number | undefined;
-  onChangeChipIn: (value: number) => any;
-  total: number;
-  alreadyChippedIn: number;
-  currentlyChippingIn: number;
-}) => {
-  const [value, setValue] = useState(0);
-
-  return (
-    <View
-      style={{
-        width: "80%",
-      }}
-    >
-      <ChipInHeader
-        total={props.total}
-        alreadyChippedIn={props.alreadyChippedIn}
-        currentlyChippingIn={value}
-      />
-
-      <Slider
-        value={value}
-        onValueChange={(value: number) => {
-          props.onChangeChipIn(value);
-          setValue(value);
-        }}
-        maximumValue={props.maxCost}
-        thumbStyle={{
-          height: 20,
-          width: 20,
-          backgroundColor: "black",
-        }}
-      />
-      <Text style={{padding:20}}>Amount chipping in: £{value.toFixed(2)}</Text>
-    </View>
-  );
-};
-
-let ChipInHeader = (props: {
-  total: number;
-  alreadyChippedIn: number;
-  currentlyChippingIn: number;
-}) => {
-  return (
-    <View
-      style={{
-        alignSelf: "center",
-        flexDirection: "row",
-        width: "100%",
-        justifyContent: "space-between",
-        padding:20
-      }}
-    >
-      <Text>Total Cost: £{props.total.toFixed(2)}</Text>
-      <Text>
-        Left: £
-        {(
-          props.total -
-          props.alreadyChippedIn -
-          props.currentlyChippingIn
-        ).toFixed(2)}
-      </Text>
-    </View>
-  );
-};
