@@ -11,6 +11,8 @@ import Categories from "../../../constants/Categories";
 import QuizNavigator from "../../../components/Quiz/QuizNavigator";
 import PrimaryText from "../../../components/PrimaryText";
 import PrimaryButton from "../../../components/PrimaryButton";
+import AddNewButton from "../../../components/Quiz/AddNewButton";
+import TagData from "../../../interfaces/TagData";
 
 export default function CategoriesScreen({
   route,
@@ -20,6 +22,7 @@ export default function CategoriesScreen({
   navigation: any;
 }) {
   const [chosenCategories] = useState(new Set<string>());
+  var [cats, setCats] = useState(Categories.slice());
   const [arrayCategories, setChosenCategories] = useState(new Array());
   const [initialPageNum] = useState(route.params.pagenum);
 
@@ -29,7 +32,7 @@ export default function CategoriesScreen({
       <Text style={styles.subtext}>Each category that you choose will help use discover more about you. This means you may potentially be asked more questions</Text>
       <View style={styles.space} />
       <MultipleOptionQuestion
-        tagdata={Categories}
+        tagdata={cats}
         onTagPress={(tagname) => {
           if (chosenCategories.has(tagname)) {
             chosenCategories.delete(tagname);
@@ -37,6 +40,12 @@ export default function CategoriesScreen({
             chosenCategories.add(tagname);
           }
           setChosenCategories(Array.from(chosenCategories));
+        }}
+      />
+      <View style={styles.space} />
+      <AddNewButton
+        setCats={(cat: TagData) => {
+          setCats(cats.concat(cat));
         }}
       />
       <View style={styles.space} />
