@@ -31,8 +31,19 @@ export const styles = StyleSheet.create({
     margin: 5,
     backgroundColor: "black",
   },
+  row: {
+    flex: 1,
+    flexDirection: "row"
+  },
   input: {
     width: "90%",
+    height: 40,
+    margin: 5,
+    borderWidth: 1,
+    paddingLeft: 10,
+  },
+  numericInput: {
+    width: "20%",
     height: 40,
     margin: 5,
     borderWidth: 1,

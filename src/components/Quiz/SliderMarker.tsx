@@ -12,8 +12,8 @@ export default ({ markerValue }: { markerValue: number }) => {
 
 const styles = StyleSheet.create({
   marker: {
-    height: 40,
-    width: 40,
+    height: 30,
+    width: 30,
     backgroundColor: "#000000",
     borderRadius: 20,
     alignItems: "center",
