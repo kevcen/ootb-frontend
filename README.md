@@ -4,6 +4,8 @@ A cross platform mobile app to aid gifters gift more meaningful gifts.
 
 [Click here for the backend repo.](https://github.com/kevcen/ootb-backend)
 
+![poster](https://i.imgur.com/sNzn2sB.png)
+
 --------------------
 Click images below for demo of features:
 
