@@ -15,3 +15,8 @@ Click images below for demo of features:
 [![private](https://img.youtube.com/vi/6ggC4JgioUM/1.jpg)](https://youtu.be/6ggC4JgioUM)
 - Chipping in (bill splitting)
 [![chip in](https://img.youtube.com/vi/zBmU0ujvcGc/1.jpg)](https://youtu.be/zBmU0ujvcGc)
+
+
+--------------
+
+Disclaimer: backend may not be currently running so not guaranteed to work. 
